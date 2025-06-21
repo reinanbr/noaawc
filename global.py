@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 cmap = 'inferno'
 
-date_base = '25/09/2023'
+date_base = '20/06/2025'
 dn = gnd(date=date_base)
 indice = 5
 

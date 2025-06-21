@@ -6,5 +6,5 @@ license: GPLv3
 --------------------------------------------------
 
 '''
-from noaawc.animate import create_plot_gif
+from noaawc.animate import Create_plot_gif
 from noaawc.plot import plot_global

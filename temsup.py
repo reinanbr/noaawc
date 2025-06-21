@@ -3,7 +3,7 @@ from noawclg.main import get_noaa_data as gnd
 
 
 def test_render():
-    dn = gnd(date='21/09/2023') 
+    dn = gnd(date='20/06/2025') 
 
     point_jua = (-9.43847,-40.5052)
     cmap = 'jet'

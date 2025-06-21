@@ -83,16 +83,19 @@ class Create_plot_gif:
     fps:float = 10
     cmap: ListedColormap = field(default_factory=lambda: ListedColormap(["red", "blue"]))#cmap:plt.cm=plt.cm.jet
     resolution:str = 'c'
+    point_init:tuple = None
+    point_end:tuple = None
+    text_cb:str = '°C'
 
 
 
     def tracing(self):
         assert self.size < 128, print('size of data is max 128!!')
         self.speed_degree_frame = self.speed_frame
-        #size = frames
+        self.frames = self.size*self.fps
         self.locs_focus = []
         if self.loc_focus:
-            for _ in range(self.size):
+            for _ in range(self.frames):
                 self.locs_focus.append(self.loc_focus)
             
         if self.point_init and self.point_end:
@@ -125,7 +128,7 @@ class Create_plot_gif:
         images = []
         images_path = []
         img_path = urllib.parse.quote(self.title)
-        for i in range(self.size):
+        for i in range(self.frames):
             path_img = f'{self.path_data}/{img_path}_{i}.png'
 
             pg = plot_global(dn=self.dn,
@@ -155,7 +158,7 @@ class Create_plot_gif:
             pg.cmap = self.cmap
 
             pg.render(show=False)
-            ping_fun(time_0,i,self.size)
+            ping_fun(time_0,i,self.frames)
             images.append(imageio.imread(path_img))
             images_path.append(path_img)
         self.images = images
@@ -180,7 +183,6 @@ class Create_plot_gif:
         render_video.render_mp4(file_mp4)
         #for img in self.images:
         os.system(f'rm -rf {self.path_data}/*.png')
-
 
 
 
