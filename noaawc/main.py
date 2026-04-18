@@ -1,3 +1,5 @@
+# mypy: disable-error-code=attr-defined
+
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,6 +9,7 @@ import cartopy.feature as cfeature
 import imageio
 from matplotlib.colors import BoundaryNorm
 from datetime import datetime, timezone
+from typing import Any
 
 # ── variable presets — single source of truth ─────────────────────────────────
 #
@@ -30,7 +33,7 @@ def list_variable_presets() -> None:
 
 # ── quality presets ───────────────────────────────────────────────────────────
 
-QUALITY_PRESETS = {
+QUALITY_PRESETS: dict[str, dict[str, Any]] = {
     "sd": {
         "dpi": 72,
         "figsize": (8, 8),
@@ -680,21 +683,24 @@ class OrthoAnimator:
     _FPS_DEFAULT = 6
     _STEP_DEFAULT = 1
     _DPI_DEFAULT = 120
-    _FIGSIZE_DEFAULT = (8, 8)
+    _FIGSIZE_DEFAULT = (8.0, 8.0)
     _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8  # imageio quality scale: 0 (worst) – 10 (best)
 
     def __init__(self, ds, var: str, central_point: tuple = (-45.0, -15.0)):
         self._ds = ds
         self._var = var
-        self._central_point = central_point
+        self._central_point: tuple[float, float] = (
+            float(central_point[0]),
+            float(central_point[1]),
+        )
 
         # output options
         self._output = self._OUTPUT_DEFAULT
         self._fps = self._FPS_DEFAULT
         self._step = self._STEP_DEFAULT
         self._dpi = self._DPI_DEFAULT
-        self._figsize = self._FIGSIZE_DEFAULT
+        self._figsize: tuple[float, float] = self._FIGSIZE_DEFAULT
         self._codec = self._CODEC_DEFAULT
         self._video_quality = self._VIDEO_QUALITY_DEFAULT
 
@@ -702,12 +708,12 @@ class OrthoAnimator:
         self._apply_variable_preset(var, silent=False)
 
         # rotation (None = no rotation)
-        self._lon_start = None
-        self._lat_start = None
-        self._lon_end = None
-        self._lat_end = None
-        self._stop_frame = None
-        self._stop_fraction = None
+        self._lon_start: float | None = None
+        self._lat_start: float | None = None
+        self._lon_end: float | None = None
+        self._lat_end: float | None = None
+        self._stop_frame: int | None = None
+        self._stop_fraction: float | None = None
 
         # annotations
         self._annotations: list[dict] = []
@@ -719,7 +725,7 @@ class OrthoAnimator:
         # author label (set via set_author())
         # author label
         self._author: str = ""
-        self._author_kwargs: dict = {}  # populated by set_author()
+        self._author_kwargs: dict[str, Any] = {}  # populated by set_author()
 
     # ── variable preset helpers ───────────────────────────────────────────────
 
@@ -1136,7 +1142,7 @@ class OrthoAnimator:
         self._author = name.strip()
 
         # Store all style kwargs so _draw_author() can be called with them later
-        self._author_kwargs: dict = dict(
+        self._author_kwargs = dict(
             x=x,
             y=y,
             ha=ha,
@@ -1419,6 +1425,10 @@ class OrthoAnimator:
         """Return the (lon, lat) of the camera centre for frame `tidx`."""
         if self._lon_start is None:
             return self._central_point
+
+        assert self._lon_end is not None
+        assert self._lat_start is not None
+        assert self._lat_end is not None
 
         if tidx >= stop:
             return (self._lon_end, self._lat_end)

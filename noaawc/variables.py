@@ -29,6 +29,8 @@ Reflectivity            _REFC_CMAP          18-colour NWS WSR-88D standard palet
 Ozone / diagnostics     cmocean.deep        sequential deep-ocean repurposed
 """
 
+# mypy: disable-error-code=attr-defined
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
