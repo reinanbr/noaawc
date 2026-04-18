@@ -1,3 +1,3 @@
-# from .main import plot_global, create_plot_gif
+from noaawc.main import OrthoAnimator as OrthoAnimator
 
-# all = [plot_global,create_plot_gif]
+__all__ = ["OrthoAnimator"]
