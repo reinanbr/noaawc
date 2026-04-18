@@ -1,8 +1,0 @@
-## 24/11/24 11:51
-
-- No pc de Denise:
-
-Foi verificado que o noaawc usa mais ram do cpu e placa de video.<br>
-que na produção do video, a ram tava no talo, enquanto a cpu em 4% e placa de video em 3%...
-
-Para produzir isso, precisa de +32GB de ram, ry7 ^^,.. Uma cpu melhor  do que intel i5-12450H 12th

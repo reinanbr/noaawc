@@ -1,1 +1,0 @@
-pip install -U noawclg psutil imageio basemap kitano opencv-python twine setuptools
