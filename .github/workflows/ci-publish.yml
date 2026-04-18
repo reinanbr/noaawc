@@ -1,50 +1,189 @@
-name: CI and Publish
+name: CI / CD
 
 on:
   push:
-    branches:
-      - main
-      - master
-    tags:
-      - "v*"
+    branches: ["main", "master"]
+    tags:     ["v*.*.*"]
   pull_request:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test:
-    name: Test (Python ${{ matrix.python-version }})
+
+  # ────────────────────────────────────────────────────────────────────────────
+  lint:
+    name: Lint & type-check
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install lint tools
+        run: pip install ruff mypy
+
+      - name: ruff — lint
+        run: ruff check . --output-format=github
+
+      - name: ruff — format check
+        run: ruff format --check .
+
+      - name: mypy — type check
+        run: mypy noaawc/ --ignore-missing-imports
+
+  # ────────────────────────────────────────────────────────────────────────────
+  test:
+    name: Test (Python ${{ matrix.python-version }} · ${{ matrix.os }})
+    needs: lint
+    runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
+        os:             [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libproj-dev proj-data proj-bin libgeos-dev
+
+      - name: Install system dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install proj geos
+
+      - name: Install system dependencies (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          choco install miniconda3 --yes --no-progress
+          call C:\tools\miniconda3\Scripts\activate.bat
+          conda install -c conda-forge proj geos --yes
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install pytest pytest-cov numpy xarray matplotlib cmocean imageio cartopy psutil
+
+      - name: Run tests
+        shell: bash
+        run: |
+          pytest tests/ -v \
+            -m "not integration" \
+            --tb=short \
+            --cov=noaawc \
+            --cov-report=term-missing \
+            --cov-report=xml \
+            --junitxml=junit/test-results-${{ matrix.python-version }}.xml
+
+      - name: Upload coverage to Codecov
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+          flags: unittests
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload JUnit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-${{ matrix.os }}-${{ matrix.python-version }}
+          path: junit/
+
+  # ────────────────────────────────────────────────────────────────────────────
+  integration:
+    name: Integration tests (network)
+    needs: test
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main' ||
+      github.event_name == 'workflow_dispatch'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
 
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libproj-dev proj-data proj-bin libgeos-dev
 
-      - name: Install package and test dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --no-deps -e .
-          python -m pip install pytest numpy xarray matplotlib cmocean imageio cartopy
+          python -m pip install -e .
+          python -m pip install pytest numpy xarray matplotlib cmocean imageio cartopy psutil
 
-      - name: Run tests
-        run: pytest
+      - name: Run integration tests
+        shell: bash
+        run: pytest tests/ -v -m integration --tb=short || ([ $? -eq 5 ] && echo "No integration tests found — skipping." && exit 0)
 
+  # ────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build distribution
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build wheel and sdist
+        run: python -m build
+
+      - name: Check distribution with twine
+        run: twine check dist/*
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  # ────────────────────────────────────────────────────────────────────────────
   publish:
     name: Publish to PyPI
+    needs: [test, build]
     runs-on: ubuntu-latest
-    needs: test
     if: startsWith(github.ref, 'refs/tags/v')
     environment:
       name: pypi
@@ -54,21 +193,63 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          python-version: "3.12"
+          name: dist
+          path: dist/
 
-      - name: Build package
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install build
-          python -m build
-
-      - name: Publish package distributions to PyPI
+      - name: Publish to PyPI via Trusted Publishing
         uses: pypa/gh-action-pypi-publish@release/v1
+
+  # ────────────────────────────────────────────────────────────────────────────
+  release:
+    name: Create GitHub Release
+    needs: publish
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
         with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          fetch-depth: 0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract changelog section for this release
+        id: changelog
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          python3 - <<'EOF'
+          import re, pathlib, os
+          version = os.environ["VERSION"]
+          text    = pathlib.Path("CHANGELOG.md").read_text()
+          pattern = rf"## \[{re.escape(version)}\].*?(?=\n## |\Z)"
+          match   = re.search(pattern, text, re.S)
+          notes   = match.group(0).strip() if match else "See CHANGELOG.md for details."
+          pathlib.Path(os.environ["GITHUB_OUTPUT"]).open("a").write(
+              f"NOTES<<EOF\n{notes}\nEOF\n"
+          )
+          EOF
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name:   ${{ github.ref_name }}
+          name:       "noaawc ${{ steps.version.outputs.VERSION }}"
+          body:       ${{ steps.changelog.outputs.NOTES }}
+          files:      dist/*
+          draft:      false
+          prerelease: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') }}

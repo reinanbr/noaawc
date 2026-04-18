@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.1] - 2026-04-18
+
+### Changed
+- Updated package version to `0.3.1` in `setup.py`.
+- Updated metadata tests to parse `setup.py` via AST and validate version without relying on string formatting.
+
+### CI/CD
+- Removed Basemap installation from workflow jobs and kept test pipeline aligned with Cartopy-only stack.
+
 ## [0.3.0] - 2026-04-18
 
 ### Added
