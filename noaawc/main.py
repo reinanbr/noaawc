@@ -28,63 +28,62 @@ def list_variable_presets() -> None:
     print()
 
 
-
-
-
-
 # ── quality presets ───────────────────────────────────────────────────────────
 
 QUALITY_PRESETS = {
     "sd": {
-        "dpi":     72,
+        "dpi": 72,
         "figsize": (8, 8),
-        "fps":     6,
-        "codec":   "libx264",
+        "fps": 6,
+        "codec": "libx264",
         "quality": 6,
         "description": "Standard Definition — fast render, small file",
     },
     "hd": {
-        "dpi":     120,
+        "dpi": 120,
         "figsize": (10, 10),
-        "fps":     24,
-        "codec":   "libx264",
+        "fps": 24,
+        "codec": "libx264",
         "quality": 8,
         "description": "Full HD (1080p-range) — balanced quality and speed",
     },
     "4k": {
-        "dpi":     220,
+        "dpi": 220,
         "figsize": (17.07, 17.07),
-        "fps":     30,
-        "codec":   "libx264",
+        "fps": 30,
+        "codec": "libx264",
         "quality": 10,
         "description": "Ultra HD 4K — maximum quality, large file and slow render",
     },
     "4k_60": {
-        "dpi":     220,
+        "dpi": 220,
         "figsize": (17.07, 17.07),
-        "fps":     60,
-        "codec":   "libx264",
+        "fps": 60,
+        "codec": "libx264",
         "quality": 10,
         "description": "Ultra HD 4K @ 60 fps — silky smooth, very large file",
     },
 }
 
 
-plt.rcParams.update({
-    "figure.facecolor": "#0d1117",
-    "axes.facecolor":   "#0d1117",
-    "text.color":       "#e6edf3",
-    "axes.labelcolor":  "#e6edf3",
-    "xtick.color":      "#8b949e",
-    "ytick.color":      "#8b949e",
-    "font.family":      "monospace",
-    "axes.titlepad":    10,
-})
+plt.rcParams.update(
+    {
+        "figure.facecolor": "#0d1117",
+        "axes.facecolor": "#0d1117",
+        "text.color": "#e6edf3",
+        "axes.labelcolor": "#e6edf3",
+        "xtick.color": "#8b949e",
+        "ytick.color": "#8b949e",
+        "font.family": "monospace",
+        "axes.titlepad": 10,
+    }
+)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Module-level map helpers
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def _get(ds, var: str, time_idx: int = 0, step: int = 2):
     da = ds[var][time_idx]
@@ -97,10 +96,15 @@ def _get(ds, var: str, time_idx: int = 0, step: int = 2):
 
 
 def _add_features(ax: plt.Axes, lw: float = 0.4) -> None:
-    ax.add_feature(cfeature.LAND,      facecolor="#1c2128", edgecolor="none",        zorder=0)
-    ax.add_feature(cfeature.COASTLINE, edgecolor="#58a6ff", linewidth=lw,            zorder=3)
-    ax.add_feature(cfeature.BORDERS,   edgecolor="#484f58", linewidth=lw * 0.7,
-                   linestyle="--", zorder=3)
+    ax.add_feature(cfeature.LAND, facecolor="#1c2128", edgecolor="none", zorder=0)
+    ax.add_feature(cfeature.COASTLINE, edgecolor="#58a6ff", linewidth=lw, zorder=3)
+    ax.add_feature(
+        cfeature.BORDERS,
+        edgecolor="#484f58",
+        linewidth=lw * 0.7,
+        linestyle="--",
+        zorder=3,
+    )
 
 
 def _font_scale(dpi: int, base_dpi: int = 120) -> float:
@@ -129,32 +133,50 @@ def _font_scale(dpi: int, base_dpi: int = 120) -> float:
 def _add_gridlines(ax: plt.Axes, proj, scale: float = 1.0) -> None:
     draw = isinstance(proj, (ccrs.Mercator, ccrs.PlateCarree))
     gl = ax.gridlines(
-        crs=ccrs.PlateCarree(), draw_labels=draw,
-        linewidth=0.3 * scale, color="#21262d", alpha=0.8, linestyle="--", zorder=2,
+        crs=ccrs.PlateCarree(),
+        draw_labels=draw,
+        linewidth=0.3 * scale,
+        color="#21262d",
+        alpha=0.8,
+        linestyle="--",
+        zorder=2,
     )
-    gl.top_labels   = False
+    gl.top_labels = False
     gl.right_labels = False
-    gl.xlocator     = mticker.MultipleLocator(10)
-    gl.ylocator     = mticker.MultipleLocator(10)
+    gl.xlocator = mticker.MultipleLocator(10)
+    gl.ylocator = mticker.MultipleLocator(10)
     gl.xlabel_style = {"size": round(6 * scale, 1), "color": "#8b949e"}
     gl.ylabel_style = {"size": round(6 * scale, 1), "color": "#8b949e"}
 
 
-def _colorbar(fig, cf, ax, label: str, orientation: str = "horizontal",
-              scale: float = 1.0) -> None:
-    cb = fig.colorbar(cf, ax=ax, orientation=orientation,
-                      pad=0.03, fraction=0.03, shrink=0.85)
+def _colorbar(
+    fig, cf, ax, label: str, orientation: str = "horizontal", scale: float = 1.0
+) -> None:
+    cb = fig.colorbar(
+        cf, ax=ax, orientation=orientation, pad=0.03, fraction=0.03, shrink=0.85
+    )
     cb.set_label(label, fontsize=round(8 * scale, 1), color="#8b949e")
     cb.ax.tick_params(labelsize=round(7 * scale, 1), colors="#8b949e")
     cb.outline.set_edgecolor("#30363d")
 
 
 def _title(ax, main: str, sub: str = "", scale: float = 1.0) -> None:
-    ax.set_title(main, fontsize=round(10 * scale, 1), fontweight="bold",
-                 color="#e6edf3", loc="left", pad=6 * scale)
+    ax.set_title(
+        main,
+        fontsize=round(10 * scale, 1),
+        fontweight="bold",
+        color="#e6edf3",
+        loc="left",
+        pad=6 * scale,
+    )
     if sub:
-        ax.set_title(sub, fontsize=round(7 * scale, 1), color="#8b949e",
-                     loc="right", pad=6 * scale)
+        ax.set_title(
+            sub,
+            fontsize=round(7 * scale, 1),
+            color="#8b949e",
+            loc="right",
+            pad=6 * scale,
+        )
 
 
 def _run_label(time_val) -> str:
@@ -164,14 +186,62 @@ def _run_label(time_val) -> str:
 # ── month name tables per date_style ─────────────────────────────────────────
 
 _MONTHS: dict[str, list[str]] = {
-    "pt-br": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
-              "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-    "en":    ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "es":    ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
-              "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    "fr":    ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
-              "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+    "pt-br": [
+        "Jan",
+        "Fev",
+        "Mar",
+        "Abr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Set",
+        "Out",
+        "Nov",
+        "Dez",
+    ],
+    "en": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ],
+    "es": [
+        "Ene",
+        "Feb",
+        "Mar",
+        "Abr",
+        "May",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dic",
+    ],
+    "fr": [
+        "Jan",
+        "Fév",
+        "Mar",
+        "Avr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Aoû",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Déc",
+    ],
 }
 
 
@@ -203,13 +273,15 @@ def _format_date(time_val, date_style: str = "en") -> str:
         dt = datetime.fromtimestamp(float(time_val), tz=timezone.utc)
 
     months = _MONTHS.get(date_style.lower(), _MONTHS["en"])
-    return f"{dt.day:02d} {months[dt.month - 1]} {dt.year} {dt.hour:02d}:{dt.minute:02d}"
+    return (
+        f"{dt.day:02d} {months[dt.month - 1]} {dt.year} {dt.hour:02d}:{dt.minute:02d}"
+    )
 
 
 def _gfs_meta(ds, var: str):
     """Return (run_date_str, cycle_str) from dataset attributes."""
     run_date = str(ds.attrs.get("run_date", "unknown"))
-    cycle    = str(ds.attrs.get("cycle",    "00z"))
+    cycle = str(ds.attrs.get("cycle", "00z"))
     return run_date, cycle
 
 
@@ -249,7 +321,9 @@ def _interp_field_value(lat_arr, lon_arr, field, pos: tuple) -> float:
 
 def list_quality_presets() -> None:
     """Print all available quality presets and their settings."""
-    print(f"{'Preset':<10}  {'DPI':<5}  {'Figsize (in)':<16}  {'FPS':<5}  {'Codec':<10}  Description")
+    print(
+        f"{'Preset':<10}  {'DPI':<5}  {'Figsize (in)':<16}  {'FPS':<5}  {'Codec':<10}  Description"
+    )
     print("-" * 90)
     for name, p in QUALITY_PRESETS.items():
         w, h = p["figsize"]
@@ -264,6 +338,7 @@ def list_quality_presets() -> None:
 # ══════════════════════════════════════════════════════════════════════════════
 # Figure-level overlay helpers
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def _draw_info_box(
     fig: plt.Figure,
@@ -303,9 +378,11 @@ def _draw_info_box(
     text = "\n".join(lines)
 
     fig.text(
-        0.985, 0.985,
+        0.985,
+        0.985,
         text,
-        ha="right", va="top",
+        ha="right",
+        va="top",
         fontsize=round(7.5 * scale, 1),
         color="#828283",
         fontweight="bold",
@@ -340,9 +417,11 @@ def _draw_data_credit(fig: plt.Figure, scale: float = 1.0) -> None:
     scale : DPI-proportional font scale factor
     """
     fig.text(
-        0.985, 0.012,
+        0.985,
+        0.012,
         "GFS 0.25°\nNASA / NOAA",
-        ha="right", va="bottom",
+        ha="right",
+        va="bottom",
         fontsize=round(6.5 * scale, 1),
         color="#8b949e",
         fontweight="bold",
@@ -351,13 +430,14 @@ def _draw_data_credit(fig: plt.Figure, scale: float = 1.0) -> None:
         zorder=10,
     )
 
+
 # ── figure-level constants ─────────────────────────────────────────────────────
 
 # Vertical position of the colorbar in figure coordinates.
 # The horizontal colorbar is placed at ~pad=0.03 below the axes, fraction=0.03
 # tall, so its top edge sits at roughly y=0.10 in figure space.
 # The author label is centred in the gap between y=0 and y=0.10.
-_CBAR_BOTTOM_Y: float = 0.10   # approximate top of the horizontal colorbar area
+_CBAR_BOTTOM_Y: float = 0.10  # approximate top of the horizontal colorbar area
 
 
 def _draw_author(
@@ -438,10 +518,12 @@ def _draw_author(
         # At the reference DPI (120) an 8.5pt monospace character is ~12px tall.
         # Figure height in pixels ≈ figsize[1] * dpi.
         fig_height_px: float = fig.get_figheight() * fig.dpi
-        font_height_fig: float = (fontsize * scale * 1.4) / fig_height_px   # 1.4 = line-height
+        font_height_fig: float = (
+            fontsize * scale * 1.4
+        ) / fig_height_px  # 1.4 = line-height
         # Centre of the gap, shifted up by half a line-height so the visual
         # centre of the glyphs sits at the mathematical midpoint.
-        gap_centre: float = _CBAR_BOTTOM_Y / 2.0 + 0.005   # slight upward bias
+        gap_centre: float = _CBAR_BOTTOM_Y / 2.0 + 0.005  # slight upward bias
         y_pos = gap_centre + font_height_fig * 0.5
 
     # ── optional bbox ──────────────────────────────────────────────────────────
@@ -456,9 +538,11 @@ def _draw_author(
         )
 
     fig.text(
-        x_pos, y_pos,
+        x_pos,
+        y_pos,
         author,
-        ha=ha, va=va,
+        ha=ha,
+        va=va,
         fontsize=round(fontsize * scale, 1),
         color=color,
         fontweight=fontweight,
@@ -469,10 +553,10 @@ def _draw_author(
     )
 
 
-
 # ══════════════════════════════════════════════════════════════════════════════
 # OrthoAnimator
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class OrthoAnimator:
     """
@@ -592,37 +676,37 @@ class OrthoAnimator:
     """
 
     # ── class-level defaults ──────────────────────────────────────────────────
-    _OUTPUT_DEFAULT        = "output.mp4"
-    _FPS_DEFAULT           = 6
-    _STEP_DEFAULT          = 1
-    _DPI_DEFAULT           = 120
-    _FIGSIZE_DEFAULT       = (8, 8)
-    _CODEC_DEFAULT         = "libx264"
-    _VIDEO_QUALITY_DEFAULT = 8      # imageio quality scale: 0 (worst) – 10 (best)
+    _OUTPUT_DEFAULT = "output.mp4"
+    _FPS_DEFAULT = 6
+    _STEP_DEFAULT = 1
+    _DPI_DEFAULT = 120
+    _FIGSIZE_DEFAULT = (8, 8)
+    _CODEC_DEFAULT = "libx264"
+    _VIDEO_QUALITY_DEFAULT = 8  # imageio quality scale: 0 (worst) – 10 (best)
 
     def __init__(self, ds, var: str, central_point: tuple = (-45.0, -15.0)):
-        self._ds            = ds
-        self._var           = var
+        self._ds = ds
+        self._var = var
         self._central_point = central_point
 
         # output options
-        self._output        = self._OUTPUT_DEFAULT
-        self._fps           = self._FPS_DEFAULT
-        self._step          = self._STEP_DEFAULT
-        self._dpi           = self._DPI_DEFAULT
-        self._figsize       = self._FIGSIZE_DEFAULT
-        self._codec         = self._CODEC_DEFAULT
+        self._output = self._OUTPUT_DEFAULT
+        self._fps = self._FPS_DEFAULT
+        self._step = self._STEP_DEFAULT
+        self._dpi = self._DPI_DEFAULT
+        self._figsize = self._FIGSIZE_DEFAULT
+        self._codec = self._CODEC_DEFAULT
         self._video_quality = self._VIDEO_QUALITY_DEFAULT
 
         # ── auto-load variable preset (falls back to temperature defaults) ────
         self._apply_variable_preset(var, silent=False)
 
         # rotation (None = no rotation)
-        self._lon_start     = None
-        self._lat_start     = None
-        self._lon_end       = None
-        self._lat_end       = None
-        self._stop_frame    = None
+        self._lon_start = None
+        self._lat_start = None
+        self._lon_end = None
+        self._lat_end = None
+        self._stop_frame = None
         self._stop_fraction = None
 
         # annotations
@@ -630,12 +714,13 @@ class OrthoAnimator:
 
         # custom title template (set via set_title())
         self._title_template: str | None = None
-        self._title_date_style: str      = "en"
+        self._title_date_style: str = "en"
 
         # author label (set via set_author())
         # author label
         self._author: str = ""
-        self._author_kwargs: dict = {}   # populated by set_author()
+        self._author_kwargs: dict = {}  # populated by set_author()
+
     # ── variable preset helpers ───────────────────────────────────────────────
 
     def _apply_variable_preset(self, var: str, silent: bool = True) -> None:
@@ -656,8 +741,8 @@ class OrthoAnimator:
                 f"falling back to temperature defaults.  "
                 f"Call use_variable_defaults(key) to override."
             )
-        self._cmap       = p["cmap"]
-        self._levels     = np.asarray(p["levels"])
+        self._cmap = p["cmap"]
+        self._levels = np.asarray(p["levels"])
         self._cbar_label = p["cbar_label"]
         self._plot_title = p["plot_title"]
 
@@ -791,10 +876,10 @@ class OrthoAnimator:
             options = ", ".join(f'"{k}"' for k in QUALITY_PRESETS)
             raise ValueError(f"Unknown preset '{preset}'. Choose from: {options}")
         p = QUALITY_PRESETS[preset]
-        self._dpi           = p["dpi"]
-        self._figsize       = p["figsize"]
-        self._fps           = p["fps"]
-        self._codec         = p["codec"]
+        self._dpi = p["dpi"]
+        self._figsize = p["figsize"]
+        self._fps = p["fps"]
+        self._codec = p["codec"]
         self._video_quality = p["quality"]
         print(f"Quality preset '{preset}': {p['description']}")
         return self
@@ -910,7 +995,7 @@ class OrthoAnimator:
         ...     .set_quality("4k")
         ...     .animate())
         """
-        self._title_template   = template if template else None
+        self._title_template = template if template else None
         self._title_date_style = date_style
         return self
 
@@ -1052,9 +1137,14 @@ class OrthoAnimator:
 
         # Store all style kwargs so _draw_author() can be called with them later
         self._author_kwargs: dict = dict(
-            x=x, y=y, ha=ha, va=va,
-            color=color, fontsize=fontsize,
-            fontweight=fontweight, fontfamily=fontfamily,
+            x=x,
+            y=y,
+            ha=ha,
+            va=va,
+            color=color,
+            fontsize=fontsize,
+            fontweight=fontweight,
+            fontfamily=fontfamily,
             alpha=alpha,
             bbox=bbox,
             bbox_facecolor=bbox_facecolor,
@@ -1063,6 +1153,7 @@ class OrthoAnimator:
             bbox_pad=bbox_pad,
         )
         return self
+
     # ── named-variable convenience shortcuts ─────────────────────────────────
 
     def use_temperature_defaults(self) -> "OrthoAnimator":
@@ -1123,9 +1214,9 @@ class OrthoAnimator:
         used as a fixed value throughout the rotation.
         """
         self._lon_start = lon_start
-        self._lon_end   = lon_end
+        self._lon_end = lon_end
         self._lat_start = lat_start if lat_start is not None else self._central_point[1]
-        self._lat_end   = lat_end   if lat_end   is not None else self._central_point[1]
+        self._lat_end = lat_end if lat_end is not None else self._central_point[1]
         return self
 
     def set_rotation_stop(
@@ -1145,9 +1236,9 @@ class OrthoAnimator:
             if not 0.0 < fraction < 1.0:
                 raise ValueError("fraction must be strictly between 0 and 1.")
             self._stop_fraction = fraction
-            self._stop_frame    = None
+            self._stop_frame = None
         else:
-            self._stop_frame    = frame
+            self._stop_frame = frame
             self._stop_fraction = None
         return self
 
@@ -1177,54 +1268,54 @@ class OrthoAnimator:
         """
         Add a text annotation (with optional position marker) overlaid on the
         map in every frame.
- 
+
         Parameters
         ----------
         text_base : str
             Label text.  Use ``%d`` / ``%.1f`` / ``%.2f`` as a placeholder for
             the field value sampled at ``pos``.
- 
+
             Examples::
- 
+
                 "Juazeiro: %.1f°C"     →   "Juazeiro: 32.4°C"
                 "Salvador %.1f hPa"    →   "Salvador 1012.3 hPa"
                 "Recife %.1f m/s"      →   "Recife 6.4 m/s"
- 
+
         pos : tuple (lat, lon)
             Geographic position in decimal degrees.  Example: ``(-9.4, -40.5)``.
- 
+
         size : float
             Font size in points at the HD reference DPI (120 dpi).  Default 9.
- 
+
         color : str
             Text colour.  Default ``"#e6edf3"``.
- 
+
         weight : str
             ``"normal"`` | ``"bold"`` (default) | ``"heavy"``.
- 
+
         alpha : float
             Text opacity.  Default ``0.9``.
- 
+
         bbox : bool
             Draw a rounded background box behind the text.  Default ``True``.
- 
+
         bbox_color : str
             Background fill colour.  Default ``"#0d1117"``.
- 
+
         bbox_alpha : float
             Background box opacity.  Default ``0.55``.
- 
+
         interpolate : bool
             Replace ``%…`` placeholder with the field value at ``pos``.
             Default ``True``.
- 
+
         zorder : int
             Render layer.  Default ``5``.
- 
+
         marker : str or None
             Matplotlib marker symbol plotted at the exact geographic position.
             ``None`` disables the marker.
- 
+
             Common choices
             --------------
             ``"o"``  filled circle  (default)
@@ -1235,36 +1326,36 @@ class OrthoAnimator:
             ``"+"``  plus
             ``"x"``  X mark
             ``None`` no marker
- 
+
         marker_size : float
             Marker size in points at the HD reference DPI.  Default ``6.0``.
- 
+
         marker_color : str or None
             Marker fill colour.  ``None`` (default) inherits ``color``.
- 
+
         marker_edge_color : str
             Marker outline colour.  Default ``"#0d1117"``.
- 
+
         marker_edge_width : float
             Marker outline width in points.  Default ``0.8``.
- 
+
         marker_alpha : float
             Marker opacity.  Default ``1.0``.
- 
+
         text_offset : tuple (Δlon, Δlat)
             Shift the text label relative to ``pos`` in decimal degrees so it
             does not sit on top of the marker.  Default ``(0.0, 0.8)`` —
             0.8 ° north of the point.
- 
+
         Returns
         -------
         self
- 
+
         Examples
         --------
         # Default: circle marker + label 0.8° north
         anim.set_annotate("Juazeiro: %.1f°C", pos=(-9.4, -40.5))
- 
+
         # Star, custom colour, bigger offset
         anim.set_annotate(
             "Fortaleza: %.1f°C",
@@ -1274,10 +1365,10 @@ class OrthoAnimator:
             marker_color="#f7c948",
             text_offset=(0.5, 1.2),
         )
- 
+
         # No marker — text only
         anim.set_annotate("Manaus", pos=(-3.10, -60.02), marker=None)
- 
+
         # Method chaining
         (anim
             .set_annotate("Recife %.1f m/s",    pos=(-8.05,  -34.88))
@@ -1285,29 +1376,29 @@ class OrthoAnimator:
             .set_annotate("Manaus %.1f m/s",    pos=(-3.10,  -60.02))
         )
         """
-        self._annotations.append(dict(
-            text_base         = text_base,
-            pos               = pos,
-            size              = size,
-            color             = color,
-            weight            = weight,
-            alpha             = alpha,
-            bbox              = bbox,
-            bbox_color        = bbox_color,
-            bbox_alpha        = bbox_alpha,
-            interpolate       = interpolate,
-            zorder            = zorder,
-            marker            = marker,
-            marker_size       = marker_size,
-            marker_color      = marker_color,   # None → inherits color
-            marker_edge_color = marker_edge_color,
-            marker_edge_width = marker_edge_width,
-            marker_alpha      = marker_alpha,
-            text_offset       = text_offset,
-        ))
+        self._annotations.append(
+            dict(
+                text_base=text_base,
+                pos=pos,
+                size=size,
+                color=color,
+                weight=weight,
+                alpha=alpha,
+                bbox=bbox,
+                bbox_color=bbox_color,
+                bbox_alpha=bbox_alpha,
+                interpolate=interpolate,
+                zorder=zorder,
+                marker=marker,
+                marker_size=marker_size,
+                marker_color=marker_color,  # None → inherits color
+                marker_edge_color=marker_edge_color,
+                marker_edge_width=marker_edge_width,
+                marker_alpha=marker_alpha,
+                text_offset=text_offset,
+            )
+        )
         return self
- 
- 
 
     def clear_annotations(self) -> "OrthoAnimator":
         """Remove all registered annotations."""
@@ -1332,14 +1423,14 @@ class OrthoAnimator:
         if tidx >= stop:
             return (self._lon_end, self._lat_end)
 
-        t   = tidx / stop
+        t = tidx / stop
         lon = self._lon_start + t * (self._lon_end - self._lon_start)
         lat = self._lat_start + t * (self._lat_end - self._lat_start)
         return (lon, lat)
 
     def _build_axes(self, central: tuple) -> tuple[plt.Figure, plt.Axes]:
         """Create and return a (fig, ax) pair with the orthographic projection."""
-        proj  = ccrs.Orthographic(*central)
+        proj = ccrs.Orthographic(*central)
         scale = _font_scale(self._dpi)
         fig, ax = plt.subplots(
             figsize=self._figsize,
@@ -1354,18 +1445,20 @@ class OrthoAnimator:
     def _draw_annotations(
         self,
         ax: plt.Axes,
-        lat, lon, field,
+        lat,
+        lon,
+        field,
     ) -> None:
         """Draw all registered map annotations (marker + text) onto the axes."""
         if not self._annotations:
             return
- 
+
         scale = _font_scale(self._dpi)
- 
+
         for ann in self._annotations:
             lat_a, lon_a = ann["pos"]
             d_lon, d_lat = ann.get("text_offset", (0.0, 0.8))
- 
+
             # ── resolve label text ────────────────────────────────────
             if ann["interpolate"] and ("%" in ann["text_base"]):
                 val = _interp_field_value(lat, lon, field, ann["pos"])
@@ -1375,57 +1468,59 @@ class OrthoAnimator:
                     text = ann["text_base"]
             else:
                 text = ann["text_base"]
- 
+
             # ── marker at the exact geographic position ───────────────
             mk = ann.get("marker", "o")
             if mk is not None:
                 mk_color = ann.get("marker_color") or ann["color"]
-                mk_size  = ann.get("marker_size", 6.0) * scale
- 
+                mk_size = ann.get("marker_size", 6.0) * scale
+
                 ax.plot(
-                    lon_a, lat_a,
-                    marker          = mk,
-                    markersize      = mk_size,
-                    color           = mk_color,
-                    markeredgecolor = ann.get("marker_edge_color", "#0d1117"),
-                    markeredgewidth = ann.get("marker_edge_width", 0.8) * scale,
-                    alpha           = ann.get("marker_alpha", 1.0),
-                    transform       = ccrs.PlateCarree(),
-                    zorder          = ann["zorder"],
-                    linestyle       = "none",
+                    lon_a,
+                    lat_a,
+                    marker=mk,
+                    markersize=mk_size,
+                    color=mk_color,
+                    markeredgecolor=ann.get("marker_edge_color", "#0d1117"),
+                    markeredgewidth=ann.get("marker_edge_width", 0.8) * scale,
+                    alpha=ann.get("marker_alpha", 1.0),
+                    transform=ccrs.PlateCarree(),
+                    zorder=ann["zorder"],
+                    linestyle="none",
                 )
- 
+
             # ── text label (offset from the marker) ───────────────────
             bbox_props = None
             if ann["bbox"]:
                 bbox_props = dict(
-                    boxstyle  = "round,pad=0.3",
-                    facecolor = ann["bbox_color"],
-                    alpha     = ann["bbox_alpha"],
-                    edgecolor = "none",
+                    boxstyle="round,pad=0.3",
+                    facecolor=ann["bbox_color"],
+                    alpha=ann["bbox_alpha"],
+                    edgecolor="none",
                 )
- 
+
             ax.annotate(
                 text,
-                xy       = (lon_a + d_lon, lat_a + d_lat),
-                xycoords = ccrs.PlateCarree()._as_mpl_transform(ax),
-                fontsize = round(ann["size"] * scale, 1),
-                color    = ann["color"],
-                fontweight = ann["weight"],
-                alpha    = ann["alpha"],
-                bbox     = bbox_props,
-                ha       = "center",
-                va       = "center",
-                zorder   = ann["zorder"],
+                xy=(lon_a + d_lon, lat_a + d_lat),
+                xycoords=ccrs.PlateCarree()._as_mpl_transform(ax),
+                fontsize=round(ann["size"] * scale, 1),
+                color=ann["color"],
+                fontweight=ann["weight"],
+                alpha=ann["alpha"],
+                bbox=bbox_props,
+                ha="center",
+                va="center",
+                zorder=ann["zorder"],
             )
-
-
 
     def _draw_field(
         self,
         fig: plt.Figure,
         ax: plt.Axes,
-        lat, lon, field, time_val,
+        lat,
+        lon,
+        field,
+        time_val,
     ) -> None:
         """
         Draw pcolormesh + contours + map annotations + colorbar + axis titles
@@ -1435,18 +1530,27 @@ class OrthoAnimator:
           • bottom-centre: author label (if set)
         """
         scale = _font_scale(self._dpi)
-        norm  = BoundaryNorm(self._levels, ncolors=self._cmap.N, clip=True)
+        norm = BoundaryNorm(self._levels, ncolors=self._cmap.N, clip=True)
 
         cf = ax.pcolormesh(
-            lon, lat, field,
-            cmap=self._cmap, norm=norm,
-            transform=ccrs.PlateCarree(), zorder=1,
+            lon,
+            lat,
+            field,
+            cmap=self._cmap,
+            norm=norm,
+            transform=ccrs.PlateCarree(),
+            zorder=1,
         )
         ax.contour(
-            lon[::3], lat[::3], field[::3, ::3],
+            lon[::3],
+            lat[::3],
+            field[::3, ::3],
             levels=self._levels[::5],
-            colors="white", linewidths=0.25 * scale, alpha=0.4,
-            transform=ccrs.PlateCarree(), zorder=2,
+            colors="white",
+            linewidths=0.25 * scale,
+            alpha=0.4,
+            transform=ccrs.PlateCarree(),
+            zorder=2,
         )
 
         # ── map annotations (cities, custom labels, etc.) ─────────────
@@ -1456,7 +1560,7 @@ class OrthoAnimator:
 
         # ── axis titles ───────────────────────────────────────────────
         if self._title_template is not None:
-            date_str   = _format_date(time_val, self._title_date_style)
+            date_str = _format_date(time_val, self._title_date_style)
             main_title = self._title_template.replace("%S", date_str)
             _title(ax, main_title, scale=scale)
         else:
@@ -1465,9 +1569,9 @@ class OrthoAnimator:
         # ── figure-level overlays ─────────────────────────────────────
 
         # top-right info box: key / cycle / date
-        _, cycle    = _gfs_meta(self._ds, self._var)
-        date_str_box = self._ds['time'][0].dt.strftime("%Y-%m-%d").item()
-        
+        _, cycle = _gfs_meta(self._ds, self._var)
+        date_str_box = self._ds["time"][0].dt.strftime("%Y-%m-%d").item()
+
         _draw_info_box(fig, self._var, cycle, date_str_box, scale=scale)
 
         # bottom-right: data source credit  (GFS 0.25° / NASA · NOAA)
@@ -1477,7 +1581,6 @@ class OrthoAnimator:
         # bottom-centre: optional author name
         if self._author:
             _draw_author(fig, self._author, scale=scale, **self._author_kwargs)
-
 
     def _render_frame(self, tidx: int, fpath: str, central: tuple) -> None:
         """Render a single frame and save it to disk."""
@@ -1495,7 +1598,7 @@ class OrthoAnimator:
         writer_kwargs: dict = {"fps": self._fps}
 
         if self._output.endswith(".mp4"):
-            writer_kwargs["codec"]   = self._codec
+            writer_kwargs["codec"] = self._codec
             writer_kwargs["quality"] = self._video_quality
             if self._codec in ("libx265", "hevc"):
                 writer_kwargs["output_params"] = ["-pix_fmt", "yuv420p"]
@@ -1555,7 +1658,9 @@ class OrthoAnimator:
         if save:
             fig.savefig(save, dpi=self._dpi, bbox_inches="tight")
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         else:
             plt.show()
@@ -1569,14 +1674,14 @@ class OrthoAnimator:
         Step 2 — assemble the video from the PNG files.
         """
         run_date, cycle = _gfs_meta(self._ds, self._var)
-        fdir     = _frames_dir(self._var, run_date, cycle)
+        fdir = _frames_dir(self._var, run_date, cycle)
         n_frames = len(self._ds[self._var].time)
-        stop     = self._resolve_stop_frame(n_frames)
+        stop = self._resolve_stop_frame(n_frames)
 
         self._print_render_info(n_frames)
 
         for tidx in range(n_frames):
-            fpath   = _frame_path(fdir, tidx)
+            fpath = _frame_path(fdir, tidx)
             central = self._rotation_at(tidx, stop)
 
             if not os.path.exists(fpath):

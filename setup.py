@@ -30,7 +30,8 @@ setup(
         "cfgrib",
         "eccodes",
         "netCDF4",
-        "requests",        # remova se não fizer download direto da NOAA
+        "requests",  # remova se não fizer download direto da NOAA
         "noawclg",
         "kitano",
-    ],)
+    ],
+)

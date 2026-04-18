@@ -8,7 +8,11 @@ def _load_setup_call_kwargs() -> dict[str, ast.AST]:
     tree = ast.parse(content)
 
     for node in ast.walk(tree):
-        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "setup":
+        if (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "setup"
+        ):
             return {kw.arg: kw.value for kw in node.keywords if kw.arg is not None}
 
     raise AssertionError("setup() call not found in setup.py")

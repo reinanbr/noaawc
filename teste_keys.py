@@ -26,53 +26,488 @@ from requests.adapters import HTTPAdapter
 # Cópia do dicionário VARIABLES (exatamente como no seu código-fonte)
 # ──────────────────────────────────────────────────────────────────────────────
 VARIABLES: dict[str, dict[str, Any]] = {
-    "t2m":   {"short":"t2m","long_name":"2 metre temperature","units":"C","tlev":"heightAboveGround","levels":[2],"grib_var":"var_TMP","grib_lev":"lev_2_m_above_ground","converter":lambda x:x-273.15},
-    "d2m":   {"short":"d2m","long_name":"2 metre dewpoint temperature","units":"C","tlev":"heightAboveGround","levels":[2],"grib_var":"var_DPT","grib_lev":"lev_2_m_above_ground","converter":lambda x:x-273.15},
-    "r2":    {"short":"r2","long_name":"2 metre relative humidity","units":"%","tlev":"heightAboveGround","levels":[2],"grib_var":"var_RH","grib_lev":"lev_2_m_above_ground","converter":None},
-    "sh2":   {"short":"sh2","long_name":"2 metre specific humidity","units":"kg kg**-1","tlev":"heightAboveGround","levels":[2],"grib_var":"var_SPFH","grib_lev":"lev_2_m_above_ground","converter":None},
-    "aptmp": {"short":"aptmp","long_name":"Apparent temperature","units":"C","tlev":"heightAboveGround","levels":[2],"grib_var":"var_APTMP","grib_lev":"lev_2_m_above_ground","converter":lambda x:x-273.15},
-    "u10":   {"short":"u10","long_name":"10 metre U wind component","units":"m s**-1","tlev":"heightAboveGround","levels":[10],"grib_var":"var_UGRD","grib_lev":"lev_10_m_above_ground","converter":None},
-    "v10":   {"short":"v10","long_name":"10 metre V wind component","units":"m s**-1","tlev":"heightAboveGround","levels":[10],"grib_var":"var_VGRD","grib_lev":"lev_10_m_above_ground","converter":None},
-    "gust":  {"short":"gust","long_name":"Wind speed (gust)","units":"m s**-1","tlev":"surface","levels":None,"grib_var":"var_GUST","grib_lev":"lev_surface","converter":None},
-    "prmsl": {"short":"prmsl","long_name":"Pressure reduced to MSL","units":"hPa","tlev":"meanSea","levels":None,"grib_var":"var_PRMSL","grib_lev":"lev_mean_sea_level","converter":lambda x:x/100},
-    "mslet": {"short":"mslet","long_name":"MSLP (Eta model reduction)","units":"hPa","tlev":"meanSea","levels":None,"grib_var":"var_MSLET","grib_lev":"lev_mean_sea_level","converter":lambda x:x/100},
-    "sp":    {"short":"sp","long_name":"Surface pressure","units":"hPa","tlev":"surface","levels":None,"grib_var":"var_PRES","grib_lev":"lev_surface","converter":lambda x:x/100},
-    "orog":  {"short":"orog","long_name":"Orography","units":"m","tlev":"surface","levels":None,"grib_var":"var_HGT","grib_lev":"lev_surface","converter":None},
-    "lsm":   {"short":"lsm","long_name":"Land-sea mask","units":"0 - 1","tlev":"surface","levels":None,"grib_var":"var_LAND","grib_lev":"lev_surface","converter":None},
-    "vis":   {"short":"vis","long_name":"Visibility","units":"m","tlev":"surface","levels":None,"grib_var":"var_VIS","grib_lev":"lev_surface","converter":None},
-    "prate": {"short":"prate","long_name":"Precipitation rate","units":"kg m**-2 s**-1","tlev":"surface","levels":None,"grib_var":"var_PRATE","grib_lev":"lev_surface","converter":None},
-    "cpofp": {"short":"cpofp","long_name":"Percent frozen precipitation","units":"%","tlev":"surface","levels":None,"grib_var":"var_CPOFP","grib_lev":"lev_surface","converter":None},
-    "crain": {"short":"crain","long_name":"Categorical rain","units":"Code table 4.222","tlev":"surface","levels":None,"grib_var":"var_CRAIN","grib_lev":"lev_surface","converter":None},
-    "csnow": {"short":"csnow","long_name":"Categorical snow","units":"Code table 4.222","tlev":"surface","levels":None,"grib_var":"var_CSNOW","grib_lev":"lev_surface","converter":None},
-    "cfrzr": {"short":"cfrzr","long_name":"Categorical freezing rain","units":"Code table 4.222","tlev":"surface","levels":None,"grib_var":"var_CFRZR","grib_lev":"lev_surface","converter":None},
-    "cicep": {"short":"cicep","long_name":"Categorical ice pellets","units":"Code table 4.222","tlev":"surface","levels":None,"grib_var":"var_CICEP","grib_lev":"lev_surface","converter":None},
-    "sde":   {"short":"sde","long_name":"Snow depth","units":"m","tlev":"surface","levels":None,"grib_var":"var_SNOD","grib_lev":"lev_surface","converter":None},
-    "sdwe":  {"short":"sdwe","long_name":"Water equivalent of accumulated snow depth","units":"kg m**-2","tlev":"surface","levels":None,"grib_var":"var_WEASD","grib_lev":"lev_surface","converter":None},
-    "pwat":  {"short":"pwat","long_name":"Precipitable water","units":"kg m**-2","tlev":"atmosphereSingleLayer","levels":None,"grib_var":"var_PWAT","grib_lev":"lev_entire_atmosphere_(considered_as_a_single_layer)","converter":None},
-    "cwat":  {"short":"cwat","long_name":"Cloud water","units":"kg m**-2","tlev":"atmosphereSingleLayer","levels":None,"grib_var":"var_CWAT","grib_lev":"lev_entire_atmosphere_(considered_as_a_single_layer)","converter":None},
-    "tcc":   {"short":"tcc","long_name":"Total cloud cover","units":"%","tlev":"atmosphere","levels":None,"grib_var":"var_TCDC","grib_lev":"lev_entire_atmosphere","converter":None},
-    "lcc":   {"short":"lcc","long_name":"Low cloud cover","units":"%","tlev":"lowCloudLayer","levels":None,"grib_var":"var_TCDC","grib_lev":"lev_low_cloud_layer","converter":None},
-    "mcc":   {"short":"mcc","long_name":"Medium cloud cover","units":"%","tlev":"middleCloudLayer","levels":None,"grib_var":"var_TCDC","grib_lev":"lev_middle_cloud_layer","converter":None},
-    "hcc":   {"short":"hcc","long_name":"High cloud cover","units":"%","tlev":"highCloudLayer","levels":None,"grib_var":"var_TCDC","grib_lev":"lev_high_cloud_layer","converter":None},
-    "cape":  {"short":"cape","long_name":"Convective available potential energy","units":"J kg**-1","tlev":"surface","levels":None,"grib_var":"var_CAPE","grib_lev":"lev_surface","converter":None,"multilevel":True},
-    "cin":   {"short":"cin","long_name":"Convective inhibition","units":"J kg**-1","tlev":"surface","levels":None,"grib_var":"var_CIN","grib_lev":"lev_surface","converter":None,"multilevel":True},
-    "lftx":  {"short":"lftx","long_name":"Surface lifted index","units":"K","tlev":"surface","levels":None,"grib_var":"var_LFTX","grib_lev":"lev_surface","converter":None},
-    "lftx4": {"short":"lftx4","long_name":"Best (4-layer) lifted index","units":"K","tlev":"surface","levels":None,"grib_var":"var_4LFTX","grib_lev":"lev_surface","converter":None},
-    "hlcy":  {"short":"hlcy","long_name":"Storm relative helicity","units":"m**2 s**-2","tlev":"heightAboveGroundLayer","levels":None,"grib_var":"var_HLCY","grib_lev":"lev_height_above_ground_layer","converter":None},
-    "t":     {"short":"t","long_name":"Temperature","units":"C","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_TMP","grib_lev":"lev_500_mb","converter":lambda x:x-273.15,"multilevel":True},
-    "r":     {"short":"r","long_name":"Relative humidity","units":"%","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_RH","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "q":     {"short":"q","long_name":"Specific humidity","units":"kg kg**-1","tlev":"isobaricInhPa","levels":[1000],"grib_var":"var_SPFH","grib_lev":"lev_1000_mb","converter":None,"multilevel":True},
-    "gh":    {"short":"gh","long_name":"Geopotential height","units":"gpm","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_HGT","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "u":     {"short":"u","long_name":"U component of wind","units":"m s**-1","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_UGRD","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "v":     {"short":"v","long_name":"V component of wind","units":"m s**-1","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_VGRD","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "w":     {"short":"w","long_name":"Vertical velocity","units":"Pa s**-1","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_VVEL","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "absv":  {"short":"absv","long_name":"Absolute vorticity","units":"s**-1","tlev":"isobaricInhPa","levels":[500],"grib_var":"var_ABSV","grib_lev":"lev_500_mb","converter":None,"multilevel":True},
-    "st":    {"short":"st","long_name":"Soil temperature","units":"C","tlev":"depthBelowLandLayer","levels":[0],"grib_var":"var_TSOIL","grib_lev":"lev_0-10_cm_below_ground","converter":lambda x:x-273.15,"multilevel":True},
-    "soilw": {"short":"soilw","long_name":"Volumetric soil moisture content","units":"Proportion","tlev":"depthBelowLandLayer","levels":[0],"grib_var":"var_SOILW","grib_lev":"lev_0-10_cm_below_ground","converter":None,"multilevel":True},
-    "refc":  {"short":"refc","long_name":"Maximum/Composite radar reflectivity","units":"dB","tlev":"atmosphere","levels":None,"grib_var":"var_REFC","grib_lev":"lev_entire_atmosphere","converter":None},
-    "siconc":{"short":"siconc","long_name":"Sea ice area fraction","units":"0 - 1","tlev":"surface","levels":None,"grib_var":"var_ICEC","grib_lev":"lev_surface","converter":None},
-    "veg":   {"short":"veg","long_name":"Vegetation","units":"%","tlev":"surface","levels":None,"grib_var":"var_VEG","grib_lev":"lev_surface","converter":None},
-    "tozne": {"short":"tozne","long_name":"Total ozone","units":"DU","tlev":"atmosphere","levels":None,"grib_var":"var_TOZNE","grib_lev":"lev_entire_atmosphere","converter":None},
+    "t2m": {
+        "short": "t2m",
+        "long_name": "2 metre temperature",
+        "units": "C",
+        "tlev": "heightAboveGround",
+        "levels": [2],
+        "grib_var": "var_TMP",
+        "grib_lev": "lev_2_m_above_ground",
+        "converter": lambda x: x - 273.15,
+    },
+    "d2m": {
+        "short": "d2m",
+        "long_name": "2 metre dewpoint temperature",
+        "units": "C",
+        "tlev": "heightAboveGround",
+        "levels": [2],
+        "grib_var": "var_DPT",
+        "grib_lev": "lev_2_m_above_ground",
+        "converter": lambda x: x - 273.15,
+    },
+    "r2": {
+        "short": "r2",
+        "long_name": "2 metre relative humidity",
+        "units": "%",
+        "tlev": "heightAboveGround",
+        "levels": [2],
+        "grib_var": "var_RH",
+        "grib_lev": "lev_2_m_above_ground",
+        "converter": None,
+    },
+    "sh2": {
+        "short": "sh2",
+        "long_name": "2 metre specific humidity",
+        "units": "kg kg**-1",
+        "tlev": "heightAboveGround",
+        "levels": [2],
+        "grib_var": "var_SPFH",
+        "grib_lev": "lev_2_m_above_ground",
+        "converter": None,
+    },
+    "aptmp": {
+        "short": "aptmp",
+        "long_name": "Apparent temperature",
+        "units": "C",
+        "tlev": "heightAboveGround",
+        "levels": [2],
+        "grib_var": "var_APTMP",
+        "grib_lev": "lev_2_m_above_ground",
+        "converter": lambda x: x - 273.15,
+    },
+    "u10": {
+        "short": "u10",
+        "long_name": "10 metre U wind component",
+        "units": "m s**-1",
+        "tlev": "heightAboveGround",
+        "levels": [10],
+        "grib_var": "var_UGRD",
+        "grib_lev": "lev_10_m_above_ground",
+        "converter": None,
+    },
+    "v10": {
+        "short": "v10",
+        "long_name": "10 metre V wind component",
+        "units": "m s**-1",
+        "tlev": "heightAboveGround",
+        "levels": [10],
+        "grib_var": "var_VGRD",
+        "grib_lev": "lev_10_m_above_ground",
+        "converter": None,
+    },
+    "gust": {
+        "short": "gust",
+        "long_name": "Wind speed (gust)",
+        "units": "m s**-1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_GUST",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "prmsl": {
+        "short": "prmsl",
+        "long_name": "Pressure reduced to MSL",
+        "units": "hPa",
+        "tlev": "meanSea",
+        "levels": None,
+        "grib_var": "var_PRMSL",
+        "grib_lev": "lev_mean_sea_level",
+        "converter": lambda x: x / 100,
+    },
+    "mslet": {
+        "short": "mslet",
+        "long_name": "MSLP (Eta model reduction)",
+        "units": "hPa",
+        "tlev": "meanSea",
+        "levels": None,
+        "grib_var": "var_MSLET",
+        "grib_lev": "lev_mean_sea_level",
+        "converter": lambda x: x / 100,
+    },
+    "sp": {
+        "short": "sp",
+        "long_name": "Surface pressure",
+        "units": "hPa",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_PRES",
+        "grib_lev": "lev_surface",
+        "converter": lambda x: x / 100,
+    },
+    "orog": {
+        "short": "orog",
+        "long_name": "Orography",
+        "units": "m",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_HGT",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "lsm": {
+        "short": "lsm",
+        "long_name": "Land-sea mask",
+        "units": "0 - 1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_LAND",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "vis": {
+        "short": "vis",
+        "long_name": "Visibility",
+        "units": "m",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_VIS",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "prate": {
+        "short": "prate",
+        "long_name": "Precipitation rate",
+        "units": "kg m**-2 s**-1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_PRATE",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "cpofp": {
+        "short": "cpofp",
+        "long_name": "Percent frozen precipitation",
+        "units": "%",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CPOFP",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "crain": {
+        "short": "crain",
+        "long_name": "Categorical rain",
+        "units": "Code table 4.222",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CRAIN",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "csnow": {
+        "short": "csnow",
+        "long_name": "Categorical snow",
+        "units": "Code table 4.222",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CSNOW",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "cfrzr": {
+        "short": "cfrzr",
+        "long_name": "Categorical freezing rain",
+        "units": "Code table 4.222",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CFRZR",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "cicep": {
+        "short": "cicep",
+        "long_name": "Categorical ice pellets",
+        "units": "Code table 4.222",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CICEP",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "sde": {
+        "short": "sde",
+        "long_name": "Snow depth",
+        "units": "m",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_SNOD",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "sdwe": {
+        "short": "sdwe",
+        "long_name": "Water equivalent of accumulated snow depth",
+        "units": "kg m**-2",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_WEASD",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "pwat": {
+        "short": "pwat",
+        "long_name": "Precipitable water",
+        "units": "kg m**-2",
+        "tlev": "atmosphereSingleLayer",
+        "levels": None,
+        "grib_var": "var_PWAT",
+        "grib_lev": "lev_entire_atmosphere_(considered_as_a_single_layer)",
+        "converter": None,
+    },
+    "cwat": {
+        "short": "cwat",
+        "long_name": "Cloud water",
+        "units": "kg m**-2",
+        "tlev": "atmosphereSingleLayer",
+        "levels": None,
+        "grib_var": "var_CWAT",
+        "grib_lev": "lev_entire_atmosphere_(considered_as_a_single_layer)",
+        "converter": None,
+    },
+    "tcc": {
+        "short": "tcc",
+        "long_name": "Total cloud cover",
+        "units": "%",
+        "tlev": "atmosphere",
+        "levels": None,
+        "grib_var": "var_TCDC",
+        "grib_lev": "lev_entire_atmosphere",
+        "converter": None,
+    },
+    "lcc": {
+        "short": "lcc",
+        "long_name": "Low cloud cover",
+        "units": "%",
+        "tlev": "lowCloudLayer",
+        "levels": None,
+        "grib_var": "var_TCDC",
+        "grib_lev": "lev_low_cloud_layer",
+        "converter": None,
+    },
+    "mcc": {
+        "short": "mcc",
+        "long_name": "Medium cloud cover",
+        "units": "%",
+        "tlev": "middleCloudLayer",
+        "levels": None,
+        "grib_var": "var_TCDC",
+        "grib_lev": "lev_middle_cloud_layer",
+        "converter": None,
+    },
+    "hcc": {
+        "short": "hcc",
+        "long_name": "High cloud cover",
+        "units": "%",
+        "tlev": "highCloudLayer",
+        "levels": None,
+        "grib_var": "var_TCDC",
+        "grib_lev": "lev_high_cloud_layer",
+        "converter": None,
+    },
+    "cape": {
+        "short": "cape",
+        "long_name": "Convective available potential energy",
+        "units": "J kg**-1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CAPE",
+        "grib_lev": "lev_surface",
+        "converter": None,
+        "multilevel": True,
+    },
+    "cin": {
+        "short": "cin",
+        "long_name": "Convective inhibition",
+        "units": "J kg**-1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_CIN",
+        "grib_lev": "lev_surface",
+        "converter": None,
+        "multilevel": True,
+    },
+    "lftx": {
+        "short": "lftx",
+        "long_name": "Surface lifted index",
+        "units": "K",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_LFTX",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "lftx4": {
+        "short": "lftx4",
+        "long_name": "Best (4-layer) lifted index",
+        "units": "K",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_4LFTX",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "hlcy": {
+        "short": "hlcy",
+        "long_name": "Storm relative helicity",
+        "units": "m**2 s**-2",
+        "tlev": "heightAboveGroundLayer",
+        "levels": None,
+        "grib_var": "var_HLCY",
+        "grib_lev": "lev_height_above_ground_layer",
+        "converter": None,
+    },
+    "t": {
+        "short": "t",
+        "long_name": "Temperature",
+        "units": "C",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_TMP",
+        "grib_lev": "lev_500_mb",
+        "converter": lambda x: x - 273.15,
+        "multilevel": True,
+    },
+    "r": {
+        "short": "r",
+        "long_name": "Relative humidity",
+        "units": "%",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_RH",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "q": {
+        "short": "q",
+        "long_name": "Specific humidity",
+        "units": "kg kg**-1",
+        "tlev": "isobaricInhPa",
+        "levels": [1000],
+        "grib_var": "var_SPFH",
+        "grib_lev": "lev_1000_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "gh": {
+        "short": "gh",
+        "long_name": "Geopotential height",
+        "units": "gpm",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_HGT",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "u": {
+        "short": "u",
+        "long_name": "U component of wind",
+        "units": "m s**-1",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_UGRD",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "v": {
+        "short": "v",
+        "long_name": "V component of wind",
+        "units": "m s**-1",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_VGRD",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "w": {
+        "short": "w",
+        "long_name": "Vertical velocity",
+        "units": "Pa s**-1",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_VVEL",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "absv": {
+        "short": "absv",
+        "long_name": "Absolute vorticity",
+        "units": "s**-1",
+        "tlev": "isobaricInhPa",
+        "levels": [500],
+        "grib_var": "var_ABSV",
+        "grib_lev": "lev_500_mb",
+        "converter": None,
+        "multilevel": True,
+    },
+    "st": {
+        "short": "st",
+        "long_name": "Soil temperature",
+        "units": "C",
+        "tlev": "depthBelowLandLayer",
+        "levels": [0],
+        "grib_var": "var_TSOIL",
+        "grib_lev": "lev_0-10_cm_below_ground",
+        "converter": lambda x: x - 273.15,
+        "multilevel": True,
+    },
+    "soilw": {
+        "short": "soilw",
+        "long_name": "Volumetric soil moisture content",
+        "units": "Proportion",
+        "tlev": "depthBelowLandLayer",
+        "levels": [0],
+        "grib_var": "var_SOILW",
+        "grib_lev": "lev_0-10_cm_below_ground",
+        "converter": None,
+        "multilevel": True,
+    },
+    "refc": {
+        "short": "refc",
+        "long_name": "Maximum/Composite radar reflectivity",
+        "units": "dB",
+        "tlev": "atmosphere",
+        "levels": None,
+        "grib_var": "var_REFC",
+        "grib_lev": "lev_entire_atmosphere",
+        "converter": None,
+    },
+    "siconc": {
+        "short": "siconc",
+        "long_name": "Sea ice area fraction",
+        "units": "0 - 1",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_ICEC",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "veg": {
+        "short": "veg",
+        "long_name": "Vegetation",
+        "units": "%",
+        "tlev": "surface",
+        "levels": None,
+        "grib_var": "var_VEG",
+        "grib_lev": "lev_surface",
+        "converter": None,
+    },
+    "tozne": {
+        "short": "tozne",
+        "long_name": "Total ozone",
+        "units": "DU",
+        "tlev": "atmosphere",
+        "levels": None,
+        "grib_var": "var_TOZNE",
+        "grib_lev": "lev_entire_atmosphere",
+        "converter": None,
+    },
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -117,30 +552,34 @@ def latest_run() -> tuple[str, str]:
 
 
 def build_url(var_cfg: dict, date: str, cycle: str, hour: int = 6) -> str:
-    grib_var  = var_cfg["grib_var"]
-    grib_lev  = var_cfg["grib_lev"]
+    grib_var = var_cfg["grib_var"]
+    grib_lev = var_cfg["grib_lev"]
     var_params = f"&{grib_var}=on&{grib_lev}=on"
     # pequena região só para HEAD/GET rápido (1°×1° em torno de 0N 0E)
     region_params = "&subregion=&leftlon=-1&rightlon=1&toplat=1&bottomlat=-1"
     return _FILTER_BASE.format(
-        date=date, cycle=cycle, hour=hour,
-        var_params=var_params, region_params=region_params,
+        date=date,
+        cycle=cycle,
+        hour=hour,
+        var_params=var_params,
+        region_params=region_params,
     )
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Runner
 # ──────────────────────────────────────────────────────────────────────────────
-GREEN  = "\033[92m"
-RED    = "\033[91m"
+GREEN = "\033[92m"
+RED = "\033[91m"
 YELLOW = "\033[93m"
-RESET  = "\033[0m"
+RESET = "\033[0m"
+
 
 def run_tests():
     date, cycle = latest_run()
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"  GFS run: {date}  cycle: {cycle}z")
-    print(f"{'='*60}\n")
+    print(f"{'=' * 60}\n")
 
     session = make_session()
     passed, failed = [], []
@@ -155,14 +594,16 @@ def run_tests():
 
             # NOMADS retorna 200 mesmo em erro — verifica o magic number GRIB
             is_grib = chunk[:4] == b"GRIB"
-            status   = resp.status_code
+            status = resp.status_code
 
             if is_grib:
                 print(f"  {GREEN}✅ {key:<8}{RESET}  HTTP {status}  GRIB magic ✓")
                 passed.append(key)
             else:
                 snippet = chunk[:120].decode("utf-8", errors="replace").strip()
-                print(f"  {RED}❌ {key:<8}{RESET}  HTTP {status}  body: {snippet[:80]!r}")
+                print(
+                    f"  {RED}❌ {key:<8}{RESET}  HTTP {status}  body: {snippet[:80]!r}"
+                )
                 failed.append((key, cfg, snippet))
 
         except Exception as exc:
@@ -170,10 +611,10 @@ def run_tests():
             failed.append((key, cfg, str(exc)))
 
     # ── Resumo ────────────────────────────────────────────────────────────────
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"  Passed : {len(passed)}/{len(VARIABLES)}")
     print(f"  Failed : {len(failed)}")
-    print(f"{'='*60}\n")
+    print(f"{'=' * 60}\n")
 
     if failed:
         print(f"{YELLOW}Keys com problema:{RESET}")

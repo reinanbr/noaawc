@@ -10,16 +10,20 @@ from noaawc.main import OrthoAnimator, _font_scale
 
 @pytest.fixture
 def sample_ds():
-    times = np.array([
-        np.datetime64("2026-04-18T00:00:00"),
-        np.datetime64("2026-04-18T03:00:00"),
-    ])
+    times = np.array(
+        [
+            np.datetime64("2026-04-18T00:00:00"),
+            np.datetime64("2026-04-18T03:00:00"),
+        ]
+    )
     lat = np.array([-10.0, -9.5])
     lon = np.array([-41.0, -40.5])
-    data = np.array([
-        [[25.0, 26.0], [27.0, 28.0]],
-        [[24.0, 25.0], [26.0, 27.0]],
-    ])
+    data = np.array(
+        [
+            [[25.0, 26.0], [27.0, 28.0]],
+            [[24.0, 25.0], [26.0, 27.0]],
+        ]
+    )
 
     ds = xr.Dataset(
         {
