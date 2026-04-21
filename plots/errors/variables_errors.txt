@@ -1,0 +1,51 @@
+Error processing [hcc - High cloud cover]:
+No files downloaded for 'hcc'.
+
+Error processing [aptmp - Apparent temperature]:
+No files downloaded for 'aptmp'.
+
+Error processing [lcc - Low cloud cover]:
+No files downloaded for 'lcc'.
+
+Error processing [mcc - Medium cloud cover]:
+No files downloaded for 'mcc'.
+
+Error processing [hcc - High cloud cover]:
+No files downloaded for 'hcc'.
+
+Error processing [hlcy - Storm relative helicity]:
+No files downloaded for 'hlcy'.
+
+Error processing [t - Temperature]:
+No files downloaded for 't'.
+
+Error processing [r - Relative humidity]:
+No files downloaded for 'r'.
+
+Error processing [q - Specific humidity]:
+No files downloaded for 'q'.
+
+Error processing [gh - Geopotential height]:
+No files downloaded for 'gh'.
+
+Error processing [u - U component of wind]:
+No files downloaded for 'u'.
+
+Error processing [v - V component of wind]:
+No files downloaded for 'v'.
+
+Error processing [w - Vertical velocity]:
+No files downloaded for 'w'.
+
+Error processing [absv - Absolute vorticity]:
+No files downloaded for 'absv'.
+
+Error processing [st - Soil temperature]:
+No files downloaded for 'st'.
+
+Error processing [soilw - Volumetric soil moisture content]:
+No files downloaded for 'soilw'.
+
+Error processing [tozne - Total ozone]:
+No files downloaded for 'tozne'.
+

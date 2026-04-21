@@ -1,3 +1,3 @@
-from noaawc.main import OrthoAnimator as OrthoAnimator
+from noaawc.ortho import OrthoAnimator as OrthoAnimator
 
 __all__ = ["OrthoAnimator"]
