@@ -1,8 +1,8 @@
 # noaawc
 
-**noaawc** is a Python library for rendering animated and static meteorological maps from GFS (Global Forecast System) data. It provides a high-level API to create publication-quality, dark-themed weather visualizations — orthographic globe maps with smooth camera rotation, per-frame annotations, dynamic titles, and export to MP4 or GIF.
+**noaawc** is a Python library for rendering animated and static meteorological maps from GFS (Global Forecast System) data. It provides a high-level API to create publication-quality, dark-themed weather visualizations — four projection modes, smooth camera rotation, per-frame annotations, dynamic titles, and export to MP4 or GIF.
 
-> **noaawc** is built on top of [**noawclg**](https://github.com/your-org/noawclg) — the companion library responsible for downloading, parsing, and organizing GFS GRIB2 data into `xarray.Dataset` objects ready for visualization. You need `noawclg` to obtain the datasets that `noaawc` renders.
+> **noaawc** is built on top of [**noawclg**](https://github.com/your-org/noawclg) — the companion library responsible for downloading, parsing, and organizing GFS GRIB2 data into `xarray.Dataset` objects ready for visualization.
 
 ---
 
@@ -12,23 +12,23 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
-- [Core Class: OrthoAnimator](#core-class-orthoanimator)
-  - [Constructor](#constructor)
-  - [Variable Presets](#variable-presets)
+- [WeatherAnimator — Unified Entry Point](#weatheranimator--unified-entry-point)
+- [Projection Modes](#projection-modes)
+  - [OrthoAnimator](#orthoanimator)
+  - [NearsidePerspectiveAnimator](#nearsideperspectiveanimator)
+  - [PlateCarreeAnimator](#platecarreeanimator)
+  - [RobinsonAnimator](#robinsonanimator)
+- [Shared API Reference](#shared-api-reference)
   - [Quality Presets](#quality-presets)
   - [Output Options](#output-options)
   - [Colormap & Levels](#colormap--levels)
+  - [Variable Presets](#variable-presets)
   - [Titles & Labels](#titles--labels)
   - [Camera Rotation](#camera-rotation)
   - [Map Annotations](#map-annotations)
   - [Static Snapshot](#static-snapshot)
   - [Rendering the Animation](#rendering-the-animation)
 - [Supported Variables](#supported-variables)
-  - [Variable Presets Reference](#variable-presets-reference)
-  - [VARIABLES\_INFO Reference](#variables_info-reference)
-  - [Colormap Design Rationale](#colormap-design-rationale)
-  - [Derived Wind Speed Variables](#derived-wind-speed-variables)
-- [Utility Functions](#utility-functions)
 - [Visual Style](#visual-style)
 - [Examples](#examples)
 - [Dependencies](#dependencies)
@@ -43,13 +43,11 @@ noaawc is the **visualization layer** of a two-library pipeline:
 noawclg  ──────────────────────────────────────────►  noaawc
   │                                                      │
   │  Downloads GFS GRIB2 files from NOAA servers         │  Renders animated / static
-  │  Parses variables, levels, and forecast hours        │  orthographic maps from
-  │  Converts units (K→°C, Pa→hPa, etc.)                │  xarray Datasets
-  │  Returns xarray.Dataset with a time dimension        │
+  │  Parses variables, levels, and forecast hours        │  orthographic, satellite,
+  │  Converts units (K→°C, Pa→hPa, etc.)                │  flat, or Robinson maps
+  │  Returns xarray.Dataset with a time dimension        │  from xarray Datasets
   └──────────────────────────────────────────────────────┘
 ```
-
-**noawclg** handles everything upstream of the plot: authentication, data download, GRIB2 decoding, unit conversion, and dataset assembly. **noaawc** takes the resulting `xarray.Dataset` and turns it into publication-quality animated or static maps.
 
 ### Typical workflow
 
@@ -65,29 +63,28 @@ ds = noawclg.load(
 )
 
 # Step 2 — visualize with noaawc
-from noaawc import OrthoAnimator
+from noaawc.weather import WeatherAnimator
 
-anim = OrthoAnimator(ds, "t2m")
+anim = WeatherAnimator(ds, "t2m", mode="ortho")
 anim.set_output("temperature.mp4")
 anim.animate()
 ```
-
-> Refer to the [noawclg documentation](https://github.com/your-org/noawclg) for the full download API, available variables, and GFS cycle management.
 
 ---
 
 ## Features
 
-- 🌍 **Orthographic globe projection** with optional smooth camera rotation across frames
+- 🌍 **Four projection modes** — orthographic globe, nearside perspective (satellite), PlateCarrée (flat regional), and Robinson (world map)
 - 🎨 **Dark theme** optimized for social media and presentation use
 - 📦 **50+ variable presets** — colormaps, level ranges, and labels auto-loaded for every GFS variable
-- 🗃️ **VARIABLES\_INFO metadata** — GRIB2 identifiers, level types, unit converters, and long names for all supported variables
+- 🗃️ **VARIABLES_INFO metadata** — GRIB2 identifiers, level types, unit converters, and long names
 - 🏷️ **Dynamic frame titles** with per-frame timestamps and multi-language month names
 - 📍 **Geo-referenced annotations** with configurable markers, labels, and field-value interpolation
 - 🖼️ **Per-frame overlays**: info box (variable/cycle/date), data credit, and author label
 - 🎬 **MP4 / GIF export** via imageio + ffmpeg, with quality presets from SD to 4K @ 60 fps
 - 📸 **Static snapshot** mode for quick single-frame inspection
 - ⚡ **Frame caching** — already-rendered PNG frames are reused on re-runs
+- 🔗 **Method chaining** — all setters return `self`
 
 ---
 
@@ -95,11 +92,6 @@ anim.animate()
 
 ```bash
 pip install noaawc
-```
-
-Install the data companion library as well:
-
-```bash
 pip install noawclg
 ```
 
@@ -114,117 +106,259 @@ pip install noawclg
 | `imageio[ffmpeg]` | Video encoding |
 | `xarray` | GFS dataset interface |
 
+Install ffmpeg separately for MP4 output:
+
+```bash
+# Ubuntu / Debian
+sudo apt install ffmpeg
+
+# macOS (Homebrew)
+brew install ffmpeg
+
+# Conda
+conda install -c conda-forge ffmpeg
+```
+
 ---
 
 ## Quick Start
 
 ```python
 import noawclg
-from noaawc import OrthoAnimator
+from noaawc.weather import WeatherAnimator
 
-# Download GFS data via noawclg
+# Download GFS data
 ds = noawclg.load(var="t2m", run_date="20260417", cycle="00z",
                   forecast_hours=range(0, 121, 3))
 
-# Create animator for 2-metre temperature
-anim = OrthoAnimator(ds, "t2m")
+# Orthographic globe with rotation
+anim = WeatherAnimator(ds, "t2m", mode="ortho")
 anim.set_output("temperature.mp4")
-
-# Optional: add a rotating camera arc
+anim.set_quality("hd")
 anim.set_rotation(lon_start=-90, lon_end=-20, lat_start=-5, lat_end=-20)
 anim.set_rotation_stop(fraction=0.65)
-
-# Render all frames and encode the video
 anim.animate()
 ```
 
 ---
 
-## Core Class: OrthoAnimator
+## WeatherAnimator — Unified Entry Point
 
-### Constructor
+`WeatherAnimator` is a factory function that instantiates the correct animator
+class for the chosen projection mode and returns the full animator object.
 
 ```python
-OrthoAnimator(ds, var, central_point=(-45.0, -15.0))
+from noaawc.weather import WeatherAnimator
+
+anim = WeatherAnimator(ds, var, mode="ortho", **kwargs)
 ```
 
 | Parameter | Type | Description |
 |---|---|---|
-| `ds` | `xarray.Dataset` | GFS dataset produced by **noawclg**. Must contain the variable `var` with a `time` coordinate. |
-| `var` | `str` | Variable key. See [Supported Variables](#supported-variables). |
-| `central_point` | `tuple` | Default `(lon, lat)` of the orthographic camera when no rotation is set. |
+| `ds` | `xarray.Dataset` | GFS dataset produced by **noawclg** |
+| `var` | `str` | Variable key (e.g. `"t2m"`, `"prmsl"`, `"prate"`) |
+| `mode` | `str` | Projection mode — see table below |
+| `**kwargs` | | Mode-specific constructor arguments (see each class) |
 
-The constructor automatically loads the matching variable preset (colormap, levels, labels). If no preset exists for `var`, it falls back to temperature defaults and prints a notice.
+### Available modes
 
----
-
-### Variable Presets
-
-All plotting presets are defined in `noaawc.variables` (`presets_extended.py`) inside the `VARIABLE_PRESETS` dictionary. Each entry specifies:
-
-| Field | Description |
-|---|---|
-| `cmap` | matplotlib colormap object |
-| `levels` | 1-D numpy array of BoundaryNorm / contour boundaries |
-| `cbar_label` | Colorbar axis label (with units) |
-| `plot_title` | Left-side per-frame title |
-
-The active preset is auto-loaded at construction time. To inspect or switch presets:
+| mode | Class | Aspect | Best for |
+|---|---|---|---|
+| `"ortho"` | `OrthoAnimator` | Square | Globe spin, hemisphere overviews |
+| `"nearside"` | `NearsidePerspectiveAnimator` | Square | Geostationary satellite look |
+| `"plate"` | `PlateCarreeAnimator` | 16:9 | Regional flat maps, broadcast |
+| `"robinson"` | `RobinsonAnimator` | 16:9 | Global thematic maps |
 
 ```python
-from noaawc import list_variable_presets
-list_variable_presets()   # prints all 50+ presets
+from noaawc.weather import list_modes
+list_modes()
+```
 
-# Switch presets after construction
-anim.use_variable_defaults("prmsl")     # switch to pressure preset
-anim.use_variable_defaults("wspd10")    # switch to 10-m wind speed
+### Mode-specific init kwargs
 
-# Named convenience shortcuts
-anim.use_temperature_defaults()
-anim.use_pressure_defaults()
-anim.use_precipitation_defaults()
-anim.use_humidity_defaults()
-anim.use_cloud_water_defaults()
-anim.use_wind_speed_defaults()
-anim.use_upper_wind_speed_defaults()
+```python
+# ortho — set the default globe centre
+WeatherAnimator(ds, "t2m", mode="ortho", central_point=(-50.0, -15.0))
+
+# nearside — set sub-satellite point and altitude
+WeatherAnimator(ds, "t2m", mode="nearside", lon=-50.0, lat=-15.0,
+                satellite_height=35_786_000)
+
+# plate / robinson — no constructor kwargs; use set_region() after init
+WeatherAnimator(ds, "t2m", mode="plate")
 ```
 
 ---
+
+## Projection Modes
+
+### OrthoAnimator
+
+Orthographic projection — camera at infinity, classic "view from space" with
+no perspective distortion.
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="ortho", central_point=(-50, -15))
+anim.set_zoom(2)                       # continental scale
+anim.set_rotation(lon_start=-90, lon_end=-30, lat_start=-5, lat_end=-20)
+anim.set_rotation_stop(fraction=0.65)
+anim.animate()
+```
+
+**Camera / zoom setters:**
+
+| Method | Description |
+|---|---|
+| `set_view(lon, lat, zoom=None)` | Recentre globe, optional zoom |
+| `set_zoom(zoom)` | `1` = full hemisphere, `2` = 45° radius, `4` = 22.5°, … |
+| `set_rotation(lon_start, lon_end, lat_start, lat_end)` | Define camera arc |
+| `set_rotation_stop(fraction=None, frame=None)` | Freeze camera at a fraction of total frames |
+
+---
+
+### NearsidePerspectiveAnimator
+
+Satellite / nearside perspective projection — camera at a finite altitude,
+producing realistic foreshortening and a curved horizon.
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="nearside",
+                       lon=-75.0, lat=0.0,
+                       satellite_height=35_786_000)  # GOES-East
+anim.animate()
+```
+
+**Altitude reference:**
+
+| Height (m) | Description |
+|---|---|
+| 200 000 | Low Earth Orbit — very tight view |
+| 3 000 000 | Regional — South America fills the disk |
+| **35 786 000** | **Geostationary (GOES / Meteosat / Himawari) — default** |
+| 100 000 000 | Near-orthographic |
+
+**Camera setters:**
+
+| Method | Description |
+|---|---|
+| `set_view(lon, lat, satellite_height=None)` | Sub-satellite point + altitude |
+| `set_satellite_height(height)` | Set altitude in metres |
+| `set_rotation(...)` | Same arc API as OrthoAnimator |
+| `set_rotation_stop(...)` | Same freeze API as OrthoAnimator |
+
+---
+
+### PlateCarreeAnimator
+
+Equirectangular flat map, 16:9 output. Must set a region before rendering.
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="plate")
+anim.set_region("south_america")
+anim.set_states()
+anim.animate()
+```
+
+**Named regions:**
+
+| Key | Lat range | Lon range |
+|---|---|---|
+| `"south_america"` | −60 … 15 | −85 … −30 |
+| `"brazil"` | −34 … 6 | −75 … −28 |
+| `"northeast_br"` | −18 … −1 | −47 … −34 |
+| `"north_br"` | −5 … 5.5 | −74 … −44 |
+| `"southeast_br"` | −25.5 … −14 | −53 … −39 |
+| `"south_br"` | −34 … −22 | −58 … −47 |
+| `"global"` | −85 … 85 | −180 … 180 |
+
+**Region setters:**
+
+```python
+anim.set_region("brazil")                              # named shortcut
+anim.set_region(toplat=5, bottomlat=-35,
+                leftlon=-75, rightlon=-34)             # keyword args
+anim.set_zoom(zoom=4, pos=(-9.4, -40.5))              # zoom around a point
+anim.set_ocean(True)                                   # ocean fill (default: on)
+anim.set_grid(True)                                    # gridlines + labels (default: on)
+```
+
+---
+
+### RobinsonAnimator
+
+Robinson pseudo-cylindrical projection — visually balanced world map, 16:9 output.
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="robinson")
+anim.set_region("global")
+anim.animate()
+```
+
+**Named regions:**
+
+| Key | Description |
+|---|---|
+| `"global"` | Full world |
+| `"north_hemisphere"` | 0 … 85°N |
+| `"south_hemisphere"` | 85°S … 0 |
+| `"atlantic"` | Atlantic basin |
+| `"pacific"` | Pacific basin |
+| `"south_america"` | South America |
+| `"africa"` | Africa |
+| `"europe_asia"` | Europe + Asia |
+| `"north_america"` | North America |
+| `"asia"` | Asia |
+
+**Region setters:**
+
+```python
+anim.set_region("global")
+anim.set_region(toplat=85, bottomlat=-85, leftlon=-180, rightlon=180,
+                central_longitude=-60)   # Atlantic-centred
+anim.set_zoom(zoom=2, pos=(20.0, 10.0)) # Africa + Europe
+```
+
+---
+
+## Shared API Reference
+
+All setters return `self` — full method chaining is supported.
 
 ### Quality Presets
 
-Apply a named quality preset that configures DPI, figure size, FPS, codec, and encoding quality in one call:
-
 ```python
-anim.set_quality("hd")    # Full-HD range, 24 fps
-anim.set_quality("4k")    # Ultra HD 4K, 30 fps
-anim.set_quality("4k_60") # Ultra HD 4K, 60 fps
-anim.set_quality("sd")    # Standard Definition, 6 fps (fast preview)
+anim.set_quality("sd")     # 72 dpi,  fast preview
+anim.set_quality("hd")     # 120 dpi, 24 fps (default)
+anim.set_quality("4k")     # 220 dpi, 30 fps
+anim.set_quality("4k_60")  # 220 dpi, 60 fps
 ```
 
-| Preset | DPI | Figure (in) | Output (px) | FPS | Description |
-|---|---|---|---|---|---|
-| `sd` | 72 | 8 × 8 | 576 × 576 | 6 | Fast preview, small file |
-| `hd` | 120 | 10 × 10 | 1200 × 1200 | 24 | Full-HD range (default) |
-| `4k` | 220 | 17.07 × 17.07 | ~3755 × 3755 | 30 | Ultra HD 4K |
-| `4k_60` | 220 | 17.07 × 17.07 | ~3755 × 3755 | 60 | Ultra HD 4K @ 60 fps |
+**Square (Ortho / Nearside):**
 
-Print all presets:
+| Preset | DPI | Size (in) | Resolution | FPS |
+|---|---|---|---|---|
+| `sd` | 72 | 8 × 8 | 576 × 576 | 6 |
+| `hd` | 120 | 10 × 10 | 1200 × 1200 | 24 |
+| `4k` | 220 | 17.07 × 17.07 | ~3755 × 3755 | 30 |
+| `4k_60` | 220 | 17.07 × 17.07 | ~3755 × 3755 | 60 |
+
+**Wide 16:9 (PlateCarrée / Robinson):**
+
+| Preset | DPI | Size (in) | Resolution | FPS |
+|---|---|---|---|---|
+| `sd` | 72 | 17.78 × 10 | 1280 × 720 | 6 |
+| `hd` | 120 | 16 × 9 | 1920 × 1080 | 24 |
+| `4k` | 220 | 17.45 × 9.82 | 3840 × 2160 | 30 |
+| `4k_60` | 220 | 17.45 × 9.82 | 3840 × 2160 | 60 |
+
+Individual overrides:
 
 ```python
-from noaawc import list_quality_presets
-list_quality_presets()
-```
-
-Individual setters override preset values:
-
-```python
-anim.set_quality("4k").set_fps(24)   # 4K pixels, cinematic 24 fps
-anim.set_dpi(300)                    # print-quality stills
-anim.set_figsize(17.07, 17.07)       # custom figure size in inches
-anim.set_fps(30)
-anim.set_codec("libx265")            # H.265 — ~40% smaller files
-anim.set_video_quality(10)           # 0 (worst) – 10 (best)
+anim.set_quality("4k").set_fps(24)       # 4K pixels, cinematic 24 fps
+anim.set_dpi(300)                        # print-quality stills
+anim.set_figsize(17.07, 17.07)
+anim.set_codec("libx265")                # H.265 — ~40% smaller files
+anim.set_video_quality(10)               # 0 (worst) – 10 (best)
 ```
 
 ---
@@ -232,164 +366,152 @@ anim.set_video_quality(10)           # 0 (worst) – 10 (best)
 ### Output Options
 
 ```python
-anim.set_output("output.mp4")   # MP4 (default) or GIF
+anim.set_output("output.mp4")   # MP4 or GIF
 anim.set_fps(24)
-anim.set_step(2)                # spatial decimation — 1 = full resolution
-anim.set_codec("libx264")       # "libx264", "libx265", "vp9", "prores"
-anim.set_video_quality(8)       # 0–10; higher = larger file, sharper detail
+anim.set_step(2)                # spatial decimation (1 = full resolution)
+anim.set_codec("libx264")       # libx264, libx265, vp9, prores
+anim.set_video_quality(8)       # 0–10
 ```
 
 ---
 
 ### Colormap & Levels
 
-Override the preset colormap and/or level boundaries:
-
 ```python
 import numpy as np
 import cmocean
 
-anim.set_cmap(cmocean.cm.thermal)            # cmocean colormap object
-anim.set_cmap("RdBu_r")                      # any matplotlib name string
-anim.set_levels(np.arange(960, 1040, 2))     # pressure levels
-anim.set_levels(np.linspace(-30, 45, 40))    # custom temperature range
+anim.set_cmap(cmocean.cm.thermal)
+anim.set_cmap("RdBu_r")
+anim.set_levels(np.arange(960, 1040, 2))
+anim.set_levels(np.linspace(-30, 45, 40))
 anim.set_cbar_label("Temperature (°C)")
 anim.set_plot_title("Surface Temperature")
 ```
 
 ---
 
+### Variable Presets
+
+```python
+from noaawc.weather import list_variable_presets
+list_variable_presets()
+
+anim.use_variable_defaults("prmsl")
+anim.use_temperature_defaults()
+anim.use_pressure_defaults()
+anim.use_precipitation_defaults()
+anim.use_humidity_defaults()
+anim.use_wind_speed_defaults()
+```
+
+---
+
 ### Titles & Labels
 
-#### Dynamic title with per-frame date
-
-Use `%S` as a placeholder — it is replaced with the frame's timestamp:
+Use `%S` as a placeholder — replaced with the frame timestamp at render time:
 
 ```python
 anim.set_title("Surface Temperature  %S")
-# renders as: "Surface Temperature  17 Apr 2026 03:00"
+# → "Surface Temperature  17 Apr 2026 03:00"
 
 anim.set_title("Temperatura da Superfície — %S", date_style="pt-br")
-# renders as: "Temperatura da Superfície — 17 Abr 2026 03:00"
+# → "Temperatura da Superfície — 17 Abr 2026 03:00"
 ```
 
-Supported `date_style` values:
-
-| Key | Month example | Full example |
+| `date_style` | Month example | Full example |
 |---|---|---|
 | `"en"` (default) | Apr | 17 Apr 2026 03:00 |
 | `"pt-br"` | Abr | 17 Abr 2026 03:00 |
 | `"es"` | Abr | 17 Abr 2026 03:00 |
 | `"fr"` | Avr | 17 Avr 2026 03:00 |
 
-#### Author label
+Author label:
 
 ```python
-anim.set_author("Maria Silva")      # centred at bottom, white bold
-anim.set_author("@msilva_met")
-anim.set_author("")                 # disable
+anim.set_author("Maria Silva")
+anim.set_author("@msilva_met", x=0.98, ha="right", color="#58a6ff")
+anim.set_author("INMET / FUNCEME", bbox=True)
+anim.set_author("")   # disable
 ```
-
-#### Automatic overlays
-
-Every frame includes:
-
-- **Top-right info box** — variable key, long name (pulled from `VARIABLES_INFO`), GFS cycle, and frame date
-- **Bottom-right credit** — `GFS 0.25° / NASA · NOAA`
-
-These are always rendered and require no configuration.
 
 ---
 
 ### Camera Rotation
 
-Define a smooth arc from a start position to an end position:
+*(OrthoAnimator and NearsidePerspectiveAnimator only)*
 
 ```python
 anim.set_rotation(lon_start=-90, lon_end=-20, lat_start=-5, lat_end=-20)
+anim.set_rotation_stop(fraction=0.65)  # freeze at 65% of frames
+anim.set_rotation_stop(frame=40)       # freeze at absolute frame 40
 ```
-
-Optionally freeze the camera at the end position after a fraction of the total frames:
-
-```python
-anim.set_rotation_stop(fraction=0.65)  # stop rotating at 65% of frames
-anim.set_rotation_stop(frame=40)       # stop at absolute frame index 40
-```
-
-If `set_rotation` is not called, the camera stays fixed at `central_point`.
 
 ---
 
 ### Map Annotations
 
-Add geo-referenced city or point labels with optional markers. Use `%d`, `%.1f`, `%.2f`, etc. as a placeholder for the field value sampled at the annotation position.
-
 ```python
-# Basic: circle marker + temperature value
+# Circle marker + live field value
 anim.set_annotate("Juazeiro: %.1f°C", pos=(-9.4, -40.5))
 
-# Custom marker, colour, and text offset
+# Star marker, custom colour
 anim.set_annotate(
     "Fortaleza: %.1f°C",
     pos=(-3.72, -38.54),
-    marker="*",
-    marker_size=10,
-    marker_color="#f7c948",
-    color="#58a6ff",
-    text_offset=(0.5, 1.2),
+    marker="*", marker_size=10, marker_color="#f7c948",
+    color="#58a6ff", text_offset=(0.5, 1.2),
 )
 
-# No marker — text only
+# Text only
 anim.set_annotate("Manaus", pos=(-3.10, -60.02), marker=None)
 
-# Method chaining — multiple cities
+# Method chaining
 (anim
     .set_annotate("Recife %.1f m/s",    pos=(-8.05,  -34.88))
     .set_annotate("Fortaleza %.1f m/s", pos=(-3.72,  -38.54))
     .set_annotate("Manaus %.1f m/s",    pos=(-3.10,  -60.02))
 )
 
-# Remove all annotations
 anim.clear_annotations()
 ```
 
-**`set_annotate` parameters:**
+**Full parameter reference:**
 
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| `text_base` | `str` | — | Label text. Use `%d`/`%.1f`/`%.2f` for field value. |
-| `pos` | `(lat, lon)` | — | Geographic position in decimal degrees. |
-| `size` | `float` | `9.0` | Font size in points (at HD 120 dpi). |
-| `color` | `str` | `"#e6edf3"` | Text colour. |
-| `weight` | `str` | `"bold"` | Font weight: `"normal"`, `"bold"`, `"heavy"`. |
-| `alpha` | `float` | `0.9` | Text opacity. |
-| `bbox` | `bool` | `True` | Draw a rounded background box. |
-| `bbox_color` | `str` | `"#0d1117"` | Background box fill colour. |
-| `bbox_alpha` | `float` | `0.55` | Background box opacity. |
-| `interpolate` | `bool` | `True` | Replace `%…` placeholder with field value at `pos`. |
-| `marker` | `str \| None` | `"o"` | Marker symbol. `None` disables the marker. Common: `"o"`, `"^"`, `"s"`, `"D"`, `"*"`, `"+"`, `"x"`. |
-| `marker_size` | `float` | `6.0` | Marker size in points. |
-| `marker_color` | `str \| None` | `None` | Marker fill. `None` inherits `color`. |
-| `marker_edge_color` | `str` | `"#0d1117"` | Marker outline colour. |
-| `marker_edge_width` | `float` | `0.8` | Marker outline width in points. |
-| `marker_alpha` | `float` | `1.0` | Marker opacity. |
-| `text_offset` | `(Δlon, Δlat)` | `(0.0, 0.8)` | Shift label relative to `pos` in decimal degrees. |
+| Parameter | Default | Description |
+|---|---|---|
+| `text_base` | — | Label text; use `%d` / `%.1f` for field value |
+| `pos` | — | `(lat, lon)` in decimal degrees |
+| `size` | `9.0` | Font size at HD reference DPI |
+| `color` | `"#e6edf3"` | Text colour |
+| `weight` | `"bold"` | Font weight |
+| `alpha` | `0.9` | Text opacity |
+| `bbox` | `True` | Rounded background box |
+| `bbox_color` | `"#0d1117"` | Box fill colour |
+| `bbox_alpha` | `0.55` | Box opacity |
+| `interpolate` | `True` | Replace `%…` placeholder with field value |
+| `marker` | `"o"` | Marker symbol (`None` = no marker) |
+| `marker_size` | `6.0` | Marker size |
+| `marker_color` | `None` | Marker fill (inherits `color` if `None`) |
+| `marker_edge_color` | `"#0d1117"` | Marker outline |
+| `marker_edge_width` | `0.8` | Marker outline width |
+| `marker_alpha` | `1.0` | Marker opacity |
+| `text_offset` | `(0.0, 0.8)` | `(Δlon, Δlat)` shift in decimal degrees |
 
 ---
 
 ### Static Snapshot
 
-Render a single frame without producing a video:
-
 ```python
-# Open an interactive window
-anim.plot(time_idx=0)
+anim.plot(time_idx=0)                           # interactive window
+anim.plot(time_idx=6, save="snapshot.png")      # save to file
+anim.plot(time_idx=0, show=False, save="fig.png")
 
-# Save to file
-anim.plot(time_idx=6, save="snapshot.png")
+# OrthoAnimator — override camera for this plot only
+anim.plot(time_idx=0, central_point=(-60.0, -20.0))
 
-# Override camera position for this plot only
-anim.plot(time_idx=0, central_point=(-60.0, -20.0), save="fig.png")
+# NearsidePerspectiveAnimator — override camera for this plot only
+anim.plot(time_idx=0, central=(-75.0, 0.0))
 ```
 
 ---
@@ -400,241 +522,95 @@ anim.plot(time_idx=0, central_point=(-60.0, -20.0), save="fig.png")
 anim.animate()
 ```
 
-**What `animate()` does:**
+1. Creates `frames/<prefix>_<var>_<run_date>_<cycle>/`
+2. Renders each time step as PNG (skips frames that already exist)
+3. Encodes all frames into the output video
 
-1. Creates a `frames/<var>_<run_date>_<cycle>/` directory
-2. Renders each time step as a PNG to disk (skipping frames that already exist)
-3. Encodes all frames into the output video file
-
-A summary line is printed before the loop:
-
-```
-Render: 65 frames  |  1200×1200 px  |  120 dpi  |  24 fps  |  codec=libx264  quality=8  annotations=2  →  output.mp4
-```
+Frame directory prefixes: `<var>_` (ortho), `ns_<var>_` (nearside), `pc_<var>_` (plate), `rob_<var>_` (robinson).
 
 ---
 
 ## Supported Variables
 
-All supported variables are registered in **`VARIABLE_PRESETS`** (plotting configuration) and **`VARIABLES_INFO`** (metadata and GRIB2 identifiers), both defined in `noaawc/variables.py`.
-
----
-
-### Variable Presets Reference
-
-#### Surface temperature & dewpoint
+### Surface temperature & dewpoint
 
 | Key | Description | Colormap | Level range |
 |---|---|---|---|
 | `t2m` | 2-metre temperature | `cmocean.thermal` | −20 to 50 °C, step 2 |
-| `d2m` | 2-metre dewpoint temperature | `cmocean.haline` | −30 to 30 °C, step 2 |
-| `aptmp` | Apparent temperature (heat index / wind chill) | `cmocean.thermal` | −30 to 50 °C, step 2 |
+| `d2m` | 2-metre dewpoint | `cmocean.haline` | −30 to 30 °C, step 2 |
+| `aptmp` | Apparent temperature | `cmocean.thermal` | −30 to 50 °C, step 2 |
 
-#### Humidity
+### Humidity
 
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `r2` | 2-metre relative humidity | `cmocean.haline` | 0–100 %, step 5 |
-| `sh2` | 2-metre specific humidity | `cmocean.haline` | 0–26 × 10⁻³ kg kg⁻¹ |
-| `pwat` | Precipitable water | `cmocean.haline` | 0–80 kg m⁻², step 4 |
-| `cwat` | Column cloud water | `cmocean.ice` | 0–5 kg m⁻² (log-spaced) |
-
-#### 10-metre wind
-
-| Key | Description | Colormap | Level range | Notes |
-|---|---|---|---|---|
-| `u10` | 10-m U wind component | `RdBu_r` | ±30 m s⁻¹, step 2 | Diverging |
-| `v10` | 10-m V wind component | `RdBu_r` | ±30 m s⁻¹, step 2 | Diverging |
-| `wspd10` | 10-m wind speed scalar | `cmocean.speed` | 0–30 m s⁻¹, step 1 | **Derived** — see below |
-| `gust` | Surface wind gust | `cmocean.speed` | 0–50 m s⁻¹, step 2 | |
-
-#### Pressure
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `prmsl` | Mean sea-level pressure | `RdBu_r` | 960–1044 hPa, step 2 |
-| `mslet` | MSLP (Eta model reduction) | `RdBu_r` | 960–1044 hPa, step 2 |
-| `sp` | Surface pressure | `RdBu_r` | 500–1050 hPa, step 10 |
-
-#### Precipitation & hydrology
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `prate` | Precipitation rate | `cmocean.rain` | 0–64 mm h⁻¹ (log-spaced) |
-| `cpofp` | Frozen precipitation fraction | `cool` | 0–100 %, step 10 |
-| `crain` | Categorical rain | `Blues` | 0/1 binary |
-| `csnow` | Categorical snow | `winter` | 0/1 binary |
-| `cfrzr` | Categorical freezing rain | `PuBu` | 0/1 binary |
-| `cicep` | Categorical ice pellets | `Purples` | 0/1 binary |
-| `sde` | Snow depth | `cmocean.ice` | 0–2 m (log-spaced) |
-| `sdwe` | Snow water equivalent | `cmocean.ice` | 0–500 kg m⁻² |
-
-#### Cloud cover
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `tcc` | Total cloud cover | `cmocean.ice` | 0–100 %, step 5 |
-| `lcc` | Low cloud cover | `cmocean.ice` | 0–100 %, step 5 |
-| `mcc` | Medium cloud cover | `cmocean.ice` | 0–100 %, step 5 |
-| `hcc` | High cloud cover | `cmocean.ice` | 0–100 %, step 5 |
-
-#### Convection & instability
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `cape` | CAPE | `YlOrRd` | 0–5000 J kg⁻¹ (log-spaced) |
-| `cin` | Convective inhibition | `RdPu` | −500 to 0 J kg⁻¹ |
-| `lftx` | Surface lifted index | `RdBu_r` | −12 to 10 K, step 1 |
-| `lftx4` | Best (4-layer) lifted index | `RdBu_r` | −12 to 10 K, step 1 |
-| `hlcy` | Storm relative helicity | `YlOrRd` | 0–1000 m² s⁻² |
-
-#### Upper-air / isobaric
-
-| Key | Description | Colormap | Level range | Notes |
-|---|---|---|---|---|
-| `t` | Temperature | `cmocean.thermal` | −80 to 40 °C, step 4 | Multi-level |
-| `r` | Relative humidity | `cmocean.haline` | 0–100 %, step 5 | Multi-level |
-| `q` | Specific humidity | `cmocean.haline` | 0–18 × 10⁻³ kg kg⁻¹ | Multi-level |
-| `gh` | Geopotential height | `cmocean.deep` | 0–6000 gpm, step 60 | Multi-level |
-| `u` | U wind component | `RdBu_r` | ±60 m s⁻¹, step 4 | Multi-level |
-| `v` | V wind component | `RdBu_r` | ±60 m s⁻¹, step 4 | Multi-level |
-| `w` | Vertical velocity ω | `RdBu_r` | ±5 Pa s⁻¹ (non-uniform) | Multi-level; negative = rising |
-| `absv` | Absolute vorticity | `RdBu_r` | ±8 × 10⁻⁴ s⁻¹ | Multi-level |
-| `wspd` | Wind speed scalar | `cmocean.speed` | 0–80 m s⁻¹, step 4 | **Derived**, multi-level |
-
-#### Soil (4-layer)
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `st` | Soil temperature | `cmocean.matter` | −10 to 40 °C, step 2 |
-| `soilw` | Volumetric soil moisture | `cmocean.matter` | 0–1 (proportion) |
-
-#### Diagnostics & other
-
-| Key | Description | Colormap | Level range |
-|---|---|---|---|
-| `refc` | Composite radar reflectivity | NWS 18-colour | −10 to 75 dBZ, step 5 |
-| `siconc` | Sea ice area fraction | `cmocean.ice` | 0–1 |
-| `orog` | Orography / terrain height | `cmocean.topo` | 0–6000 m (non-uniform) |
-| `lsm` | Land-sea mask | `BrBG` | 0–1 |
-| `veg` | Vegetation fraction | `cmocean.algae` | 0–100 %, step 5 |
-| `vis` | Surface visibility | `cmocean.gray` | 0–50 000 m (log-spaced) |
-| `tozne` | Total ozone column | `cmocean.deep` | 200–500 DU, step 10 |
-
----
-
-### VARIABLES\_INFO Reference
-
-`VARIABLES_INFO` is a dictionary exported from `noaawc.variables` that maps every variable key to its full metadata record. It is used internally by `OrthoAnimator` (e.g. to populate the info-box long name) and can be queried directly:
-
-```python
-from noaawc.variables import VARIABLES_INFO
-
-info = VARIABLES_INFO["t2m"]
-# {
-#   "short":      "t2m",
-#   "long_name":  "2 metre temperature",
-#   "units":      "C",
-#   "tlev":       "heightAboveGround",
-#   "levels":     [2],
-#   "grib_var":   "var_TMP",
-#   "grib_lev":   "lev_2_m_above_ground",
-#   "converter":  <lambda x: x - 273.15>,
-# }
-```
-
-Each record contains:
-
-| Field | Type | Description |
+| Key | Description | Colormap |
 |---|---|---|
-| `short` | `str` | Short variable key (same as the dictionary key) |
-| `long_name` | `str` | Human-readable name shown in the info box overlay |
-| `units` | `str` | Physical units of the variable as stored in the dataset |
-| `tlev` | `str` | GRIB2 type-of-level string (e.g. `"heightAboveGround"`, `"isobaricInhPa"`) |
-| `levels` | `list \| None` | Level values (e.g. `[2]` for 2 m, `[500]` for 500 hPa), or `None` for single-level fields |
-| `grib_var` | `str` | GRIB2 variable name used by **noawclg** for filtering |
-| `grib_lev` | `str` | GRIB2 level name used by **noawclg** for filtering |
-| `converter` | `callable \| None` | Lambda applied by **noawclg** to convert raw SI values (e.g. K → °C, Pa → hPa). `None` = no conversion. |
-| `multilevel` | `bool` | `True` for variables that exist at multiple pressure or depth levels |
+| `r2` | 2-metre relative humidity | `cmocean.haline` |
+| `sh2` | 2-metre specific humidity | `cmocean.haline` |
+| `pwat` | Precipitable water | `cmocean.haline` |
+| `cwat` | Column cloud water | `cmocean.ice` |
 
-The `grib_var` and `grib_lev` fields are the primary bridge between `VARIABLES_INFO` and **noawclg** — they are the exact filter strings noawclg uses when selecting messages from GFS GRIB2 files.
+### Wind (10 m)
 
----
-
-### Colormap Design Rationale
-
-Colormaps in `VARIABLE_PRESETS` were selected following perceptual and meteorological conventions:
-
-| Variable group | Colormap | Rationale |
+| Key | Description | Notes |
 |---|---|---|
-| Temperature | `cmocean.thermal` | Perceptually uniform; warm palette matches intuition |
-| Dewpoint / humidity | `cmocean.haline` | Blue-green tones; intuitive for moisture |
-| Wind components (U/V) | `RdBu_r` | Diverging ± around zero; zero centred |
-| Wind speed / gust | `cmocean.speed` | Sequential white → dark teal; calm = white |
-| Pressure (MSLP/SP) | `RdBu_r` | Diverging: blue = low pressure, red = high |
-| Precipitation | `cmocean.rain` | White → navy; log-spaced levels |
-| Cloud / water / snow | `cmocean.ice` | White → dark; dense cloud = darker |
-| Soil | `cmocean.matter` | Earth brown tones |
-| CAPE | `YlOrRd` | Yellow → red instability scale |
-| CIN / Lifted Index | `RdPu` / `RdBu_r` | Stable → unstable gradient |
-| Vorticity / omega | `RdBu_r` | Diverging ± around zero |
-| Categorical fields | `Blues` / `winter` / `PuBu` | Two-tone binary (0 = no, 1 = yes) |
-| Reflectivity | NWS 18-colour | Standard WSR-88D radar palette |
-| Ozone / geopotential | `cmocean.deep` | Sequential deep-ocean repurposed |
+| `u10` | 10-m U component | Diverging |
+| `v10` | 10-m V component | Diverging |
+| `wspd10` | 10-m wind speed | **Derived** — see below |
+| `gust` | Surface wind gust | |
 
-The NWS radar reflectivity palette (`_REFC_CMAP`) is an 18-colour `ListedColormap` matching the standard WSR-88D colour scale used by US National Weather Service products.
+### Pressure
 
----
+| Key | Description |
+|---|---|
+| `prmsl` | Mean sea-level pressure |
+| `mslet` | MSLP (Eta reduction) |
+| `sp` | Surface pressure |
 
-### Derived Wind Speed Variables
+### Precipitation & hydrology
 
-`wspd10` (surface) and `wspd` (upper-air) do not exist directly in GFS GRIB2 files. Compute and attach them to the dataset before creating the animator:
+`prate`, `cpofp`, `crain`, `csnow`, `cfrzr`, `cicep`, `sde`, `sdwe`
+
+### Cloud cover
+
+`tcc`, `lcc`, `mcc`, `hcc`
+
+### Convection & instability
+
+`cape`, `cin`, `lftx`, `lftx4`, `hlcy`
+
+### Upper-air (multi-level)
+
+`t`, `r`, `q`, `gh`, `u`, `v`, `w`, `absv`, `wspd`
+
+### Soil, diagnostics & other
+
+`st`, `soilw`, `refc`, `siconc`, `orog`, `lsm`, `veg`, `vis`, `tozne`
+
+### Derived wind speed variables
+
+`wspd10` and `wspd` do not exist in GFS GRIB2 files directly. Compute them before use:
 
 ```python
 import numpy as np
 
-# 10-m wind speed
 ds["wspd10"] = np.sqrt(ds["u10"] ** 2 + ds["v10"] ** 2)
+ds["wspd"]   = np.sqrt(ds["u"]   ** 2 + ds["v"]   ** 2)
 
-# Upper-air wind speed (isobaric levels)
-ds["wspd"] = np.sqrt(ds["u"] ** 2 + ds["v"] ** 2)
-
-anim = OrthoAnimator(ds, "wspd10")
-```
-
-For tropical cyclone applications, extend the `wspd10` levels to cover higher wind speeds:
-
-```python
-anim.set_levels(np.arange(0, 65, 2))   # up to 64 m/s (Category 5+)
-```
-
----
-
-## Utility Functions
-
-```python
-from noaawc import list_variable_presets, list_quality_presets
-
-# Print all variable presets: key, colormap, level range, label
-list_variable_presets()
-
-# Print all quality presets: DPI, figure size, FPS, codec, description
-list_quality_presets()
+anim = WeatherAnimator(ds, "wspd10", mode="ortho")
 ```
 
 ---
 
 ## Visual Style
 
-noaawc uses a consistent dark GitHub-inspired theme across all renders:
-
 | Element | Colour |
 |---|---|
 | Figure / axes background | `#0d1117` |
-| Land fill | `#1c2128` |
-| Coastlines | `#58a6ff` |
-| Country borders | `#484f58` (dashed) |
-| Grid lines | `#21262d` |
+| Land fill | `#13171d` |
+| Ocean fill | `#0d1520` |
+| Coastlines | `#2d6db5` |
+| Country borders | `#2a2f36` |
+| Grid lines | `#14181c` |
 | Text (titles, labels) | `#e6edf3` |
 | Subtitle / tick text | `#8b949e` |
 | Info box background | `#161b22` |
@@ -645,58 +621,185 @@ noaawc uses a consistent dark GitHub-inspired theme across all renders:
 
 ## Examples
 
-### 4K temperature animation with author credit
+### Static snapshots
+
+#### Orthographic globe — single frame
 
 ```python
-anim = OrthoAnimator(ds, "t2m")
+from noaawc.weather import WeatherAnimator
+
+anim = WeatherAnimator(ds, "t2m", mode="ortho", central_point=(-50, -15))
+anim.set_quality("hd")
+anim.set_title("2m Temperature — %S")
+anim.set_annotate("Juazeiro %.1f°C", pos=(-9.4, -40.5))
+anim.plot(time_idx=0, save="ortho_t2m.png", show=False)
+```
+
+> 📷 **Example output:**
+> ![Orthographic globe snapshot — 2m Temperature](docs/examples/ortho_t2m.png)
+
+---
+
+#### Satellite view — single frame
+
+```python
+anim = WeatherAnimator(ds, "prmsl", mode="nearside",
+                       lon=-50.0, lat=-15.0,
+                       satellite_height=35_786_000)
+anim.set_quality("hd")
+anim.set_title("Sea-Level Pressure — %S")
+anim.plot(time_idx=0, save="nearside_prmsl.png", show=False)
+```
+
+> 📷 **Example output:**
+> ![Nearside perspective snapshot — MSLP](docs/examples/nearside_prmsl.png)
+
+---
+
+#### Flat regional map — South America
+
+```python
+anim = WeatherAnimator(ds, "prate", mode="plate")
+anim.set_region("south_america")
+anim.set_states()
+anim.set_quality("hd")
+anim.set_title("Precipitation Rate — %S", date_style="en")
+anim.set_annotate("Brasília %.2f mm/h", pos=(-15.78, -47.93))
+anim.plot(time_idx=0, save="plate_prate.png", show=False)
+```
+
+> 📷 **Example output:**
+> ![PlateCarrée snapshot — Precipitation Rate, South America](docs/examples/plate_prate.png)
+
+---
+
+#### Robinson world map — global temperature
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="robinson")
+anim.set_region("global")
+anim.set_quality("hd")
+anim.set_title("Global 2m Temperature — %S")
+anim.set_annotate("New York %.0f°C",  pos=(40.71, -74.01))
+anim.set_annotate("London %.0f°C",    pos=(51.51,  -0.13))
+anim.set_annotate("São Paulo %.0f°C", pos=(-23.55, -46.63))
+anim.set_annotate("Tokyo %.0f°C",     pos=(35.68,  139.69))
+anim.plot(time_idx=0, save="robinson_t2m.png", show=False)
+```
+
+> 📷 **Example output:**
+> ![Robinson snapshot — Global 2m Temperature](docs/examples/robinson_t2m.png)
+
+---
+
+#### Northeast Brazil zoom — PlateCarrée
+
+```python
+anim = WeatherAnimator(ds, "r2", mode="plate")
+anim.set_zoom(zoom=4, pos=(-9.4, -40.5))
+anim.set_states()
+anim.set_quality("hd")
+anim.set_title("Relative Humidity — %S")
+anim.set_annotate("Juazeiro %.0f%%", pos=(-9.4, -40.5), marker="*")
+anim.plot(time_idx=0, save="plate_r2_ne_brazil.png", show=False)
+```
+
+> 📷 **Example output:**
+> ![PlateCarrée snapshot — Relative Humidity, NE Brazil](docs/examples/plate_r2_ne_brazil.png)
+
+---
+
+### Animated videos
+
+#### 4K temperature animation — rotating globe
+
+```python
+anim = WeatherAnimator(ds, "t2m", mode="ortho", central_point=(-50, -15))
 anim.set_output("temperature_4k.mp4")
 anim.set_quality("4k")
-anim.set_title("Temperatura 2m — %S", date_style="pt-br")
+anim.set_title("2m Temperature — %S", date_style="pt-br")
 anim.set_author("Maria Silva")
 anim.set_rotation(lon_start=-90, lon_end=-30, lat_start=-10, lat_end=-15)
 anim.set_rotation_stop(fraction=0.7)
-anim.set_annotate("Juazeiro %.1f°C", pos=(-9.4, -40.5))
-anim.set_annotate("Fortaleza %.1f°C", pos=(-3.72, -38.54), color="#58a6ff")
+anim.set_annotate("Juazeiro %.1f°C",    pos=(-9.4,  -40.5))
+anim.set_annotate("Fortaleza %.1f°C",   pos=(-3.72, -38.54), color="#58a6ff")
 anim.animate()
 ```
 
-### 10-m wind speed with derived variable
+> 🎬 **Example output:**
+> ![4K rotating globe animation — 2m Temperature](docs/examples/temperature_4k_preview.gif)
+
+---
+
+#### Satellite-style CAPE animation
+
+```python
+anim = WeatherAnimator(ds, "cape", mode="nearside",
+                       lon=-50.0, lat=-15.0,
+                       satellite_height=10_000_000)
+anim.set_output("cape_satellite.mp4")
+anim.set_quality("hd")
+anim.set_title("CAPE — %S")
+anim.set_author("@msilva_met")
+anim.animate()
+```
+
+> 🎬 **Example output:**
+> ![Nearside perspective animation — CAPE](docs/examples/cape_satellite_preview.gif)
+
+---
+
+#### Brazil precipitation animation — flat map
+
+```python
+anim = WeatherAnimator(ds, "prate", mode="plate")
+anim.set_region("brazil")
+anim.set_states()
+anim.set_output("brazil_precipitation.mp4")
+anim.set_quality("hd")
+anim.set_title("Precipitation Rate — %S", date_style="pt-br")
+anim.set_author("INMET / FUNCEME", bbox=True)
+anim.set_annotate("Brasília %.2f mm/h",     pos=(-15.78, -47.93))
+anim.set_annotate("São Paulo %.2f mm/h",    pos=(-23.55, -46.63))
+anim.set_annotate("Manaus %.2f mm/h",       pos=(-3.10,  -60.02))
+anim.animate()
+```
+
+> 🎬 **Example output:**
+> ![PlateCarrée animation — Precipitation Rate, Brazil](docs/examples/brazil_precipitation_preview.gif)
+
+---
+
+#### Global wind speed — Robinson world map
 
 ```python
 import numpy as np
 
 ds["wspd10"] = np.sqrt(ds["u10"] ** 2 + ds["v10"] ** 2)
 
-anim = OrthoAnimator(ds, "wspd10")
-anim.set_output("wind_speed_10m.mp4")
-anim.set_title("Wind Speed (10 m)  %S")
-anim.set_quality("hd")
+anim = WeatherAnimator(ds, "wspd10", mode="robinson")
+anim.set_region("global")
+anim.set_output("world_wind_speed.mp4")
+anim.set_quality("4k")
+anim.set_title("10m Wind Speed — %S")
+anim.set_author("GFS Analysis", bbox=True)
 anim.animate()
 ```
 
-### Static snapshot for quick inspection
+> 🎬 **Example output:**
+> ![Robinson animation — Global 10m Wind Speed](docs/examples/world_wind_speed_preview.gif)
+
+---
+
+#### Full method chaining
 
 ```python
-anim = OrthoAnimator(ds, "prmsl")
-anim.plot(time_idx=0, save="mslp_t0.png")
-```
+import numpy as np
+from noaawc.weather import WeatherAnimator
 
-### Custom colormap and levels
+ds["wspd10"] = np.sqrt(ds["u10"] ** 2 + ds["v10"] ** 2)
 
-```python
-anim = OrthoAnimator(ds, "cape")
-anim.set_cmap("YlOrRd")
-anim.set_levels(np.arange(0, 4000, 200))
-anim.set_cbar_label("CAPE (J kg⁻¹)")
-anim.set_title("CAPE — %S")
-anim.set_output("cape.mp4")
-anim.animate()
-```
-
-### Full method chaining
-
-```python
-(OrthoAnimator(ds, "t2m")
+(WeatherAnimator(ds, "t2m", mode="ortho", central_point=(-50, -15))
     .set_output("t2m_full.mp4")
     .set_quality("4k")
     .set_title("2m Temperature — %S", date_style="en")
@@ -708,6 +811,31 @@ anim.animate()
     .set_annotate("Brasília %.1f°C",  pos=(-15.78, -47.93))
     .animate()
 )
+```
+
+---
+
+#### Batch render — all projections for one variable
+
+```python
+from noaawc.weather import WeatherAnimator
+from noaawc.variables import VARIABLES_INFO
+
+profiles = [
+    ("ortho",     dict(central_point=(-50, -15)), lambda a: a.set_view(-50, -15)),
+    ("nearside",  dict(lon=-50, lat=-15),          lambda a: a.set_view(-50, -15)),
+    ("plate",     {},                              lambda a: a.set_region("south_america").set_states()),
+    ("robinson",  {},                              lambda a: a.set_region("global")),
+]
+
+var = "t2m"
+for mode, init_kw, configure in profiles:
+    anim = WeatherAnimator(ds, var, mode=mode, **init_kw)
+    configure(anim)
+    anim.set_quality("hd")
+    anim.set_title(f"{VARIABLES_INFO[var]['long_name']} — %S", date_style="en")
+    anim.set_author("@reinanbr_")
+    anim.plot(time_idx=0, save=f"{var}_{mode}.png", show=False)
 ```
 
 ---

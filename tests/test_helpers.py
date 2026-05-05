@@ -6,7 +6,7 @@ import pytest
 pytest.importorskip("cartopy")
 pytest.importorskip("cmocean")
 
-from noaawc.ortho import _format_date
+from noaawc.projections.ortho import _format_date
 
 
 def test_format_date_with_numpy_datetime64_and_locale_ptbr():

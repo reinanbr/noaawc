@@ -1,51 +1,1920 @@
-Error processing [hcc - High cloud cover]:
-No files downloaded for 'hcc'.
+[ORTHO] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
 
-Error processing [aptmp - Apparent temperature]:
-No files downloaded for 'aptmp'.
+------------------------------------------------------------
+[NEARSIDE] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
 
-Error processing [lcc - Low cloud cover]:
-No files downloaded for 'lcc'.
+------------------------------------------------------------
+[PLATE] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
 
-Error processing [mcc - Medium cloud cover]:
-No files downloaded for 'mcc'.
+------------------------------------------------------------
+[ROBINSON] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
 
-Error processing [hcc - High cloud cover]:
-No files downloaded for 'hcc'.
+------------------------------------------------------------
+[ORTHO] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
 
-Error processing [hlcy - Storm relative helicity]:
-No files downloaded for 'hlcy'.
+------------------------------------------------------------
+[NEARSIDE] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
 
-Error processing [t - Temperature]:
-No files downloaded for 't'.
+------------------------------------------------------------
+[PLATE] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
 
-Error processing [r - Relative humidity]:
-No files downloaded for 'r'.
+------------------------------------------------------------
+[ROBINSON] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
 
-Error processing [q - Specific humidity]:
-No files downloaded for 'q'.
+------------------------------------------------------------
+[ORTHO] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
 
-Error processing [gh - Geopotential height]:
-No files downloaded for 'gh'.
+------------------------------------------------------------
+[NEARSIDE] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
 
-Error processing [u - U component of wind]:
-No files downloaded for 'u'.
+------------------------------------------------------------
+[PLATE] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
 
-Error processing [v - V component of wind]:
-No files downloaded for 'v'.
+------------------------------------------------------------
+[ROBINSON] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
 
-Error processing [w - Vertical velocity]:
-No files downloaded for 'w'.
+------------------------------------------------------------
+[ORTHO] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
 
-Error processing [absv - Absolute vorticity]:
-No files downloaded for 'absv'.
+------------------------------------------------------------
+[NEARSIDE] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
 
-Error processing [st - Soil temperature]:
-No files downloaded for 'st'.
+------------------------------------------------------------
+[PLATE] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
 
-Error processing [soilw - Volumetric soil moisture content]:
-No files downloaded for 'soilw'.
+------------------------------------------------------------
+[ROBINSON] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
 
-Error processing [tozne - Total ozone]:
-No files downloaded for 'tozne'.
+------------------------------------------------------------
+[ORTHO] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
 
+------------------------------------------------------------
+[NEARSIDE] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[PLATE] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[ROBINSON] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[ORTHO] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[NEARSIDE] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[PLATE] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[ROBINSON] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[ORTHO] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[NEARSIDE] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[PLATE] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[ROBINSON] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[ORTHO] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[NEARSIDE] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[PLATE] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[ROBINSON] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[ORTHO] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[NEARSIDE] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[PLATE] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[ROBINSON] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[ORTHO] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[NEARSIDE] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[PLATE] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[ROBINSON] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[ORTHO] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[NEARSIDE] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[PLATE] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[ROBINSON] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[ORTHO] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[NEARSIDE] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[PLATE] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[ROBINSON] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[ORTHO] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[NEARSIDE] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[PLATE] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[ROBINSON] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[ORTHO] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[NEARSIDE] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[PLATE] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[ROBINSON] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[ORTHO] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[NEARSIDE] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[PLATE] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[ROBINSON] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[ORTHO] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[NEARSIDE] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[PLATE] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[ROBINSON] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 145, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 125, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[ORTHO] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
+
+------------------------------------------------------------
+[NEARSIDE] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
+
+------------------------------------------------------------
+[PLATE] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
+
+------------------------------------------------------------
+[ROBINSON] [aptmp - Apparent temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'aptmp'.
+
+------------------------------------------------------------
+[ORTHO] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
+
+------------------------------------------------------------
+[NEARSIDE] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
+
+------------------------------------------------------------
+[PLATE] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
+
+------------------------------------------------------------
+[ROBINSON] [lcc - Low cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'lcc'.
+
+------------------------------------------------------------
+[ORTHO] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
+
+------------------------------------------------------------
+[NEARSIDE] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
+
+------------------------------------------------------------
+[PLATE] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
+
+------------------------------------------------------------
+[ROBINSON] [mcc - Medium cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'mcc'.
+
+------------------------------------------------------------
+[ORTHO] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
+
+------------------------------------------------------------
+[NEARSIDE] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
+
+------------------------------------------------------------
+[PLATE] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
+
+------------------------------------------------------------
+[ROBINSON] [hcc - High cloud cover]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hcc'.
+
+------------------------------------------------------------
+[ORTHO] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[NEARSIDE] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[PLATE] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[ROBINSON] [hlcy - Storm relative helicity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'hlcy'.
+
+------------------------------------------------------------
+[ORTHO] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[NEARSIDE] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[PLATE] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[ROBINSON] [t - Temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 't'.
+
+------------------------------------------------------------
+[ORTHO] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[NEARSIDE] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[PLATE] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[ROBINSON] [r - Relative humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'r'.
+
+------------------------------------------------------------
+[ORTHO] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[NEARSIDE] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[PLATE] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[ROBINSON] [q - Specific humidity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'q'.
+
+------------------------------------------------------------
+[ORTHO] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[NEARSIDE] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[PLATE] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[ROBINSON] [gh - Geopotential height]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'gh'.
+
+------------------------------------------------------------
+[ORTHO] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[NEARSIDE] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[PLATE] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[ROBINSON] [u - U component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'u'.
+
+------------------------------------------------------------
+[ORTHO] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[NEARSIDE] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[PLATE] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[ROBINSON] [v - V component of wind]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'v'.
+
+------------------------------------------------------------
+[ORTHO] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[NEARSIDE] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[PLATE] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[ROBINSON] [w - Vertical velocity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'w'.
+
+------------------------------------------------------------
+[ORTHO] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[NEARSIDE] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[PLATE] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[ROBINSON] [absv - Absolute vorticity]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'absv'.
+
+------------------------------------------------------------
+[ORTHO] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[NEARSIDE] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[PLATE] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[ROBINSON] [st - Soil temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'st'.
+
+------------------------------------------------------------
+[ORTHO] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[NEARSIDE] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[PLATE] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[ROBINSON] [soilw - Volumetric soil moisture content]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'soilw'.
+
+------------------------------------------------------------
+[ORTHO] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[NEARSIDE] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[PLATE] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------
+[ROBINSON] [tozne - Total ozone]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 154, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_plot_all_keys.py", line 134, in process
+    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1305, in build_dataset
+    raise RuntimeError(f"No files downloaded for '{var_key}'.")
+RuntimeError: No files downloaded for 'tozne'.
+
+------------------------------------------------------------

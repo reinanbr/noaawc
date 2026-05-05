@@ -1,4 +1,4 @@
-from noaawc.plate import PlateCarreeAnimator
+from noaawc.projections.plate import PlateCarreeAnimator
 from noawclg.main import get_noaa_data as gnd
 
 ds = gnd(date="16/04/2026", keys=["v10"])._ds

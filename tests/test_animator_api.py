@@ -5,7 +5,7 @@ import xarray as xr
 pytest.importorskip("cartopy")
 pytest.importorskip("cmocean")
 
-from noaawc.ortho import OrthoAnimator, _font_scale
+from noaawc.projections.ortho import OrthoAnimator, _font_scale
 
 
 @pytest.fixture

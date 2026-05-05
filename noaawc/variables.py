@@ -69,6 +69,27 @@ _REFC_COLORS = [
 ]
 _REFC_CMAP = mcolors.ListedColormap(_REFC_COLORS, name="nws_refc")
 
+# ── Variables for which contour lines should be suppressed ────────────────────
+# Patchy / categorical / binary fields where contours add visual noise rather
+# than meteorological value.  Referenced by OrthoAnimator and
+# NearsidePerspectiveAnimator in _draw_field().
+NO_CONTOUR_VARS: frozenset[str] = frozenset({
+    "prate",   # precipitation rate  — sparse, patchy
+    "crain",   # categorical rain     — binary 0/1
+    "csnow",   # categorical snow     — binary 0/1
+    "cfrzr",   # categorical frz rain — binary 0/1
+    "cicep",   # categorical ice      — binary 0/1
+    "refc",    # radar reflectivity   — NWS palette already encodes magnitude
+    "tcc",     # cloud cover          — smooth enough without contours
+    "lcc",
+    "mcc",
+    "hcc",
+    "sde",     # snow depth           — discontinuous edges
+    "sdwe",    # snow water equiv     — same
+    "siconc",  # sea ice              — sharp edges, contours are noisy
+    "vis",     # visibility           — log-spaced levels, contours cluttered
+})
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # VARIABLE_PRESETS
@@ -239,11 +260,16 @@ VARIABLE_PRESETS: dict[str, dict] = {
         "plot_title": "Surface Visibility",
     },
     # ── precipitation / hydrology ─────────────────────────────────────────────
+    # FIX: mask_below raised from 0.1 → 0.25 mm/h to suppress near-threshold
+    # noise pixels (white/beige speckling) at the low end of the rain palette.
+    # Values in [0.10, 0.25) are now masked transparent instead of rendered.
     "prate": {
         "cmap": cmocean.cm.rain,
-        "levels": np.array([0, 0.1, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64]),
+        "levels": np.array([0.25, 0.5, 1, 2, 4, 8, 16, 32, 64]),
         "cbar_label": "Precipitation Rate (mm h\u207b\u00b9)",
         "plot_title": "Precipitation Rate",
+        "convert": lambda x: x * 3600,
+        "mask_below": 0.25,  # raised from 0.10 — suppresses near-zero speckle
     },
     "cpofp": {
         "cmap": plt.cm.cool,
@@ -495,6 +521,14 @@ def list_variable_presets() -> None:
 
 
 VARIABLES_INFO: dict[str, dict[str, Any]] = {
+    # NOTE: VARIABLES_INFO converters (Kelvin → Celsius etc.) run at data-load
+    # time via the data pipeline.  VARIABLE_PRESETS["convert"] lambdas run at
+    # render time inside _get().  Both can exist for the same variable — the
+    # VARIABLES_INFO converter runs first (once, on load) and the preset
+    # converter runs on every frame draw.  Keep them consistent: if
+    # VARIABLES_INFO already converts K→°C, do NOT add a duplicate
+    # VARIABLE_PRESETS["convert"] for the same variable, or the conversion
+    # will be applied twice.
     "t2m": {
         "short": "t2m",
         "long_name": "2 metre temperature",
