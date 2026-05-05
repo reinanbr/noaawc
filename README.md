@@ -57,8 +57,8 @@ import noawclg
 
 ds = noawclg.load(
     var="t2m",
-    run_date="20260417",
-    cycle="00z",
+    run_date="02/05/2026",
+    cycle="00",
     forecast_hours=range(0, 121, 3),
 )
 

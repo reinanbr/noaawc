@@ -1,0 +1,152 @@
+[ORTHO] [t2m - 2 metre temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[NEARSIDE] [t2m - 2 metre temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[PLATE] [t2m - 2 metre temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[ROBINSON] [t2m - 2 metre temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[ORTHO] [d2m - 2 metre dewpoint temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[NEARSIDE] [d2m - 2 metre dewpoint temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[PLATE] [d2m - 2 metre dewpoint temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
+[ROBINSON] [d2m - 2 metre dewpoint temperature]
+Traceback (most recent call last):
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 195, in main
+    saved = process(key, profile)
+  File "/home/jezuis/Desktop/std/libs/python/noaawc/test_videoplot_all_keys.py", line 169, in process
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/main.py", line 258, in __init__
+    self._ds = self.dataset.build_dataset(self.keys[0], self.hours)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1306, in build_dataset
+    return self._build_single_var_ds(var_key, files)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/jezuis/.local/share/virtualenvs/noaawc-X3ScD4Hr/lib/python3.13/site-packages/noawclg/gfs_dataset.py", line 1215, in _build_single_var_ds
+    times.append(self._run_dt + timedelta(hours=hour))
+                                ~~~~~~~~~^^^^^^^^^^^^
+TypeError: unsupported type for timedelta hours component: numpy.int64
+
+------------------------------------------------------------
