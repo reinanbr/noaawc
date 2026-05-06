@@ -18,11 +18,11 @@ def _load_setup_call_kwargs() -> dict[str, ast.AST]:
     raise AssertionError("setup() call not found in setup.py")
 
 
-def test_setup_version_is_031():
+def test_setup_version_is_041():
     kwargs = _load_setup_call_kwargs()
     version_node = kwargs.get("version")
     assert isinstance(version_node, ast.Constant)
-    assert version_node.value == "0.3.1"
+    assert version_node.value == "0.4.1"
 
 
 def test_setup_does_not_require_basemap():

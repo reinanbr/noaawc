@@ -13,7 +13,7 @@ from kitano import puts
 
 # ── configuration ─────────────────────────────────────────────────────────────
 
-DATE   = "02/05/2026"
+DATE = "02/05/2026"
 HOURS_16DAYS_3H = list(range(0, 121, 3)) + list(range(123, 385, 3))
 HOURS = HOURS_16DAYS_3H
 KEYS: list[str] = list(VARIABLES_INFO.keys())
@@ -23,7 +23,7 @@ KEYS: list[str] = list(VARIABLES_INFO.keys())
 DERIVED = {"wspd10", "wspd"}
 
 OUTPUT_ROOT = Path("./videos")
-ERROR_LOG   = OUTPUT_ROOT / "errors" / "variables_errors.txt"
+ERROR_LOG = OUTPUT_ROOT / "errors" / "variables_errors.txt"
 
 # Qualidade padrão para todos os vídeos ("sd" | "hd" | "4k" | "4k_60")
 QUALITY = "hd"
@@ -34,13 +34,15 @@ CODEC = "libx264"
 
 # ── projection profiles ───────────────────────────────────────────────────────
 
+
 @dataclass
 class Profile:
     """Descreve um modo de projeção e como configurar seu animator."""
-    mode:        str
-    subdir:      str
-    suffix:      str
-    configure:   Callable   # (anim, key) → None
+
+    mode: str
+    subdir: str
+    suffix: str
+    configure: Callable  # (anim, key) → None
     init_kwargs: dict = field(default_factory=dict)
 
 
@@ -125,6 +127,7 @@ PROFILES: list[Profile] = [
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
+
 def output_path(profile: Profile, key: str) -> Path:
     return OUTPUT_ROOT / profile.subdir / f"{key}{profile.suffix}"
 
@@ -134,8 +137,7 @@ def log_error(key: str, profile: Profile, exc: Exception) -> None:
     long_name = VARIABLES_INFO[key]["long_name"]
     entry = (
         f"[{profile.mode.upper()}] [{key} - {long_name}]\n"
-        f"{traceback.format_exc()}\n"
-        + "-" * 60 + "\n"
+        f"{traceback.format_exc()}\n" + "-" * 60 + "\n"
     )
     with ERROR_LOG.open("a") as fh:
         fh.write(entry)
@@ -181,12 +183,17 @@ def process(key: str, profile: Profile) -> bool:
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
+
 def main() -> None:
     total = len(KEYS) * len(PROFILES)
     ok = skipped = errors = 0
 
-    puts(f"Renderizando {len(KEYS)} variável(is) × {len(PROFILES)} projeção(ões) = {total} vídeos\n")
-    puts(f"Qualidade: {QUALITY}  |  Codec: {CODEC}  |  Horas: {HOURS[0]}–{HOURS[-1]} h  ({len(HOURS)} frames)\n")
+    puts(
+        f"Renderizando {len(KEYS)} variável(is) × {len(PROFILES)} projeção(ões) = {total} vídeos\n"
+    )
+    puts(
+        f"Qualidade: {QUALITY}  |  Codec: {CODEC}  |  Horas: {HOURS[0]}–{HOURS[-1]} h  ({len(HOURS)} frames)\n"
+    )
 
     for key in KEYS:
         puts(f"  {key}  ({VARIABLES_INFO[key]['long_name']})")

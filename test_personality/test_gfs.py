@@ -7,7 +7,7 @@ dl = GFSDownloader(date="18/04/2026", cycle="00z", hours=[0])
 ds = GFSDownloader("18/04/2026").fetch(keys=["v"])
 
 # Skip known-unavailable fields
-#ds = GFSDownloader("18/04/2026").fetch(skip=["aptmp"])
+# ds = GFSDownloader("18/04/2026").fetch(skip=["aptmp"])
 
 # Save and reload
 GFSDownloader.save(ds, "gfs_20260418_00z.nc")

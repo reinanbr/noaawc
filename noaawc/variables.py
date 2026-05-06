@@ -73,22 +73,24 @@ _REFC_CMAP = mcolors.ListedColormap(_REFC_COLORS, name="nws_refc")
 # Patchy / categorical / binary fields where contours add visual noise rather
 # than meteorological value.  Referenced by OrthoAnimator and
 # NearsidePerspectiveAnimator in _draw_field().
-NO_CONTOUR_VARS: frozenset[str] = frozenset({
-    "prate",   # precipitation rate  — sparse, patchy
-    "crain",   # categorical rain     — binary 0/1
-    "csnow",   # categorical snow     — binary 0/1
-    "cfrzr",   # categorical frz rain — binary 0/1
-    "cicep",   # categorical ice      — binary 0/1
-    "refc",    # radar reflectivity   — NWS palette already encodes magnitude
-    "tcc",     # cloud cover          — smooth enough without contours
-    "lcc",
-    "mcc",
-    "hcc",
-    "sde",     # snow depth           — discontinuous edges
-    "sdwe",    # snow water equiv     — same
-    "siconc",  # sea ice              — sharp edges, contours are noisy
-    "vis",     # visibility           — log-spaced levels, contours cluttered
-})
+NO_CONTOUR_VARS: frozenset[str] = frozenset(
+    {
+        "prate",  # precipitation rate  — sparse, patchy
+        "crain",  # categorical rain     — binary 0/1
+        "csnow",  # categorical snow     — binary 0/1
+        "cfrzr",  # categorical frz rain — binary 0/1
+        "cicep",  # categorical ice      — binary 0/1
+        "refc",  # radar reflectivity   — NWS palette already encodes magnitude
+        "tcc",  # cloud cover          — smooth enough without contours
+        "lcc",
+        "mcc",
+        "hcc",
+        "sde",  # snow depth           — discontinuous edges
+        "sdwe",  # snow water equiv     — same
+        "siconc",  # sea ice              — sharp edges, contours are noisy
+        "vis",  # visibility           — log-spaced levels, contours cluttered
+    }
+)
 
 
 # ══════════════════════════════════════════════════════════════════════════════

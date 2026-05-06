@@ -68,6 +68,7 @@ import xarray as xr
 
 try:
     import cfgrib
+
     _HAS_CFGRIB = True
 except ImportError:
     _HAS_CFGRIB = False
@@ -75,22 +76,23 @@ except ImportError:
 
 try:
     from tqdm import tqdm as _tqdm
+
     _HAS_TQDM = True
 except ImportError:
     _HAS_TQDM = False
 
-from noaawc.variables import VARIABLES_INFO   # adjust import path as needed
+from noaawc.variables import VARIABLES_INFO  # adjust import path as needed
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Constants
 # ══════════════════════════════════════════════════════════════════════════════
 
-_NOMADS_BASE_025  = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl"
-_NOMADS_BASE_050  = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p50.pl"
-_DEFAULT_HOURS    = list(range(0, 121, 3))
-_MAX_RETRIES      = 3
-_RETRY_DELAY_S    = 5.0
+_NOMADS_BASE_025 = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl"
+_NOMADS_BASE_050 = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p50.pl"
+_DEFAULT_HOURS = list(range(0, 121, 3))
+_MAX_RETRIES = 3
+_RETRY_DELAY_S = 5.0
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -104,46 +106,40 @@ _NOMADS_LEV: dict[str, str] = {
     # ── isobaric ─────────────────────────────────────────────────────────────
     # Default representative level; callers that need multi-level data must
     # override by building the URL themselves or iterating over pressure levels.
-    "t":     "lev_500_mb",
-    "r":     "lev_500_mb",
-    "gh":    "lev_500_mb",
-    "u":     "lev_500_mb",
-    "v":     "lev_500_mb",
-    "w":     "lev_500_mb",
-    "absv":  "lev_500_mb",
-    "q":     "lev_1000_mb",
-
+    "t": "lev_500_mb",
+    "r": "lev_500_mb",
+    "gh": "lev_500_mb",
+    "u": "lev_500_mb",
+    "v": "lev_500_mb",
+    "w": "lev_500_mb",
+    "absv": "lev_500_mb",
+    "q": "lev_1000_mb",
     # ── soil layers ───────────────────────────────────────────────────────────
     # NOMADS uses dash-separated depth ranges, not slashes.
-    "st":    "lev_0-10_cm_below_ground",
+    "st": "lev_0-10_cm_below_ground",
     "soilw": "lev_0-10_cm_below_ground",
-
     # ── helicity layer ────────────────────────────────────────────────────────
     # Storm-relative helicity: 1000 m AGL integration layer.
     # NOTE: "1000-0 m above ground" is the exact string NOMADS uses
     # (top-to-bottom ordering is intentional in the GRIB2 layer descriptor).
-    "hlcy":  "lev_1000-0_m_above_ground",
-
+    "hlcy": "lev_1000-0_m_above_ground",
     # ── atmosphere column ─────────────────────────────────────────────────────
-    "tcc":   "lev_entire_atmosphere",
-    "refc":  "lev_entire_atmosphere_(considered_as_a_single_layer)",
+    "tcc": "lev_entire_atmosphere",
+    "refc": "lev_entire_atmosphere_(considered_as_a_single_layer)",
     "tozne": "lev_entire_atmosphere_(considered_as_a_single_layer)",
-
     # ── precipitable / column water ───────────────────────────────────────────
-    "pwat":  "lev_entire_atmosphere_(considered_as_a_single_layer)",
-    "cwat":  "lev_entire_atmosphere_(considered_as_a_single_layer)",
-
+    "pwat": "lev_entire_atmosphere_(considered_as_a_single_layer)",
+    "cwat": "lev_entire_atmosphere_(considered_as_a_single_layer)",
     # ── cloud layers (pgrb2b) ─────────────────────────────────────────────────
-    "lcc":   "lev_low_cloud_layer",
-    "mcc":   "lev_middle_cloud_layer",
-    "hcc":   "lev_high_cloud_layer",
-
+    "lcc": "lev_low_cloud_layer",
+    "mcc": "lev_middle_cloud_layer",
+    "hcc": "lev_high_cloud_layer",
     # ── surface / 2 m / 10 m ─────────────────────────────────────────────────
     # Most surface variables already carry the correct lev_ in VARIABLES_INFO;
     # only overrides are listed here.
-    "cape":  "lev_surface",
-    "cin":   "lev_surface",
-    "lftx":  "lev_500_mb",        # best lifted index: 500 mb level
+    "cape": "lev_surface",
+    "cin": "lev_surface",
+    "lftx": "lev_500_mb",  # best lifted index: 500 mb level
     "4lftx": "lev_0-90_mb_above_ground",
 }
 
@@ -153,42 +149,47 @@ _NOMADS_LEV: dict[str, str] = {
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Variables found only in the pgrb2b supplemental file (still 0.25°).
-_PGRB2B_VARS: frozenset[str] = frozenset({
-    "aptmp",   # apparent temperature — pgrb2b only
-    "lcc",     # low  cloud cover
-    "mcc",     # mid  cloud cover
-    "hcc",     # high cloud cover
-})
+_PGRB2B_VARS: frozenset[str] = frozenset(
+    {
+        "aptmp",  # apparent temperature — pgrb2b only
+        "lcc",  # low  cloud cover
+        "mcc",  # mid  cloud cover
+        "hcc",  # high cloud cover
+    }
+)
 
 # Variables available from the 0.5° pgrb2 file (filter_gfs_0p50.pl).
 # These are either absent at 0.25° or only published at coarser resolution.
 # Fetched from a separate base URL; decoded grid will be ~0.5° resolution.
-_PGRB2P5_VARS: frozenset[str] = frozenset({
-    # Ensemble-mean / probability products (published at 0.5° only)
-    "ulwrf",   # upward long-wave radiation flux (top of atmosphere)
-    "dswrf",   # downward short-wave radiation flux (surface)
-    "dlwrf",   # downward long-wave radiation flux (surface)
-    "uswrf",   # upward short-wave radiation flux (surface)
-    "lhtfl",   # latent heat net flux
-    "shtfl",   # sensible heat net flux
-    "gflux",   # ground heat flux
-    "hpbl",    # planetary boundary layer height
-    "fricv",   # frictional velocity
-    "vrate",   # ventilation rate — published at 0.5° only
-    "cnwat",   # plant canopy surface water
-    "sde",     # snow depth (water equivalent, alternate name)
-    "ssrun",   # storm surface runoff
-    "bgrun",   # baseflow-groundwater runoff
-    "watr",    # water runoff (0.5° stream)
-    "icaht",   # icing severity (0.5° only)
-    "ustm",    # u-component of storm motion
-    "vstm",    # v-component of storm motion
-})
+_PGRB2P5_VARS: frozenset[str] = frozenset(
+    {
+        # Ensemble-mean / probability products (published at 0.5° only)
+        "ulwrf",  # upward long-wave radiation flux (top of atmosphere)
+        "dswrf",  # downward short-wave radiation flux (surface)
+        "dlwrf",  # downward long-wave radiation flux (surface)
+        "uswrf",  # upward short-wave radiation flux (surface)
+        "lhtfl",  # latent heat net flux
+        "shtfl",  # sensible heat net flux
+        "gflux",  # ground heat flux
+        "hpbl",  # planetary boundary layer height
+        "fricv",  # frictional velocity
+        "vrate",  # ventilation rate — published at 0.5° only
+        "cnwat",  # plant canopy surface water
+        "sde",  # snow depth (water equivalent, alternate name)
+        "ssrun",  # storm surface runoff
+        "bgrun",  # baseflow-groundwater runoff
+        "watr",  # water runoff (0.5° stream)
+        "icaht",  # icing severity (0.5° only)
+        "ustm",  # u-component of storm motion
+        "vstm",  # v-component of storm motion
+    }
+)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # Internal helpers
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def _parse_date(date_str: str) -> datetime:
     for fmt in ("%d/%m/%Y", "%Y%m%d", "%Y-%m-%d"):
@@ -231,13 +232,13 @@ def _file_type(key: str) -> str:
 
 
 def _build_url(yyyymmdd: str, cycle: str, fhour: int, key: str) -> str:
-    info     = VARIABLES_INFO[key]
-    grib_var = info["grib_var"]   # e.g. "var_TMP=on"
-    lev_str  = _nomads_lev(key)
-    res      = _file_resolution(key)
-    ftype    = _file_type(key)
-    base     = _base_url(key)
-    fname    = f"gfs.t{cycle}z.{ftype}.{res}.f{fhour:03d}"
+    info = VARIABLES_INFO[key]
+    grib_var = info["grib_var"]  # e.g. "var_TMP=on"
+    lev_str = _nomads_lev(key)
+    res = _file_resolution(key)
+    ftype = _file_type(key)
+    base = _base_url(key)
+    fname = f"gfs.t{cycle}z.{ftype}.{res}.f{fhour:03d}"
 
     # NOMADS is order-sensitive — dir and file must come first
     parts = [
@@ -272,7 +273,9 @@ def _fetch_bytes(url: str, timeout: int = 120) -> bytes | None:
     return None
 
 
-def _decode_grib(raw: bytes, key: str) -> tuple[np.ndarray, np.ndarray, np.ndarray] | None:
+def _decode_grib(
+    raw: bytes, key: str
+) -> tuple[np.ndarray, np.ndarray, np.ndarray] | None:
     if not _HAS_CFGRIB:
         return None
     with tempfile.NamedTemporaryFile(suffix=".grib2", delete=False) as tmp:
@@ -283,7 +286,7 @@ def _decode_grib(raw: bytes, key: str) -> tuple[np.ndarray, np.ndarray, np.ndarr
             dvars = list(ds.data_vars)
             if not dvars:
                 continue
-            da   = ds[dvars[0]]
+            da = ds[dvars[0]]
             lats = da.latitude.values
             lons = da.longitude.values
             vals = da.values.copy()
@@ -308,6 +311,7 @@ def _bar(iterable, **kw):
 # ══════════════════════════════════════════════════════════════════════════════
 # GFSDownloader
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class GFSDownloader:
     """
@@ -358,16 +362,16 @@ class GFSDownloader:
 
     def __init__(
         self,
-        date:      str,
-        cycle:     str | int = "00z",
-        hours:     list[int] | None = None,
+        date: str,
+        cycle: str | int = "00z",
+        hours: list[int] | None = None,
         cache_dir: str = ".gfs_cache",
     ):
-        dt             = _parse_date(date)
+        dt = _parse_date(date)
         self._yyyymmdd = dt.strftime("%Y%m%d")
-        self._cycle    = _cycle_norm(cycle)
-        self._hours    = hours if hours is not None else list(_DEFAULT_HOURS)
-        self._cache    = Path(cache_dir)
+        self._cycle = _cycle_norm(cycle)
+        self._hours = hours if hours is not None else list(_DEFAULT_HOURS)
+        self._cache = Path(cache_dir)
         self._cache.mkdir(parents=True, exist_ok=True)
 
     # ── fetch ─────────────────────────────────────────────────────────────────
@@ -387,7 +391,7 @@ class GFSDownloader:
             Dims: ``(time, latitude, longitude)``.
             Attrs: ``run_date``, ``cycle``.
         """
-        known   = [k for k in keys if k in VARIABLES_INFO]
+        known = [k for k in keys if k in VARIABLES_INFO]
         unknown = [k for k in keys if k not in VARIABLES_INFO]
         if unknown:
             print(f"[GFSDownloader] Unknown keys (skipped): {unknown}")
@@ -408,8 +412,8 @@ class GFSDownloader:
             n_ok = 0
 
             for fhour in self._hours:
-                res        = _file_resolution(key)
-                ftype      = _file_type(key)
+                res = _file_resolution(key)
+                ftype = _file_type(key)
                 cache_path = (
                     self._cache
                     / f"{self._yyyymmdd}_{self._cycle}_{key}_{res}_{ftype}_f{fhour:03d}.grib2"
@@ -439,9 +443,11 @@ class GFSDownloader:
                 print(f"  [skip] {key}: no frames available.")
                 continue
 
-            first  = next(f for f in frames if f is not None)
-            filled = [f if f is not None else np.full_like(first, np.nan) for f in frames]
-            arr    = np.stack(filled, axis=0)
+            first = next(f for f in frames if f is not None)
+            filled = [
+                f if f is not None else np.full_like(first, np.nan) for f in frames
+            ]
+            arr = np.stack(filled, axis=0)
 
             info = VARIABLES_INFO[key]
             data_vars[key] = xr.DataArray(
@@ -450,12 +456,14 @@ class GFSDownloader:
                 coords={"time": times, "latitude": lats, "longitude": lons},
                 attrs={
                     "long_name": info.get("long_name", key),
-                    "units":     info.get("units", ""),
+                    "units": info.get("units", ""),
                     "source_file": f"{_file_type(key)}.{_file_resolution(key)}",
                 },
             )
-            print(f"  [ok] {key}: {n_ok}/{len(self._hours)} h  "
-                  f"({_file_type(key)}.{_file_resolution(key)})")
+            print(
+                f"  [ok] {key}: {n_ok}/{len(self._hours)} h  "
+                f"({_file_type(key)}.{_file_resolution(key)})"
+            )
 
         if not data_vars:
             raise RuntimeError("No variables were downloaded successfully.")
@@ -464,9 +472,9 @@ class GFSDownloader:
             data_vars,
             attrs={
                 "run_date": self._yyyymmdd,
-                "cycle":    self._cycle + "z",
-                "source":   "GFS / NOAA NOMADS",
-                "created":  datetime.now(tz=timezone.utc).isoformat(),
+                "cycle": self._cycle + "z",
+                "source": "GFS / NOAA NOMADS",
+                "created": datetime.now(tz=timezone.utc).isoformat(),
             },
         )
 
@@ -516,6 +524,7 @@ class GFSDownloader:
 # ══════════════════════════════════════════════════════════════════════════════
 # Static Cartopy plot — nearside (satellite-view) projection
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 def plot_nearside(
     ds: xr.Dataset,
@@ -604,8 +613,9 @@ def plot_nearside(
         ) from exc
 
     if var not in ds:
-        raise KeyError(f"Variable {var!r} not found in dataset. "
-                       f"Available: {list(ds.data_vars)}")
+        raise KeyError(
+            f"Variable {var!r} not found in dataset. Available: {list(ds.data_vars)}"
+        )
 
     da = ds[var].isel(time=fhour_index)
 
@@ -617,14 +627,14 @@ def plot_nearside(
     lons_180 = np.where(lons_360 > 180, lons_360 - 360, lons_360)
 
     # Re-sort so lons are monotonically increasing after the shift.
-    sort_idx  = np.argsort(lons_180)
+    sort_idx = np.argsort(lons_180)
     lons_plot = lons_180[sort_idx]
     data_plot = da.values[:, sort_idx]
 
     # ── Percentile-based colour limits ────────────────────────────────────────
     finite = data_plot[np.isfinite(data_plot)]
     if vmin is None:
-        vmin = float(np.percentile(finite, 2))  if len(finite) else 0.0
+        vmin = float(np.percentile(finite, 2)) if len(finite) else 0.0
     if vmax is None:
         vmax = float(np.percentile(finite, 98)) if len(finite) else 1.0
 
@@ -646,7 +656,9 @@ def plot_nearside(
 
     # Plot field
     mesh = ax.pcolormesh(
-        lons_plot, lats, data_plot,
+        lons_plot,
+        lats,
+        data_plot,
         transform=data_crs,
         cmap=cmap,
         vmin=vmin,
@@ -655,11 +667,11 @@ def plot_nearside(
     )
 
     # Geographic features
-    ax.add_feature(cfeature.COASTLINE,      linewidth=0.6, edgecolor="white")
-    ax.add_feature(cfeature.BORDERS,        linewidth=0.4, edgecolor="white", linestyle=":")
-    ax.add_feature(cfeature.LAND,           facecolor="none")
-    ax.add_feature(cfeature.OCEAN,          facecolor="none")
-    ax.add_feature(cfeature.LAKES,          linewidth=0.3, edgecolor="cyan", facecolor="none")
+    ax.add_feature(cfeature.COASTLINE, linewidth=0.6, edgecolor="white")
+    ax.add_feature(cfeature.BORDERS, linewidth=0.4, edgecolor="white", linestyle=":")
+    ax.add_feature(cfeature.LAND, facecolor="none")
+    ax.add_feature(cfeature.OCEAN, facecolor="none")
+    ax.add_feature(cfeature.LAKES, linewidth=0.3, edgecolor="cyan", facecolor="none")
     ax.gridlines(
         draw_labels=False,
         linewidth=0.3,
@@ -670,7 +682,8 @@ def plot_nearside(
 
     # Colorbar
     cbar = fig.colorbar(
-        mesh, ax=ax,
+        mesh,
+        ax=ax,
         orientation="horizontal",
         pad=0.03,
         fraction=0.04,

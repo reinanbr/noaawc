@@ -12,25 +12,27 @@ from kitano import puts
 
 # ── configuration ─────────────────────────────────────────────────────────────
 
-DATE   = "18/04/2026"
-HOURS  = [0]
+DATE = "18/04/2026"
+HOURS = [0]
 
 KEYS: list[str] = list(VARIABLES_INFO.keys())
 # KEYS = ["prate"]  # uncomment to test a single variable
 
 OUTPUT_ROOT = Path("./plots")
-ERROR_LOG   = OUTPUT_ROOT / "errors" / "variables_errors.txt"
+ERROR_LOG = OUTPUT_ROOT / "errors" / "variables_errors.txt"
 
 
 # ── projection profiles ───────────────────────────────────────────────────────
 
+
 @dataclass
 class Profile:
     """Describes one projection mode and how to configure its animator."""
-    mode:        str
-    subdir:      str
-    suffix:      str
-    configure:   Callable   # (anim, key) → None
+
+    mode: str
+    subdir: str
+    suffix: str
+    configure: Callable  # (anim, key) → None
     init_kwargs: dict = field(default_factory=dict)
 
 
@@ -105,6 +107,7 @@ PROFILES: list[Profile] = [
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
+
 def output_path(profile: Profile, key: str) -> Path:
     return OUTPUT_ROOT / profile.subdir / f"{key}{profile.suffix}"
 
@@ -114,8 +117,7 @@ def log_error(key: str, profile: Profile, exc: Exception) -> None:
     long_name = VARIABLES_INFO[key]["long_name"]
     entry = (
         f"[{profile.mode.upper()}] [{key} - {long_name}]\n"
-        f"{traceback.format_exc()}\n"
-        + "-" * 60 + "\n"
+        f"{traceback.format_exc()}\n" + "-" * 60 + "\n"
     )
     with ERROR_LOG.open("a") as fh:
         fh.write(entry)
@@ -131,7 +133,7 @@ def process(key: str, profile: Profile) -> bool:
 
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    ds   = gnd(date=DATE, keys=[key], hours=HOURS)._ds
+    ds = gnd(date=DATE, keys=[key], hours=HOURS)._ds
     anim = WeatherAnimator(ds, key, mode=profile.mode, **profile.init_kwargs)
     profile.configure(anim, key)
     anim.plot(time_idx=0, save=str(path), show=False)
@@ -141,11 +143,14 @@ def process(key: str, profile: Profile) -> bool:
 
 # ── main ──────────────────────────────────────────────────────────────────────
 
+
 def main() -> None:
     total = len(KEYS) * len(PROFILES)
     ok = skipped = errors = 0
 
-    puts(f"Rendering {len(KEYS)} variable(s) × {len(PROFILES)} projection(s) = {total} plots\n")
+    puts(
+        f"Rendering {len(KEYS)} variable(s) × {len(PROFILES)} projection(s) = {total} plots\n"
+    )
 
     for key in KEYS:
         puts(f"  {key}  ({VARIABLES_INFO[key]['long_name']})")

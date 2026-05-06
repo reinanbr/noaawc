@@ -63,7 +63,6 @@ from noaawc.main import (
     NearsidePerspectiveAnimator,
     PlateCarreeAnimator,
     RobinsonAnimator,
-    GEOSTATIONARY_HEIGHT,
     list_quality_presets,
     list_variable_presets,
 )
@@ -83,34 +82,40 @@ __all__ = [
 
 _MODES: dict[str, dict] = {
     "ortho": {
-        "class":       OrthoAnimator,
+        "class": OrthoAnimator,
         "description": "Orthographic globe — camera at infinity, full hemisphere view",
         "init_kwargs": ["central_point"],
-        "specific":    ["set_rotation", "set_rotation_stop", "set_zoom", "set_states"],
+        "specific": ["set_rotation", "set_rotation_stop", "set_zoom", "set_states"],
     },
     "nearside": {
-        "class":       NearsidePerspectiveAnimator,
+        "class": NearsidePerspectiveAnimator,
         "description": "Nearside Perspective — satellite view from a finite altitude",
         "init_kwargs": ["lon", "lat", "satellite_height"],
-        "specific":    ["set_view", "set_satellite_height", "set_rotation",
-                        "set_rotation_stop", "set_states"],
+        "specific": [
+            "set_view",
+            "set_satellite_height",
+            "set_rotation",
+            "set_rotation_stop",
+            "set_states",
+        ],
     },
     "robinson": {
-        "class":       RobinsonAnimator,
+        "class": RobinsonAnimator,
         "description": "Robinson projection — visually balanced global flat map",
         "init_kwargs": [],
-        "specific":    ["set_region", "set_states", "set_ocean", "set_grid"],
+        "specific": ["set_region", "set_states", "set_ocean", "set_grid"],
     },
     "plate": {
-        "class":       PlateCarreeAnimator,
+        "class": PlateCarreeAnimator,
         "description": "PlateCarree (equirectangular) — flat 2-D regional map",
         "init_kwargs": [],
-        "specific":    ["set_region", "set_zoom", "set_states", "set_ocean", "set_grid"],
+        "specific": ["set_region", "set_zoom", "set_states", "set_ocean", "set_grid"],
     },
 }
 
 
 # ── overloaded signatures — VS Code / Pylance resolve the return type ─────────
+
 
 @overload
 def WeatherAnimator(
@@ -120,6 +125,7 @@ def WeatherAnimator(
     *,
     central_point: tuple[float, float] = ...,
 ) -> OrthoAnimator: ...
+
 
 @overload
 def WeatherAnimator(
@@ -132,12 +138,14 @@ def WeatherAnimator(
     satellite_height: float = ...,
 ) -> NearsidePerspectiveAnimator: ...
 
+
 @overload
 def WeatherAnimator(
     ds,
     var: str,
     mode: Literal["plate"],
 ) -> PlateCarreeAnimator: ...
+
 
 @overload
 def WeatherAnimator(
@@ -146,23 +154,29 @@ def WeatherAnimator(
     mode: Literal["robinson"],
 ) -> RobinsonAnimator: ...
 
+
 @overload
 def WeatherAnimator(
     ds,
     var: str,
     mode: str = ...,
     **kwargs,
-) -> OrthoAnimator | NearsidePerspectiveAnimator | PlateCarreeAnimator | RobinsonAnimator: ...
+) -> (
+    OrthoAnimator | NearsidePerspectiveAnimator | PlateCarreeAnimator | RobinsonAnimator
+): ...
 
 
 # ── factory implementation ────────────────────────────────────────────────────
+
 
 def WeatherAnimator(  # type: ignore[misc]  # intentional overload mismatch
     ds,
     var: str,
     mode: str = "ortho",
     **kwargs,
-) -> OrthoAnimator | NearsidePerspectiveAnimator | PlateCarreeAnimator | RobinsonAnimator:
+) -> (
+    OrthoAnimator | NearsidePerspectiveAnimator | PlateCarreeAnimator | RobinsonAnimator
+):
     """
     Create and return the appropriate animator for the requested projection mode.
 
@@ -279,11 +293,11 @@ def WeatherAnimator(  # type: ignore[misc]  # intentional overload mismatch
             f"Call list_modes() to see a description of each."
         )
 
-    entry    = _MODES[mode]
-    cls      = entry["class"]
+    entry = _MODES[mode]
+    cls = entry["class"]
     accepted = set(entry["init_kwargs"])
     filtered = {k: v for k, v in kwargs.items() if k in accepted}
-    ignored  = {k: v for k, v in kwargs.items() if k not in accepted}
+    ignored = {k: v for k, v in kwargs.items() if k not in accepted}
 
     if ignored:
         print(
@@ -295,6 +309,7 @@ def WeatherAnimator(  # type: ignore[misc]  # intentional overload mismatch
 
 
 # ── discovery helpers ─────────────────────────────────────────────────────────
+
 
 def list_modes() -> None:
     """Print all available projection modes and their descriptions."""

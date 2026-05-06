@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.1] - 2026-05-06
+
+### Changed
+- Updated package version to `0.4.1` in `setup.py` to prepare the `v0.4.1` release tag.
+- Refreshed the release notes to mirror the current README structure: the unified `WeatherAnimator` entry point, four projection modes, shared quality presets, output controls, annotations, and camera rotation helpers.
+
+### CI/CD
+- Release workflow continues to publish on `v*` tags and extracts the matching changelog section for GitHub Releases.
+- Lint and test jobs remain aligned with the Cartopy-based stack documented in the README.
+
 ## [0.3.1] - 2026-04-18
 
 ### Changed

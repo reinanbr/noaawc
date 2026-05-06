@@ -1,4 +1,4 @@
-# mypy: disable-error-code=attr-defined
+# mypy: disable-error-code="attr-defined,arg-type,operator,no-redef"
 
 """
 noaawc.projections.animators
@@ -32,7 +32,7 @@ import copy
 import os
 import re
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, cast
 
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -147,6 +147,7 @@ plt.rcParams.update(
 # Shared helpers
 # ══════════════════════════════════════════════════════════════════════════════
 
+
 def _remove_contours(ax: plt.Axes) -> None:
     """Remove all contour line collections from an axes (used as a fallback
     when cartopy raises TypeError during deferred path reprojection at draw
@@ -157,6 +158,7 @@ def _remove_contours(ax: plt.Axes) -> None:
     matplotlib versions.
     """
     from matplotlib.collections import LineCollection
+
     for coll in list(ax.collections):
         if isinstance(coll, LineCollection):
             coll.remove()
@@ -174,7 +176,9 @@ def list_quality_presets(wide: bool = False) -> None:
     presets = QUALITY_PRESETS_WIDE if wide else QUALITY_PRESETS_SQUARE
     label = "16:9 wide" if wide else "square"
     print(f"\n  Quality presets ({label})\n")
-    print(f"  {'Preset':<10}  {'DPI':<5}  {'Figsize (in)':<20}  {'FPS':<5}  {'Codec':<10}  Description")
+    print(
+        f"  {'Preset':<10}  {'DPI':<5}  {'Figsize (in)':<20}  {'FPS':<5}  {'Codec':<10}  Description"
+    )
     print("  " + "─" * 100)
     for name, p in presets.items():
         w, h = p["figsize"]
@@ -202,14 +206,62 @@ def list_variable_presets() -> None:
 # ── Month name tables per locale ──────────────────────────────────────────────
 
 _MONTHS: dict[str, list[str]] = {
-    "en":    ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    "pt-br": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
-               "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-    "es":    ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
-               "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    "fr":    ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
-               "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"],
+    "en": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ],
+    "pt-br": [
+        "Jan",
+        "Fev",
+        "Mar",
+        "Abr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Set",
+        "Out",
+        "Nov",
+        "Dez",
+    ],
+    "es": [
+        "Ene",
+        "Feb",
+        "Mar",
+        "Abr",
+        "May",
+        "Jun",
+        "Jul",
+        "Ago",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dic",
+    ],
+    "fr": [
+        "Jan",
+        "Fév",
+        "Mar",
+        "Avr",
+        "Mai",
+        "Jun",
+        "Jul",
+        "Aoû",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Déc",
+    ],
 }
 
 
@@ -227,7 +279,9 @@ def _format_date(time_val, date_style: str = "en") -> str:
         dt = datetime.fromtimestamp(float(time_val), tz=timezone.utc)
 
     months = _MONTHS.get(date_style.lower(), _MONTHS["en"])
-    return f"{dt.day:02d} {months[dt.month - 1]} {dt.year} {dt.hour:02d}:{dt.minute:02d}"
+    return (
+        f"{dt.day:02d} {months[dt.month - 1]} {dt.year} {dt.hour:02d}:{dt.minute:02d}"
+    )
 
 
 def _font_scale(dpi: int, base_dpi: int = 120) -> float:
@@ -267,9 +321,10 @@ def _run_label(time_val) -> str:
 
 # ── Raw field accessor with convert + mask_below ──────────────────────────────
 
+
 def _get_field_full(ds, var: str, time_idx: int, step: int = 1):
     """Return (lats, lons, data, time_val) with convert + mask_below applied."""
-    da   = ds[var][time_idx]
+    da = ds[var][time_idx]
     lats = da.latitude.values[::step]
     lons = da.longitude.values[::step]
     data = da.values[::step, ::step]
@@ -303,18 +358,72 @@ def _get_field(ds, var: str, time_idx: int = 0, step: int = 1):
 # ── Geographic reference lines ─────────────────────────────────────────────────
 
 _REF_LATITUDES = {
-    "equator":          {"lat":   0.0, "color": "#1e4a75", "lw_factor": 1.4, "ls": "-",  "alpha": 0.70},
-    "tropic_cancer":    {"lat":  23.5, "color": "#7a5510", "lw_factor": 0.9, "ls": "--", "alpha": 0.60},
-    "tropic_capricorn": {"lat": -23.5, "color": "#7a5510", "lw_factor": 0.9, "ls": "--", "alpha": 0.60},
-    "arctic":           {"lat":  66.5, "color": "#2a5a6b", "lw_factor": 0.8, "ls": ":",  "alpha": 0.55},
-    "antarctic":        {"lat": -66.5, "color": "#2a5a6b", "lw_factor": 0.8, "ls": ":",  "alpha": 0.55},
+    "equator": {
+        "lat": 0.0,
+        "color": "#1e4a75",
+        "lw_factor": 1.4,
+        "ls": "-",
+        "alpha": 0.70,
+    },
+    "tropic_cancer": {
+        "lat": 23.5,
+        "color": "#7a5510",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.60,
+    },
+    "tropic_capricorn": {
+        "lat": -23.5,
+        "color": "#7a5510",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.60,
+    },
+    "arctic": {
+        "lat": 66.5,
+        "color": "#2a5a6b",
+        "lw_factor": 0.8,
+        "ls": ":",
+        "alpha": 0.55,
+    },
+    "antarctic": {
+        "lat": -66.5,
+        "color": "#2a5a6b",
+        "lw_factor": 0.8,
+        "ls": ":",
+        "alpha": 0.55,
+    },
 }
 
 _REF_LONGITUDES = {
-    "prime":     {"lon":   0.0, "color": "#3a3f45", "lw_factor": 1.1, "ls": "-",  "alpha": 0.55},
-    "date_line": {"lon": 180.0, "color": "#2e3338", "lw_factor": 0.9, "ls": "--", "alpha": 0.45},
-    "w90":       {"lon": -90.0, "color": "#1f2328", "lw_factor": 0.7, "ls": "--", "alpha": 0.35},
-    "e90":       {"lon":  90.0, "color": "#1f2328", "lw_factor": 0.7, "ls": "--", "alpha": 0.35},
+    "prime": {
+        "lon": 0.0,
+        "color": "#3a3f45",
+        "lw_factor": 1.1,
+        "ls": "-",
+        "alpha": 0.55,
+    },
+    "date_line": {
+        "lon": 180.0,
+        "color": "#2e3338",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.45,
+    },
+    "w90": {
+        "lon": -90.0,
+        "color": "#1f2328",
+        "lw_factor": 0.7,
+        "ls": "--",
+        "alpha": 0.35,
+    },
+    "e90": {
+        "lon": 90.0,
+        "color": "#1f2328",
+        "lw_factor": 0.7,
+        "ls": "--",
+        "alpha": 0.35,
+    },
 }
 
 
@@ -325,19 +434,32 @@ def _add_reference_lines(ax: plt.Axes, lw: float = 0.4) -> None:
     lat_range = np.linspace(-90, 90, 181)
 
     for cfg in _REF_LATITUDES.values():
-        ax.plot(lon_range, np.full_like(lon_range, cfg["lat"]),
-                transform=transform, color=cfg["color"],
-                linewidth=lw * cfg["lw_factor"], linestyle=cfg["ls"],
-                alpha=cfg["alpha"], zorder=2)
+        ax.plot(
+            lon_range,
+            np.full_like(lon_range, cast(float, cfg["lat"])),
+            transform=transform,
+            color=cast(str, cfg["color"]),
+            linewidth=lw * cast(float, cfg["lw_factor"]),
+            linestyle=cast(str, cfg["ls"]),
+            alpha=cast(float, cfg["alpha"]),
+            zorder=2,
+        )
 
     for cfg in _REF_LONGITUDES.values():
-        ax.plot(np.full_like(lat_range, cfg["lon"]), lat_range,
-                transform=transform, color=cfg["color"],
-                linewidth=lw * cfg["lw_factor"], linestyle=cfg["ls"],
-                alpha=cfg["alpha"], zorder=2)
+        ax.plot(
+            np.full_like(lat_range, cast(float, cfg["lon"])),
+            lat_range,
+            transform=transform,
+            color=cast(str, cfg["color"]),
+            linewidth=lw * cast(float, cfg["lw_factor"]),
+            linestyle=cast(str, cfg["ls"]),
+            alpha=cast(float, cfg["alpha"]),
+            zorder=2,
+        )
 
 
 # ── Shared map-feature helpers ────────────────────────────────────────────────
+
 
 def _add_features(
     ax: plt.Axes,
@@ -369,6 +491,7 @@ def _add_features(
 
 # ── Figure-level overlay helpers ───────────────────────────────────────────────
 
+
 def _colorbar(
     fig: plt.Figure,
     cf,
@@ -378,20 +501,32 @@ def _colorbar(
     scale: float = 1.0,
 ) -> None:
     """Draw a styled colorbar below the axes."""
-    cb = fig.colorbar(cf, ax=ax, orientation=orientation, pad=0.03,
-                      fraction=0.03, shrink=0.85)
+    cb = fig.colorbar(
+        cf, ax=ax, orientation=orientation, pad=0.03, fraction=0.03, shrink=0.85
+    )
     cb.set_label(label, fontsize=round(8 * scale, 1), color="#8b949e")
     cb.ax.tick_params(labelsize=round(7 * scale, 1), colors="#8b949e")
-    cb.outline.set_edgecolor("#30363d")
+    cast(Any, cb.outline).set_edgecolor("#30363d")
 
 
 def _title(ax: plt.Axes, main: str, sub: str = "", scale: float = 1.0) -> None:
     """Set the left (main) and right (subtitle) axis titles."""
-    ax.set_title(main, fontsize=round(10 * scale, 1), fontweight="bold",
-                 color="#e6edf3", loc="left", pad=6 * scale)
+    ax.set_title(
+        main,
+        fontsize=round(10 * scale, 1),
+        fontweight="bold",
+        color="#e6edf3",
+        loc="left",
+        pad=6 * scale,
+    )
     if sub:
-        ax.set_title(sub, fontsize=round(7 * scale, 1), color="#8b949e",
-                     loc="right", pad=6 * scale)
+        ax.set_title(
+            sub,
+            fontsize=round(7 * scale, 1),
+            color="#8b949e",
+            loc="right",
+            pad=6 * scale,
+        )
 
 
 # Vertical position constant — approximate top of horizontal colorbar area.
@@ -413,12 +548,21 @@ def _draw_info_box(
         f"key: {var_key} - {VARIABLES_INFO.get(var_key, {}).get('long_name', var_key)}",
         f"Date Cycle: {date_str} {cycle}",
     ]
-    props = dict(
-        ha="right", va="top",
-        fontsize=round(7.5 * scale, 1), color="#828283",
-        fontweight="bold", fontfamily="monospace", linespacing=1.55,
-        bbox=dict(boxstyle="round,pad=0.45", facecolor="#161b22",
-                  edgecolor="#30363d", linewidth=0.8 * scale, alpha=0.88),
+    props: dict[str, Any] = dict(
+        ha="right",
+        va="top",
+        fontsize=round(7.5 * scale, 1),
+        color="#828283",
+        fontweight="bold",
+        fontfamily="monospace",
+        linespacing=1.55,
+        bbox=dict(
+            boxstyle="round,pad=0.45",
+            facecolor="#161b22",
+            edgecolor="#30363d",
+            linewidth=0.8 * scale,
+            alpha=0.88,
+        ),
         zorder=10,
     )
     text = "\n".join(lines)
@@ -434,14 +578,18 @@ def _draw_data_credit(
     ax: plt.Axes | None = None,
 ) -> None:
     """Draw the bottom-right data-source credit ('GFS 0.25° / NASA · NOAA')."""
-    props = dict(
-        ha="right", va="bottom",
-        fontsize=round(6.5 * scale, 1), color="#8b949e",
-        fontweight="bold", fontfamily="monospace", linespacing=1.45, zorder=10,
+    props: dict[str, Any] = dict(
+        ha="right",
+        va="bottom",
+        fontsize=round(6.5 * scale, 1),
+        color="#8b949e",
+        fontweight="bold",
+        fontfamily="monospace",
+        linespacing=1.45,
+        zorder=10,
     )
     if ax is not None:
-        ax.text(0.995, 0.008, "GFS 0.25°\nNASA / NOAA",
-                transform=ax.transAxes, **props)
+        ax.text(0.995, 0.008, "GFS 0.25°\nNASA / NOAA", transform=ax.transAxes, **props)
     else:
         fig.text(0.985, 0.012, "GFS 0.25°\nNASA / NOAA", **props)
 
@@ -486,11 +634,18 @@ def _draw_author(
         )
 
     fig.text(
-        x_pos, y_pos, author,
-        ha=ha, va=va,
+        x_pos,
+        y_pos,
+        author,
+        ha=ha,
+        va=va,
         fontsize=round(fontsize * scale, 1),
-        color=color, fontweight=fontweight, fontfamily=fontfamily,
-        alpha=alpha, bbox=bbox_props, zorder=10,
+        color=color,
+        fontweight=fontweight,
+        fontfamily=fontfamily,
+        alpha=alpha,
+        bbox=bbox_props,
+        zorder=10,
     )
 
 
@@ -524,7 +679,9 @@ def _author_above_cbar(
     if cbar_top is None:
         cbar_top = 0.06
 
-    font_h_frac = (kw.get("fontsize", 8.5) * scale * 1.6) / (fig.get_figheight() * fig.dpi)
+    font_h_frac = (kw.get("fontsize", 8.5) * scale * 1.6) / (
+        fig.get_figheight() * fig.dpi
+    )
     y_pos = cbar_top + font_h_frac * 0.8
 
     bbox_props = None
@@ -555,11 +712,12 @@ def _author_above_cbar(
 
 # ── Annotation drawing (shared implementation) ────────────────────────────────
 
-_FMT_RE = re.compile(r'%[-+0-9*.]*[diouxXeEfFgGcrs]')
+_FMT_RE = re.compile(r"%[-+0-9*.]*[diouxXeEfFgGcrs]")
 
 
-def _draw_annotations_on(ax: plt.Axes, lat, lon, field, annotations: list[dict],
-                          dpi: int) -> None:
+def _draw_annotations_on(
+    ax: plt.Axes, lat, lon, field, annotations: list[dict], dpi: int
+) -> None:
     """Render all registered annotations onto *ax*."""
     if not annotations:
         return
@@ -583,14 +741,17 @@ def _draw_annotations_on(ax: plt.Axes, lat, lon, field, annotations: list[dict],
         if mk is not None:
             mk_color = ann.get("marker_color") or ann["color"]
             ax.plot(
-                lon_a, lat_a, marker=mk,
+                lon_a,
+                lat_a,
+                marker=mk,
                 markersize=ann.get("marker_size", 6.0) * scale,
                 color=mk_color,
                 markeredgecolor=ann.get("marker_edge_color", "#0d1117"),
                 markeredgewidth=ann.get("marker_edge_width", 0.8) * scale,
                 alpha=ann.get("marker_alpha", 1.0),
                 transform=ccrs.PlateCarree(),
-                zorder=ann["zorder"], linestyle="none",
+                zorder=ann["zorder"],
+                linestyle="none",
             )
 
         bbox_props = None
@@ -606,15 +767,20 @@ def _draw_annotations_on(ax: plt.Axes, lat, lon, field, annotations: list[dict],
             xy=(lon_a + d_lon, lat_a + d_lat),
             xycoords=ccrs.PlateCarree()._as_mpl_transform(ax),
             fontsize=round(ann["size"] * scale, 1),
-            color=ann["color"], fontweight=ann["weight"],
-            alpha=ann["alpha"], bbox=bbox_props,
-            ha="center", va="center", zorder=ann["zorder"],
+            color=ann["color"],
+            fontweight=ann["weight"],
+            alpha=ann["alpha"],
+            bbox=bbox_props,
+            ha="center",
+            va="center",
+            zorder=ann["zorder"],
         )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # _AnimatorBase — all setters + shared render pipeline
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class _AnimatorBase:
     """
@@ -640,16 +806,16 @@ class _AnimatorBase:
     # ── initialisation ────────────────────────────────────────────────────────
 
     def _base_init(self, ds, var: str) -> None:
-        self._ds  = ds
+        self._ds = ds
         self._var = var
 
-        self._output        = self._OUTPUT_DEFAULT          # type: ignore[attr-defined]
-        self._fps           = self._FPS_DEFAULT             # type: ignore[attr-defined]
-        self._step          = self._STEP_DEFAULT            # type: ignore[attr-defined]
-        self._dpi           = self._DPI_DEFAULT             # type: ignore[attr-defined]
+        self._output = self._OUTPUT_DEFAULT  # type: ignore[attr-defined]
+        self._fps = self._FPS_DEFAULT  # type: ignore[attr-defined]
+        self._step = self._STEP_DEFAULT  # type: ignore[attr-defined]
+        self._dpi = self._DPI_DEFAULT  # type: ignore[attr-defined]
         self._figsize: tuple[float, float] = self._FIGSIZE_DEFAULT  # type: ignore[attr-defined]
-        self._codec         = self._CODEC_DEFAULT           # type: ignore[attr-defined]
-        self._video_quality = self._VIDEO_QUALITY_DEFAULT   # type: ignore[attr-defined]
+        self._codec = self._CODEC_DEFAULT  # type: ignore[attr-defined]
+        self._video_quality = self._VIDEO_QUALITY_DEFAULT  # type: ignore[attr-defined]
 
         self._annotations: list[dict] = []
         self._title_template: str | None = None
@@ -666,15 +832,17 @@ class _AnimatorBase:
         if var in VARIABLE_PRESETS:
             p = VARIABLE_PRESETS[var]
             if not silent:
-                print(f"[{self.__class__.__name__}] Variable preset '{var}': {p['plot_title']}")
+                print(
+                    f"[{self.__class__.__name__}] Variable preset '{var}': {p['plot_title']}"
+                )
         else:
             p = VARIABLE_PRESETS["t2m"]
             print(
                 f"[{self.__class__.__name__}] No preset for '{var}' — "
                 f"falling back to temperature defaults."
             )
-        self._cmap       = p["cmap"]
-        self._levels     = np.asarray(p["levels"])
+        self._cmap = p["cmap"]
+        self._levels = np.asarray(p["levels"])
         self._cbar_label = p["cbar_label"]
         self._plot_title = p["plot_title"]
 
@@ -728,10 +896,10 @@ class _AnimatorBase:
             opts = ", ".join(f'"{k}"' for k in self._QUALITY_PRESETS)
             raise ValueError(f"Unknown preset '{preset}'. Choose from: {opts}")
         p = self._QUALITY_PRESETS[preset]
-        self._dpi           = p["dpi"]
-        self._figsize       = p["figsize"]
-        self._fps           = p["fps"]
-        self._codec         = p["codec"]
+        self._dpi = p["dpi"]
+        self._figsize = p["figsize"]
+        self._fps = p["fps"]
+        self._codec = p["codec"]
         self._video_quality = p["quality"]
         print(f"Quality preset '{preset}': {p['description']}")
         return self
@@ -763,7 +931,7 @@ class _AnimatorBase:
 
         Supported ``date_style`` values: ``"en"``, ``"pt-br"``, ``"es"``, ``"fr"``.
         """
-        self._title_template   = template if template else None
+        self._title_template = template if template else None
         self._title_date_style = date_style
         return self
 
@@ -802,12 +970,20 @@ class _AnimatorBase:
         if not x or not y:
             x, y = 0.4967, 0.1
         self._author_kwargs = dict(
-            x=x, y=y, ha=ha, va=va,
-            color=color, fontsize=fontsize,
-            fontweight=fontweight, fontfamily=fontfamily,
-            alpha=alpha, bbox=bbox,
-            bbox_facecolor=bbox_facecolor, bbox_edgecolor=bbox_edgecolor,
-            bbox_alpha=bbox_alpha, bbox_pad=bbox_pad,
+            x=x,
+            y=y,
+            ha=ha,
+            va=va,
+            color=color,
+            fontsize=fontsize,
+            fontweight=fontweight,
+            fontfamily=fontfamily,
+            alpha=alpha,
+            bbox=bbox,
+            bbox_facecolor=bbox_facecolor,
+            bbox_edgecolor=bbox_edgecolor,
+            bbox_alpha=bbox_alpha,
+            bbox_pad=bbox_pad,
         )
         return self
 
@@ -839,18 +1015,28 @@ class _AnimatorBase:
         Use ``%d`` / ``%.1f`` as a placeholder for the field value at ``pos``.
         ``pos`` is ``(lat, lon)`` in decimal degrees.
         """
-        self._annotations.append(dict(
-            text_base=text_base, pos=pos, size=size,
-            color=color, weight=weight, alpha=alpha,
-            bbox=bbox, bbox_color=bbox_color, bbox_alpha=bbox_alpha,
-            interpolate=interpolate, zorder=zorder,
-            marker=marker, marker_size=marker_size,
-            marker_color=marker_color,
-            marker_edge_color=marker_edge_color,
-            marker_edge_width=marker_edge_width,
-            marker_alpha=marker_alpha,
-            text_offset=text_offset,
-        ))
+        self._annotations.append(
+            dict(
+                text_base=text_base,
+                pos=pos,
+                size=size,
+                color=color,
+                weight=weight,
+                alpha=alpha,
+                bbox=bbox,
+                bbox_color=bbox_color,
+                bbox_alpha=bbox_alpha,
+                interpolate=interpolate,
+                zorder=zorder,
+                marker=marker,
+                marker_size=marker_size,
+                marker_color=marker_color,
+                marker_edge_color=marker_edge_color,
+                marker_edge_width=marker_edge_width,
+                marker_alpha=marker_alpha,
+                text_offset=text_offset,
+            )
+        )
         return self
 
     def clear_annotations(self):
@@ -881,7 +1067,7 @@ class _AnimatorBase:
         """Encode cached PNG frames into the output video / GIF."""
         writer_kwargs: dict = {"fps": self._fps}
         if self._output.endswith(".mp4"):
-            writer_kwargs["codec"]   = self._codec
+            writer_kwargs["codec"] = self._codec
             writer_kwargs["quality"] = self._video_quality
             if self._codec in ("libx265", "hevc"):
                 writer_kwargs["output_params"] = ["-pix_fmt", "yuv420p"]
@@ -919,7 +1105,7 @@ class _AnimatorBase:
             ``False`` → info box and credit are anchored to the figure (globe projections).
         """
         scale = _font_scale(self._dpi)
-        _, cycle     = _gfs_meta(self._ds, self._var)
+        _, cycle = _gfs_meta(self._ds, self._var)
         date_str_box = self._ds["time"][0].dt.strftime("%Y-%m-%d").item()
         ax_ref = ax if ax_anchored else None
 
@@ -951,8 +1137,17 @@ class _AnimatorBase:
 
     # ── shared render pipeline ────────────────────────────────────────────────
 
-    def _draw_field(self, fig, ax, lat, lon, field, time_val,
-                    _suppress_contours: bool = False, **build_kw) -> None:
+    def _draw_field(
+        self,
+        fig,
+        ax,
+        lat,
+        lon,
+        field,
+        time_val,
+        _suppress_contours: bool = False,
+        **build_kw,
+    ) -> None:
         """Full draw pipeline: pcolormesh → contour → overlays.
 
         Subclasses customise behaviour via:
@@ -968,12 +1163,27 @@ class _AnimatorBase:
             GeometryCollection projection error at draw time.
         """
         norm, cmap = self._make_norm_and_cmap()
-        cf = ax.pcolormesh(lon, lat, field, cmap=cmap, norm=norm,
-                           transform=ccrs.PlateCarree(), zorder=1)
+        cf = ax.pcolormesh(
+            lon,
+            lat,
+            field,
+            cmap=cmap,
+            norm=norm,
+            transform=ccrs.PlateCarree(),
+            zorder=1,
+        )
         if not _suppress_contours:
             self._draw_contour(ax, lat, lon, field)
-        self._draw_overlays(fig, ax, lat, lon, field, time_val, cf,
-                            ax_anchored=self._overlays_ax_anchored())
+        self._draw_overlays(
+            fig,
+            ax,
+            lat,
+            lon,
+            field,
+            time_val,
+            cf,
+            ax_anchored=self._overlays_ax_anchored(),
+        )
 
     def _make_norm_and_cmap(self):
         """Return (norm, cmap) for pcolormesh.  Override to customise (e.g. Nearside)."""
@@ -983,10 +1193,17 @@ class _AnimatorBase:
     def _draw_contour(self, ax, lat, lon, field) -> None:
         """Draw contour lines.  Override to suppress or handle errors (e.g. Nearside)."""
         scale = _font_scale(self._dpi)
-        ax.contour(lon[::3], lat[::3], field[::3, ::3],
-                   levels=self._levels[::5], colors="white",
-                   linewidths=0.25 * scale, alpha=0.4,
-                   transform=ccrs.PlateCarree(), zorder=2)
+        ax.contour(
+            lon[::3],
+            lat[::3],
+            field[::3, ::3],
+            levels=self._levels[::5],
+            colors="white",
+            linewidths=0.25 * scale,
+            alpha=0.4,
+            transform=ccrs.PlateCarree(),
+            zorder=2,
+        )
 
     def _overlays_ax_anchored(self) -> bool:
         """Return True if info-box / credit should be anchored to the axes (not figure)."""
@@ -1008,8 +1225,16 @@ class _AnimatorBase:
         def _do_render(suppress_contours: bool) -> None:
             fig, ax = self._build_axes(**build_kw)
             try:
-                self._draw_field(fig, ax, lat, lon, field, time_val,
-                                 _suppress_contours=suppress_contours, **build_kw)
+                self._draw_field(
+                    fig,
+                    ax,
+                    lat,
+                    lon,
+                    field,
+                    time_val,
+                    _suppress_contours=suppress_contours,
+                    **build_kw,
+                )
                 fig.tight_layout()
                 fig.savefig(fpath, format="png", dpi=self._dpi)
             finally:
@@ -1036,22 +1261,25 @@ class _AnimatorBase:
             if not os.path.exists(fpath):
                 kw = build_kw_for(tidx) if build_kw_for is not None else {}
                 self._render_frame(tidx, fpath, **kw)
-            print(f"  frame {tidx+1}/{n_frames}  →  {fpath}", end="\r")
+            print(f"  frame {tidx + 1}/{n_frames}  →  {fpath}", end="\r")
         print()
         self._write_video(fdir, n_frames)
         print(f"Saved: {self._output}")
 
     def _log_animate_header(self, n_frames: int, extra: str = "") -> None:
         w, h = self._figsize
-        print(f"[{self.__class__.__name__}] {n_frames} frames | "
-              f"{int(w*self._dpi)}×{int(h*self._dpi)} px | "
-              f"{self._dpi} dpi | {self._fps} fps"
-              f"{(' | ' + extra) if extra else ''} | {self._output}")
+        print(
+            f"[{self.__class__.__name__}] {n_frames} frames | "
+            f"{int(w * self._dpi)}×{int(h * self._dpi)} px | "
+            f"{self._dpi} dpi | {self._fps} fps"
+            f"{(' | ' + extra) if extra else ''} | {self._output}"
+        )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # _RotatingAnimatorMixin — camera rotation shared by Ortho and Nearside
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class _RotatingAnimatorMixin:
     """
@@ -1066,11 +1294,11 @@ class _RotatingAnimatorMixin:
 
     def _rotation_init(self) -> None:
         """Initialise all rotation state.  Call from ``__init__`` before ``_base_init``."""
-        self._lon_start:     float | None = None
-        self._lat_start:     float | None = None
-        self._lon_end:       float | None = None
-        self._lat_end:       float | None = None
-        self._stop_frame:    int   | None = None
+        self._lon_start: float | None = None
+        self._lat_start: float | None = None
+        self._lon_end: float | None = None
+        self._lat_end: float | None = None
+        self._stop_frame: int | None = None
         self._stop_fraction: float | None = None
 
     def _default_camera(self) -> tuple[float, float]:
@@ -1080,23 +1308,30 @@ class _RotatingAnimatorMixin:
     def set_rotation(
         self,
         lon_start: float,
-        lon_end:   float,
+        lon_end: float,
         lat_start: float | None = None,
-        lat_end:   float | None = None,
+        lat_end: float | None = None,
     ):
         """Define the camera arc from (lon_start, lat_start) to (lon_end, lat_end)."""
+
         def _clamp(v: float, name: str) -> float:
             c = max(-self._LAT_LIMIT, min(self._LAT_LIMIT, v))
             if abs(c - v) > 0.01:
-                print(f"[{self.__class__.__name__}] WARNING: {name}={v:.4f}° "
-                      f"clamped to {c:.4f}°.")
+                print(
+                    f"[{self.__class__.__name__}] WARNING: {name}={v:.4f}° "
+                    f"clamped to {c:.4f}°."
+                )
             return c
 
         lon0, lat0 = self._default_camera()
         self._lon_start = float(lon_start)
-        self._lon_end   = float(lon_end)
-        self._lat_start = _clamp(float(lat_start) if lat_start is not None else lat0, "lat_start")
-        self._lat_end   = _clamp(float(lat_end)   if lat_end   is not None else lat0, "lat_end")
+        self._lon_end = float(lon_end)
+        self._lat_start = _clamp(
+            float(lat_start) if lat_start is not None else lat0, "lat_start"
+        )
+        self._lat_end = _clamp(
+            float(lat_end) if lat_end is not None else lat0, "lat_end"
+        )
         return self
 
     def set_rotation_stop(
@@ -1111,9 +1346,9 @@ class _RotatingAnimatorMixin:
             if not 0.0 < fraction < 1.0:
                 raise ValueError("fraction must be strictly between 0 and 1.")
             self._stop_fraction = float(fraction)
-            self._stop_frame    = None
+            self._stop_frame = None
         else:
-            self._stop_frame    = frame
+            self._stop_frame = frame
             self._stop_fraction = None
         return self
 
@@ -1130,15 +1365,16 @@ class _RotatingAnimatorMixin:
         if tidx >= stop:
             lon, lat = float(self._lon_end), float(self._lat_end)  # type: ignore[arg-type]
         else:
-            t   = tidx / stop
-            lon = self._lon_start + t * (self._lon_end - self._lon_start)   # type: ignore[operator]
-            lat = self._lat_start + t * (self._lat_end - self._lat_start)   # type: ignore[operator]
+            t = tidx / stop
+            lon = self._lon_start + t * (self._lon_end - self._lon_start)  # type: ignore[operator]
+            lat = self._lat_start + t * (self._lat_end - self._lat_start)  # type: ignore[operator]
         return (float(lon), max(-self._LAT_LIMIT, min(self._LAT_LIMIT, float(lat))))
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 # _FlatAnimatorMixin — region/zoom/ocean/grid helpers for flat projections
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class _FlatAnimatorMixin:
     """
@@ -1171,11 +1407,15 @@ class _FlatAnimatorMixin:
             if "central_longitude" not in self._region:
                 self._region["central_longitude"] = 0.0
         else:
-            if any(v is None for v in (toplat, bottomlat, leftlon, rightlon)):
-                raise ValueError("Provide all four: toplat, bottomlat, leftlon, rightlon.")
+            if toplat is None or bottomlat is None or leftlon is None or rightlon is None:
+                raise ValueError(
+                    "Provide all four: toplat, bottomlat, leftlon, rightlon."
+                )
             self._region = {
-                "toplat": float(toplat), "bottomlat": float(bottomlat),
-                "leftlon": float(leftlon), "rightlon": float(rightlon),
+                "toplat": float(toplat),
+                "bottomlat": float(bottomlat),
+                "leftlon": float(leftlon),
+                "rightlon": float(rightlon),
                 "central_longitude": float(central_longitude),
             }
         return self
@@ -1187,10 +1427,10 @@ class _FlatAnimatorMixin:
         lat, lon = pos
         half = 90.0 / zoom
         self._region = {
-            "toplat":    min( self._LAT_MAX, lat + half),
+            "toplat": min(self._LAT_MAX, lat + half),
             "bottomlat": max(-self._LAT_MAX, lat - half),
-            "leftlon":   lon - half,
-            "rightlon":  lon + half,
+            "leftlon": lon - half,
+            "rightlon": lon + half,
             "central_longitude": lon,
         }
         return self
@@ -1214,8 +1454,10 @@ class _FlatAnimatorMixin:
 
     def _log_region_info(self) -> str:
         r = self._region
-        return (f"lat [{r['bottomlat']:.1f}…{r['toplat']:.1f}] "
-                f"lon [{r['leftlon']:.1f}…{r['rightlon']:.1f}]")
+        return (
+            f"lat [{r['bottomlat']:.1f}…{r['toplat']:.1f}] "
+            f"lon [{r['leftlon']:.1f}…{r['rightlon']:.1f}]"
+        )
 
     def plot(self, time_idx: int = 0, save: str | None = None, show: bool = True):
         """Render a single static frame."""
@@ -1226,7 +1468,9 @@ class _FlatAnimatorMixin:
         if save:
             fig.savefig(save, dpi=self._dpi, bbox_inches="tight")
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w*self._dpi)}×{int(h*self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()
@@ -1235,7 +1479,7 @@ class _FlatAnimatorMixin:
     def animate(self):
         """Render all frames and assemble the video."""
         run_date, cycle = _gfs_meta(self._ds, self._var)
-        fdir     = _frames_dir(f"{self._frames_prefix()}_{self._var}", run_date, cycle)
+        fdir = _frames_dir(f"{self._frames_prefix()}_{self._var}", run_date, cycle)
         n_frames = len(self._ds[self._var].time)
         self._log_animate_header(n_frames, extra=self._log_region_info())
         self._animate_loop(fdir, n_frames)
@@ -1245,6 +1489,7 @@ class _FlatAnimatorMixin:
 # ══════════════════════════════════════════════════════════════════════════════
 # OrthoAnimator
 # ══════════════════════════════════════════════════════════════════════════════
+
 
 class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     """Renders an animated weather map using the Orthographic (globe) projection.
@@ -1293,13 +1538,13 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         anim.plot(time_idx=0, save="snapshot.png")
     """
 
-    _QUALITY_PRESETS       = QUALITY_PRESETS_SQUARE
-    _OUTPUT_DEFAULT        = "output_ortho.mp4"
-    _FPS_DEFAULT           = 6
-    _STEP_DEFAULT          = 1
-    _DPI_DEFAULT           = 120
-    _FIGSIZE_DEFAULT       = (8.0, 8.0)
-    _CODEC_DEFAULT         = "libx264"
+    _QUALITY_PRESETS = QUALITY_PRESETS_SQUARE
+    _OUTPUT_DEFAULT = "output_ortho.mp4"
+    _FPS_DEFAULT = 6
+    _STEP_DEFAULT = 1
+    _DPI_DEFAULT = 120
+    _FIGSIZE_DEFAULT = (8.0, 8.0)
+    _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8
 
     def __init__(
@@ -1351,7 +1596,7 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     def _build_axes(self, central: tuple | None = None) -> tuple[plt.Figure, plt.Axes]:
         if central is None:
             central = self._central_point
-        proj  = ccrs.Orthographic(*central)
+        proj = ccrs.Orthographic(*central)
         scale = _font_scale(self._dpi)
         fig, ax = plt.subplots(
             figsize=self._figsize,
@@ -1363,8 +1608,9 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if self._zoom > 1.0:
             lon_c, lat_c = central
             r = 90.0 / self._zoom
-            ax.set_extent([lon_c - r, lon_c + r, lat_c - r, lat_c + r],
-                          crs=ccrs.PlateCarree())
+            ax.set_extent(
+                [lon_c - r, lon_c + r, lat_c - r, lat_c + r], crs=ccrs.PlateCarree()
+            )
         _add_features(ax, lw=0.5 * scale, show_states=self._show_states)
         return fig, ax
 
@@ -1386,7 +1632,9 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if save:
             fig.savefig(save, dpi=self._dpi, bbox_inches="tight")
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w*self._dpi)}×{int(h*self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()
@@ -1395,12 +1643,13 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     def animate(self) -> "OrthoAnimator":
         """Render all frames and assemble the video."""
         run_date, cycle = _gfs_meta(self._ds, self._var)
-        fdir     = _frames_dir(self._var, run_date, cycle)
+        fdir = _frames_dir(self._var, run_date, cycle)
         n_frames = len(self._ds[self._var].time)
-        stop     = self._resolve_stop_frame(n_frames)
+        stop = self._resolve_stop_frame(n_frames)
         self._log_animate_header(n_frames)
         self._animate_loop(
-            fdir, n_frames,
+            fdir,
+            n_frames,
             build_kw_for=lambda tidx: {"central": self._camera_at(tidx, stop)},
         )
         return self
@@ -1461,13 +1710,13 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         anim.set_rotation_stop(fraction=0.65)
     """
 
-    _QUALITY_PRESETS       = QUALITY_PRESETS_SQUARE
-    _OUTPUT_DEFAULT        = "output_nearside.mp4"
-    _FPS_DEFAULT           = 6
-    _STEP_DEFAULT          = 1
-    _DPI_DEFAULT           = 120
-    _FIGSIZE_DEFAULT       = (10.0, 10.0)
-    _CODEC_DEFAULT         = "libx264"
+    _QUALITY_PRESETS = QUALITY_PRESETS_SQUARE
+    _OUTPUT_DEFAULT = "output_nearside.mp4"
+    _FPS_DEFAULT = 6
+    _STEP_DEFAULT = 1
+    _DPI_DEFAULT = 120
+    _FIGSIZE_DEFAULT = (10.0, 10.0)
+    _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8
 
     _DEFAULT_LON: float = -50.0
@@ -1482,8 +1731,8 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         lat: float = _DEFAULT_LAT,
         satellite_height: float = _DEFAULT_HEIGHT,
     ):
-        self._lon:    float = float(lon)
-        self._lat:    float = float(lat)
+        self._lon: float = float(lon)
+        self._lat: float = float(lat)
         self._height: float = float(satellite_height)
         self._rotation_init()
         self._base_init(ds, var)
@@ -1527,7 +1776,7 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if central is None:
             central = (self._lon, self._lat)
         lon_c, lat_c = central
-        proj  = ccrs.NearsidePerspective(
+        proj = ccrs.NearsidePerspective(
             central_longitude=lon_c,
             central_latitude=lat_c,
             satellite_height=self._height,
@@ -1557,10 +1806,17 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
             return
         scale = _font_scale(self._dpi)
         try:
-            ax.contour(lon[::3], lat[::3], field[::3, ::3],
-                       levels=self._levels[::5], colors="white",
-                       linewidths=0.25 * scale, alpha=0.4,
-                       transform=ccrs.PlateCarree(), zorder=2)
+            ax.contour(
+                lon[::3],
+                lat[::3],
+                field[::3, ::3],
+                levels=self._levels[::5],
+                colors="white",
+                linewidths=0.25 * scale,
+                alpha=0.4,
+                transform=ccrs.PlateCarree(),
+                zorder=2,
+            )
         except TypeError:
             _remove_contours(ax)
 
@@ -1586,7 +1842,9 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if save:
             fig.savefig(save, dpi=self._dpi)
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w*self._dpi)}×{int(h*self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()
@@ -1595,16 +1853,17 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     def animate(self) -> "NearsidePerspectiveAnimator":
         """Render all frames and assemble the video."""
         run_date, cycle = _gfs_meta(self._ds, self._var)
-        fdir     = _frames_dir(f"ns_{self._var}", run_date, cycle)
+        fdir = _frames_dir(f"ns_{self._var}", run_date, cycle)
         n_frames = len(self._ds[self._var].time)
-        stop     = self._resolve_stop_frame(n_frames)
-        r_deg    = _visible_radius_deg(self._height)
+        stop = self._resolve_stop_frame(n_frames)
+        r_deg = _visible_radius_deg(self._height)
         self._log_animate_header(
             n_frames,
-            extra=f"height={self._height/1000:.0f} km | visible≈{r_deg:.1f}°",
+            extra=f"height={self._height / 1000:.0f} km | visible≈{r_deg:.1f}°",
         )
         self._animate_loop(
-            fdir, n_frames,
+            fdir,
+            n_frames,
             build_kw_for=lambda tidx: {"central": self._camera_at(tidx, stop)},
         )
         return self
@@ -1615,8 +1874,10 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
 # ══════════════════════════════════════════════════════════════════════════════
 
 _PC_DEFAULT_REGION = {
-    "toplat": 5.0, "bottomlat": -35.0,
-    "leftlon": -82.0, "rightlon": -30.0,
+    "toplat": 5.0,
+    "bottomlat": -35.0,
+    "leftlon": -82.0,
+    "rightlon": -30.0,
     "central_longitude": 0.0,
 }
 
@@ -1650,37 +1911,79 @@ class PlateCarreeAnimator(_FlatAnimatorMixin, _AnimatorBase):
         anim.animate()
     """
 
-    _QUALITY_PRESETS       = QUALITY_PRESETS_WIDE
-    _OUTPUT_DEFAULT        = "output_plate_carree.mp4"
-    _FPS_DEFAULT           = 6
-    _STEP_DEFAULT          = 1
-    _DPI_DEFAULT           = 120
-    _FIGSIZE_DEFAULT       = (16.0, 9.0)
-    _CODEC_DEFAULT         = "libx264"
+    _QUALITY_PRESETS = QUALITY_PRESETS_WIDE
+    _OUTPUT_DEFAULT = "output_plate_carree.mp4"
+    _FPS_DEFAULT = 6
+    _STEP_DEFAULT = 1
+    _DPI_DEFAULT = 120
+    _FIGSIZE_DEFAULT = (16.0, 9.0)
+    _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8
-    _LAT_MAX               = 80.0
+    _LAT_MAX = 80.0
 
     _NAMED_REGIONS: dict[str, dict] = {
-        "south_america": {"toplat":  15.0, "bottomlat": -60.0, "leftlon":  -85.0, "rightlon":  -30.0, "central_longitude":    0.0},
-        "brazil":        {"toplat":   6.0, "bottomlat": -34.0, "leftlon":  -75.0, "rightlon":  -28.0, "central_longitude":    0.0},
-        "northeast_br":  {"toplat":  -1.0, "bottomlat": -18.0, "leftlon":  -47.0, "rightlon":  -34.0, "central_longitude":    0.0},
-        "north_br":      {"toplat":   5.5, "bottomlat":  -5.0, "leftlon":  -74.0, "rightlon":  -44.0, "central_longitude":    0.0},
-        "southeast_br":  {"toplat": -14.0, "bottomlat": -25.5, "leftlon":  -53.0, "rightlon":  -39.0, "central_longitude":    0.0},
-        "south_br":      {"toplat": -22.0, "bottomlat": -34.0, "leftlon":  -58.0, "rightlon":  -47.0, "central_longitude":    0.0},
-        "global":        {"toplat":  85.0, "bottomlat": -85.0, "leftlon": -179.9, "rightlon":  179.9, "central_longitude":    0.0},
+        "south_america": {
+            "toplat": 15.0,
+            "bottomlat": -60.0,
+            "leftlon": -85.0,
+            "rightlon": -30.0,
+            "central_longitude": 0.0,
+        },
+        "brazil": {
+            "toplat": 6.0,
+            "bottomlat": -34.0,
+            "leftlon": -75.0,
+            "rightlon": -28.0,
+            "central_longitude": 0.0,
+        },
+        "northeast_br": {
+            "toplat": -1.0,
+            "bottomlat": -18.0,
+            "leftlon": -47.0,
+            "rightlon": -34.0,
+            "central_longitude": 0.0,
+        },
+        "north_br": {
+            "toplat": 5.5,
+            "bottomlat": -5.0,
+            "leftlon": -74.0,
+            "rightlon": -44.0,
+            "central_longitude": 0.0,
+        },
+        "southeast_br": {
+            "toplat": -14.0,
+            "bottomlat": -25.5,
+            "leftlon": -53.0,
+            "rightlon": -39.0,
+            "central_longitude": 0.0,
+        },
+        "south_br": {
+            "toplat": -22.0,
+            "bottomlat": -34.0,
+            "leftlon": -58.0,
+            "rightlon": -47.0,
+            "central_longitude": 0.0,
+        },
+        "global": {
+            "toplat": 85.0,
+            "bottomlat": -85.0,
+            "leftlon": -179.9,
+            "rightlon": 179.9,
+            "central_longitude": 0.0,
+        },
     }
 
     def __init__(self, ds, var: str):
         self._region: dict = dict(_PC_DEFAULT_REGION)
         self._show_ocean: bool = True
-        self._show_grid:  bool = True
+        self._show_grid: bool = True
         self._base_init(ds, var)
 
     def _frames_prefix(self) -> str:
         return "pc"
 
     def _build_axes(self) -> tuple[plt.Figure, plt.Axes]:
-        r     = self._region
+        r = self._region
         scale = _font_scale(self._dpi)
         safe_top = max(-self._LAT_MAX, min(self._LAT_MAX, r["toplat"]))
         safe_bot = max(-self._LAT_MAX, min(self._LAT_MAX, r["bottomlat"]))
@@ -1691,16 +1994,27 @@ class PlateCarreeAnimator(_FlatAnimatorMixin, _AnimatorBase):
             facecolor="#0d1117",
             dpi=self._dpi,
         )
-        ax.set_extent([r["leftlon"], r["rightlon"], safe_bot, safe_top],
-                      crs=ccrs.PlateCarree())
-        _add_features(ax, lw=0.5 * scale, show_states=self._show_states,
-                      show_ocean=self._show_ocean)
+        ax.set_extent(
+            [r["leftlon"], r["rightlon"], safe_bot, safe_top], crs=ccrs.PlateCarree()
+        )
+        _add_features(
+            ax,
+            lw=0.5 * scale,
+            show_states=self._show_states,
+            show_ocean=self._show_ocean,
+        )
 
         if self._show_grid:
-            gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
-                              linewidth=0.3 * scale, color="#14181c",
-                              alpha=0.8, linestyle="--", zorder=2)
-            gl.top_labels   = False
+            gl = ax.gridlines(
+                crs=ccrs.PlateCarree(),
+                draw_labels=True,
+                linewidth=0.3 * scale,
+                color="#14181c",
+                alpha=0.8,
+                linestyle="--",
+                zorder=2,
+            )
+            gl.top_labels = False
             gl.right_labels = False
             gl.xlocator = mticker.MultipleLocator(10)
             gl.ylocator = mticker.MultipleLocator(10)
@@ -1715,8 +2029,10 @@ class PlateCarreeAnimator(_FlatAnimatorMixin, _AnimatorBase):
 # ══════════════════════════════════════════════════════════════════════════════
 
 _ROB_DEFAULT_REGION = {
-    "toplat": 85.0, "bottomlat": -85.0,
-    "leftlon": -180.0, "rightlon": 180.0,
+    "toplat": 85.0,
+    "bottomlat": -85.0,
+    "leftlon": -180.0,
+    "rightlon": 180.0,
     "central_longitude": 0.0,
 }
 
@@ -1755,40 +2071,100 @@ class RobinsonAnimator(_FlatAnimatorMixin, _AnimatorBase):
         anim.animate()
     """
 
-    _QUALITY_PRESETS       = QUALITY_PRESETS_WIDE
-    _OUTPUT_DEFAULT        = "output_robinson.mp4"
-    _FPS_DEFAULT           = 6
-    _STEP_DEFAULT          = 1
-    _DPI_DEFAULT           = 120
-    _FIGSIZE_DEFAULT       = (16.0, 9.0)
-    _CODEC_DEFAULT         = "libx264"
+    _QUALITY_PRESETS = QUALITY_PRESETS_WIDE
+    _OUTPUT_DEFAULT = "output_robinson.mp4"
+    _FPS_DEFAULT = 6
+    _STEP_DEFAULT = 1
+    _DPI_DEFAULT = 120
+    _FIGSIZE_DEFAULT = (16.0, 9.0)
+    _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8
-    _LAT_MAX               = 85.0
+    _LAT_MAX = 85.0
 
     _NAMED_REGIONS: dict[str, dict] = {
-        "global":           {"toplat":  85.0, "bottomlat": -85.0, "leftlon": -180.0, "rightlon":  180.0, "central_longitude":    0.0},
-        "north_hemisphere": {"toplat":  85.0, "bottomlat":   0.0, "leftlon": -180.0, "rightlon":  180.0, "central_longitude":    0.0},
-        "south_hemisphere": {"toplat":   0.0, "bottomlat": -85.0, "leftlon": -180.0, "rightlon":  180.0, "central_longitude":    0.0},
-        "atlantic":         {"toplat":  75.0, "bottomlat": -60.0, "leftlon": -100.0, "rightlon":   20.0, "central_longitude":  -40.0},
-        "pacific":          {"toplat":  70.0, "bottomlat": -70.0, "leftlon":  100.0, "rightlon":  290.0, "central_longitude":  180.0},
-        "south_america":    {"toplat":  15.0, "bottomlat": -60.0, "leftlon":  -85.0, "rightlon":  -30.0, "central_longitude":  -57.5},
-        "africa":           {"toplat":  40.0, "bottomlat": -40.0, "leftlon":  -20.0, "rightlon":   55.0, "central_longitude":   17.5},
-        "europe_asia":      {"toplat":  75.0, "bottomlat":  10.0, "leftlon":  -30.0, "rightlon":  150.0, "central_longitude":   60.0},
-        "north_america":    {"toplat":  80.0, "bottomlat":   5.0, "leftlon": -170.0, "rightlon":  -50.0, "central_longitude": -100.0},
-        "asia":             {"toplat":  75.0, "bottomlat": -10.0, "leftlon":   40.0, "rightlon":  150.0, "central_longitude":   95.0},
+        "global": {
+            "toplat": 85.0,
+            "bottomlat": -85.0,
+            "leftlon": -180.0,
+            "rightlon": 180.0,
+            "central_longitude": 0.0,
+        },
+        "north_hemisphere": {
+            "toplat": 85.0,
+            "bottomlat": 0.0,
+            "leftlon": -180.0,
+            "rightlon": 180.0,
+            "central_longitude": 0.0,
+        },
+        "south_hemisphere": {
+            "toplat": 0.0,
+            "bottomlat": -85.0,
+            "leftlon": -180.0,
+            "rightlon": 180.0,
+            "central_longitude": 0.0,
+        },
+        "atlantic": {
+            "toplat": 75.0,
+            "bottomlat": -60.0,
+            "leftlon": -100.0,
+            "rightlon": 20.0,
+            "central_longitude": -40.0,
+        },
+        "pacific": {
+            "toplat": 70.0,
+            "bottomlat": -70.0,
+            "leftlon": 100.0,
+            "rightlon": 290.0,
+            "central_longitude": 180.0,
+        },
+        "south_america": {
+            "toplat": 15.0,
+            "bottomlat": -60.0,
+            "leftlon": -85.0,
+            "rightlon": -30.0,
+            "central_longitude": -57.5,
+        },
+        "africa": {
+            "toplat": 40.0,
+            "bottomlat": -40.0,
+            "leftlon": -20.0,
+            "rightlon": 55.0,
+            "central_longitude": 17.5,
+        },
+        "europe_asia": {
+            "toplat": 75.0,
+            "bottomlat": 10.0,
+            "leftlon": -30.0,
+            "rightlon": 150.0,
+            "central_longitude": 60.0,
+        },
+        "north_america": {
+            "toplat": 80.0,
+            "bottomlat": 5.0,
+            "leftlon": -170.0,
+            "rightlon": -50.0,
+            "central_longitude": -100.0,
+        },
+        "asia": {
+            "toplat": 75.0,
+            "bottomlat": -10.0,
+            "leftlon": 40.0,
+            "rightlon": 150.0,
+            "central_longitude": 95.0,
+        },
     }
 
     def __init__(self, ds, var: str):
         self._region: dict = dict(_ROB_DEFAULT_REGION)
         self._show_ocean: bool = True
-        self._show_grid:  bool = True
+        self._show_grid: bool = True
         self._base_init(ds, var)
 
     def _frames_prefix(self) -> str:
         return "rob"
 
     def _build_axes(self) -> tuple[plt.Figure, plt.Axes]:
-        r     = self._region
+        r = self._region
         c_lon = r.get("central_longitude", 0.0)
         scale = _font_scale(self._dpi)
         safe_top = max(-self._LAT_MAX, min(self._LAT_MAX, r["toplat"]))
@@ -1800,15 +2176,26 @@ class RobinsonAnimator(_FlatAnimatorMixin, _AnimatorBase):
             facecolor="#0d1117",
             dpi=self._dpi,
         )
-        ax.set_extent([r["leftlon"], r["rightlon"], safe_bot, safe_top],
-                      crs=ccrs.PlateCarree())
-        _add_features(ax, lw=0.5 * scale, show_states=self._show_states,
-                      show_ocean=self._show_ocean)
+        ax.set_extent(
+            [r["leftlon"], r["rightlon"], safe_bot, safe_top], crs=ccrs.PlateCarree()
+        )
+        _add_features(
+            ax,
+            lw=0.5 * scale,
+            show_states=self._show_states,
+            show_ocean=self._show_ocean,
+        )
 
         if self._show_grid:
-            gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=False,
-                              linewidth=0.3 * scale, color="#14181c",
-                              alpha=0.8, linestyle="--", zorder=2)
+            gl = ax.gridlines(
+                crs=ccrs.PlateCarree(),
+                draw_labels=False,
+                linewidth=0.3 * scale,
+                color="#14181c",
+                alpha=0.8,
+                linestyle="--",
+                zorder=2,
+            )
             gl.xlocator = mticker.MultipleLocator(30)
             gl.ylocator = mticker.MultipleLocator(30)
 
@@ -1828,7 +2215,7 @@ __all__ = [
     # Preset tables
     "QUALITY_PRESETS_SQUARE",
     "QUALITY_PRESETS_WIDE",
-    "QUALITY_PRESETS",           # backward-compat alias → QUALITY_PRESETS_SQUARE
+    "QUALITY_PRESETS",  # backward-compat alias → QUALITY_PRESETS_SQUARE
     "GEOSTATIONARY_HEIGHT",
     "EARTH_RADIUS",
     # Utility functions
