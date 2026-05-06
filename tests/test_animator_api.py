@@ -78,9 +78,9 @@ def test_rotation_at_interpolates_until_stop(sample_ds):
     anim = OrthoAnimator(sample_ds, "t2m")
     anim.set_rotation(lon_start=-60, lon_end=-30, lat_start=-20, lat_end=-10)
 
-    lon0, lat0 = anim._rotation_at(0, stop=2)
-    lon1, lat1 = anim._rotation_at(1, stop=2)
-    lon2, lat2 = anim._rotation_at(2, stop=2)
+    lon0, lat0 = anim._camera_at(0, stop=2)
+    lon1, lat1 = anim._camera_at(1, stop=2)
+    lon2, lat2 = anim._camera_at(2, stop=2)
 
     assert (lon0, lat0) == (-60, -20)
     assert (lon2, lat2) == (-30, -10)
