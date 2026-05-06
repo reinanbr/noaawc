@@ -1407,7 +1407,12 @@ class _FlatAnimatorMixin:
             if "central_longitude" not in self._region:
                 self._region["central_longitude"] = 0.0
         else:
-            if toplat is None or bottomlat is None or leftlon is None or rightlon is None:
+            if (
+                toplat is None
+                or bottomlat is None
+                or leftlon is None
+                or rightlon is None
+            ):
                 raise ValueError(
                     "Provide all four: toplat, bottomlat, leftlon, rightlon."
                 )
