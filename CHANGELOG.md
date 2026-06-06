@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.5.0] - 2026-06-06
+
+### Added
+- **`ocean_plots.py`** — batch renderer for oceanic data in Orthographic and
+  PlateCarrée projections, mirroring the `test_plot_all_keys.py` architecture
+  (`VarConfig`, `Profile`, skip-if-exists, per-error log).
+- **`noaawc.ocean_variables`** — variable catalogue and plot presets for GODAS
+  and ERSST data: `OCEAN_VARIABLES_INFO`, `OCEAN_VARIABLE_PRESETS`,
+  `OCEAN_NO_CONTOUR_VARS`, `GODAS_LEVELS`, `NINO_BOXES`, `WWV_BOX`.
+- **OISST v2 High-Res** (`open_oisst`) — 0.25° monthly SST via NOAA PSL
+  OPeNDAP; used automatically for `sst` when `year >= 1981`.
+- **Bilinear grid upsampling** (`_upsample`) via
+  `scipy.interpolate.RegularGridInterpolator`; smooths GODAS 1° → 0.25°
+  and ERSST 2° → 0.5° before rendering.
+- 14 ocean variable configurations across 4 depth levels (surface, 50 m,
+  100 m, 200 m, 500 m): `sst`, `sshg`, `pottmp`, `salt`, `ucur`, `vcur`.
+- 4 projection profiles: ortho-Atlantic, ortho-Pacific, plate-global,
+  plate-tropical.
+- `scipy` added to `install_requires` in `setup.py`.
+
+### Fixed
+- Removed unused imports in `noaawc/base.py` (`_frames_dir`,
+  `_get_field_full`), `noaawc/presets.py` (`numpy`),
+  `noaawc/ocean_variables.py` (`matplotlib.colors`), and
+  `noaawc/overlays.py` (`_format_date`).
+- All backward-compat re-exports in `noaawc/main.py` annotated with
+  `# noqa: F401`; `ruff check` now passes clean across the entire package.
+
+### Changed
+- Updated `setup.py` version to `0.5.0`.
+- README extended with a full **Ocean Data** section covering data sources,
+  variable catalogue, region presets, batch CLI, and single-plot API.
+
+---
+
 ## [0.4.1] - 2026-05-06
 
 ### Changed

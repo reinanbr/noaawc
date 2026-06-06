@@ -45,7 +45,7 @@ DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── GFS data configuration ────────────────────────────────────────────────────
 
-RUN_DATE = "02/05/2026"
+RUN_DATE = "02/06/2026"
 CYCLE = "00"
 STATIC_HOURS = [0]
 ANIM_HOURS = list(range(0, 121, 3))

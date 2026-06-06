@@ -35,6 +35,11 @@
 - [Supported Variables](#supported-variables)
 - [Visual Style](#visual-style)
 - [Examples](#examples)
+- [Ocean Data — GODAS / OISST / ERSST](#ocean-data--godas--oisst--ersst)
+  - [Ocean Variables](#ocean-variables)
+  - [Projections](#projections-1)
+  - [Batch rendering](#batch-rendering)
+  - [Single plot API](#single-plot-api)
 - [Dependencies](#dependencies)
 
 ---
@@ -79,6 +84,7 @@ anim.animate()
 ## Features
 
 - 🌍 **Four projection modes** — orthographic globe, nearside perspective (satellite), PlateCarrée (flat regional), and Robinson (world map)
+- 🌊 **Ocean data support** — GODAS subsurface fields (pottmp, salt, ucur/vcur, sshg), NOAA OISST v2 at 0.25°, and ERSST v5 long-record SST; batch-renders 14 variables × 4 projections with skip-if-exists logic
 - 🎨 **Dark theme** optimized for social media and presentation use
 - 📦 **50+ variable presets** — colormaps, level ranges, and labels auto-loaded for every GFS variable
 - 🗃️ **VARIABLES_INFO metadata** — GRIB2 identifiers, level types, unit converters, and long names
@@ -844,6 +850,84 @@ for mode, init_kw, configure in profiles:
 
 ---
 
+## Ocean Data — GODAS / OISST / ERSST
+
+`ocean_plots.py` renders oceanic fields from three NOAA sources using the
+same dark theme and cartopy projections as the GFS weather animators.
+
+| Source | Variable | Native resolution | Period |
+|---|---|---|---|
+| NOAA OISST v2 High-Res | `sst` | **0.25°** | 1981–present |
+| NOAA NCEP GODAS | `pottmp`, `salt`, `ucur`, `vcur`, `sshg` | ~1° × ⅓° | 1980–present |
+| NOAA ERSST v5 | `sst` (fallback) | 2° | 1854–present |
+
+Data is fetched lazily via OPeNDAP — no manual download required.
+OISST is the default source for SST (set `SST_SOURCE = "ersst"` for the
+long record back to 1854).
+
+### Ocean Variables
+
+| Key | Variable | Depths available |
+|---|---|---|
+| `sst` | Sea Surface Temperature | surface |
+| `sshg` | Sea Surface Height (relative to geoid) | surface |
+| `pottmp_005m` … `pottmp_500m` | Potential Temperature | 5, 50, 100, 200, 500 m |
+| `salt_005m` … `salt_500m` | Salinity | 5, 100, 500 m |
+| `ucur_005m` … `ucur_100m` | Eastward ocean current | 5, 100 m |
+| `vcur_005m` … `vcur_100m` | Northward ocean current | 5, 100 m |
+
+### Projections
+
+| Profile | Mode | Description |
+|---|---|---|
+| `ortho` | Orthographic | Globe centred on the Atlantic (lon 0°) |
+| `ortho_pacific` | Orthographic | Globe centred on the Pacific (lon 200°) |
+| `plate` | PlateCarrée | Global flat map |
+| `plate_tropical` | PlateCarrée | Tropical belt (25°S – 25°N) |
+
+### Batch rendering
+
+```bash
+# render all 14 variables × 4 projections for the previous month
+python ocean_plots.py
+
+# force re-render everything
+python ocean_plots.py --force
+
+# specific month
+python ocean_plots.py --year 2024 --month 3
+
+# only orthographic projections
+python ocean_plots.py --mode ortho
+
+# single variable
+python ocean_plots.py --var pottmp_200m
+```
+
+Output is saved under `plots/ocean/<subdir>/`.
+Files that already exist are skipped automatically.
+Errors are logged to `plots/ocean/errors/ocean_errors.txt` without
+interrupting the batch.
+
+### Single plot API
+
+```python
+from ocean_plots import plot_ortho, plot_plate
+
+# Orthographic — global SST, May 2024
+plot_ortho("sst", 2024, 5, save="sst_ortho.png")
+
+# PlateCarrée — tropical Pacific potential temperature at 200 m
+plot_plate("pottmp", 2024, 5, depth_m=200, region="pacific",
+           save="pottmp_200m_pacific.png")
+```
+
+The data grid is bilinearly upsampled (factor 4 by default) before
+rendering, turning the GODAS 1° grid into ~0.25° and ERSST 2° into ~0.5°
+for a smooth result.  Pass `upsample=1` to use the raw native grid.
+
+---
+
 ## Dependencies
 
 | Package | Minimum version | Notes |
@@ -856,6 +940,7 @@ for mode, init_kw, configure in profiles:
 | `imageio` | ≥ 2.28 | |
 | `imageio[ffmpeg]` | — | Required for MP4 output |
 | `xarray` | ≥ 2023.1 | |
+| `scipy` | ≥ 1.11 | Ocean grid upsampling (`ocean_plots.py`) |
 
 ---
 
