@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="noaawc",
-    version="0.5.0",
+    version="0.5.1",
     url="https://github.com/reinanbr/noaawc",
     license="GPLv3",
     author="Reinan Br",

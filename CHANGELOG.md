@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.1] - 2026-06-06
+
+### Fixed
+- Added `Programming Language :: Python :: 3.10/3.11/3.12` classifiers to
+  `setup.py` so the PyPI `pyversions` badge displays correctly.
+- Updated package description to reflect GFS, GODAS, OISST and ERSST support.
+- Fixed CI badge URL in README (`tests.yml` → `ci-publish.yml`).
+- Fixed `noawclg` link in README (`your-org` → `reinanbr`).
+
+---
+
 ## [0.5.0] - 2026-06-06
 
 ### Added
