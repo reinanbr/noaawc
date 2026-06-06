@@ -6,7 +6,7 @@
 <hr>
 **noaawc** is a Python library for rendering animated and static meteorological maps from GFS (Global Forecast System) data. It provides a high-level API to create publication-quality, dark-themed weather visualizations — four projection modes, smooth camera rotation, per-frame annotations, dynamic titles, and export to MP4 or GIF.
 
-> **noaawc** is built on top of [**noawclg**](https://github.com/your-org/noawclg) — the companion library responsible for downloading, parsing, and organizing GFS GRIB2 data into `xarray.Dataset` objects ready for visualization.
+> **noaawc** is built on top of [**noawclg**](https://github.com/reinanbr/noawclg) — the companion library responsible for downloading, parsing, and organizing GFS GRIB2 data into `xarray.Dataset` objects ready for visualization.
 
 ---
 
