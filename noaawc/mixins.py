@@ -1,3 +1,4 @@
+# mypy: disable-error-code="attr-defined"
 from __future__ import annotations
 
 from noaawc.utils import _get_field_full, _gfs_meta, _frames_dir
