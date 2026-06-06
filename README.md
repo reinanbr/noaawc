@@ -885,6 +885,53 @@ long record back to 1854).
 | `plate` | PlateCarrée | Global flat map |
 | `plate_tropical` | PlateCarrée | Tropical belt (25°S – 25°N) |
 
+### Variable catalogue API
+
+The `noaawc.ocean_variables` module exposes the full metadata and plot-preset
+catalogue so you can build your own renderers on top of it.
+
+```python
+from noaawc.ocean_variables import (
+    OCEAN_VARIABLES_INFO,    # metadata: units, source, converter, depth levels
+    OCEAN_VARIABLE_PRESETS,  # colormap, levels array, cbar_label, plot_title
+    OCEAN_NO_CONTOUR_VARS,   # frozenset of vars where contours are suppressed
+    GODAS_LEVELS,            # np.ndarray — all 40 GODAS depth levels (m)
+    GODAS_LEVELS_SHALLOW,    # ≤ 300 m subset
+    NINO_BOXES,              # ENSO monitoring regions (0–360 lon)
+    WWV_BOX,                 # Warm Water Volume box (5°S–5°N, 120°E–80°W)
+    list_ocean_variable_presets,  # pretty-print the catalogue
+)
+
+list_ocean_variable_presets()
+# Variable     Source    Colormap               Range (N steps)               Label
+# ──────────────────────────────────────────────────────────────────────────────────
+# pottmp       GODAS     thermal                -2 … 32  (18 steps)   Potential Temperature (°C)
+# salt         GODAS     haline                 30 … 38  (17 steps)   Salinity (PSU)
+# ucur         GODAS     RdBu_r                 -2 … 2   (21 steps)   U Current (m s⁻¹)
+# ...
+```
+
+**ENSO monitoring regions** (`NINO_BOXES`) — longitudes in 0–360 convention:
+
+| Region | Lat | Lon |
+|---|---|---|
+| Niño 1+2 | 10°S – 0° | 270–280°E |
+| Niño 3 | 5°S – 5°N | 210–270°E |
+| Niño 3.4 | 5°S – 5°N | 190–240°E |
+| Niño 4 | 5°S – 5°N | 160–210°E |
+| WWV box | 5°S – 5°N | 120–280°E |
+
+**GODAS depth levels** — 40 levels from 5 m to 4 478 m:
+
+```python
+from noaawc.ocean_variables import GODAS_LEVELS, GODAS_LEVELS_SHALLOW
+print(GODAS_LEVELS_SHALLOW)
+# [  5  15  25  35  45  55  65  75  85  95 105 115 125 135 145 155
+#   165 175 185 195 205 215 225 238 262]
+```
+
+---
+
 ### Batch rendering
 
 ```bash
