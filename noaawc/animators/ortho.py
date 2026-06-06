@@ -22,7 +22,9 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     _CODEC_DEFAULT = "libx264"
     _VIDEO_QUALITY_DEFAULT = 8
 
-    def __init__(self, ds, var: str, central_point: tuple[float, float] = (-45.0, -15.0)):
+    def __init__(
+        self, ds, var: str, central_point: tuple[float, float] = (-45.0, -15.0)
+    ):
         self._central_point = (float(central_point[0]), float(central_point[1]))
         self._zoom: float = 1.0
         self._rotation_init()
@@ -66,7 +68,9 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if self._zoom > 1.0:
             lon_c, lat_c = central
             r = 90.0 / self._zoom
-            ax.set_extent([lon_c - r, lon_c + r, lat_c - r, lat_c + r], crs=ccrs.PlateCarree())
+            ax.set_extent(
+                [lon_c - r, lon_c + r, lat_c - r, lat_c + r], crs=ccrs.PlateCarree()
+            )
         _add_features(ax, lw=0.5 * scale, show_states=self._show_states)
         return fig, ax
 
@@ -85,7 +89,9 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if save:
             fig.savefig(save, dpi=self._dpi, bbox_inches="tight")
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()
@@ -98,7 +104,8 @@ class OrthoAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         stop = self._resolve_stop_frame(n_frames)
         self._log_animate_header(n_frames)
         self._animate_loop(
-            fdir, n_frames,
+            fdir,
+            n_frames,
             build_kw_for=lambda tidx: {"central": self._camera_at(tidx, stop)},
         )
         return self

@@ -37,10 +37,46 @@ def _lev(start: float, stop: float, step: float) -> np.ndarray:
 
 GODAS_LEVELS: np.ndarray = np.array(
     [
-        5, 15, 25, 35, 45, 55, 65, 75, 85, 95,
-        105, 115, 125, 135, 145, 155, 165, 175, 185, 195,
-        205, 215, 225, 238, 262, 303, 366, 459, 584, 747,
-        949, 1193, 1479, 1807, 2174, 2579, 3016, 3483, 3972, 4478,
+        5,
+        15,
+        25,
+        35,
+        45,
+        55,
+        65,
+        75,
+        85,
+        95,
+        105,
+        115,
+        125,
+        135,
+        145,
+        155,
+        165,
+        175,
+        185,
+        195,
+        205,
+        215,
+        225,
+        238,
+        262,
+        303,
+        366,
+        459,
+        584,
+        747,
+        949,
+        1193,
+        1479,
+        1807,
+        2174,
+        2579,
+        3016,
+        3483,
+        3972,
+        4478,
     ],
     dtype=float,
 )
@@ -57,10 +93,10 @@ GODAS_LEVELS_DEEP: np.ndarray = GODAS_LEVELS[GODAS_LEVELS > 300]
 # ══════════════════════════════════════════════════════════════════════════════
 
 NINO_BOXES: dict[str, dict] = {
-    "1+2": {"lat": (-10.0,  0.0), "lon": (270.0, 280.0)},
-    "3":   {"lat": ( -5.0,  5.0), "lon": (210.0, 270.0)},
-    "3.4": {"lat": ( -5.0,  5.0), "lon": (190.0, 240.0)},
-    "4":   {"lat": ( -5.0,  5.0), "lon": (160.0, 210.0)},
+    "1+2": {"lat": (-10.0, 0.0), "lon": (270.0, 280.0)},
+    "3": {"lat": (-5.0, 5.0), "lon": (210.0, 270.0)},
+    "3.4": {"lat": (-5.0, 5.0), "lon": (190.0, 240.0)},
+    "4": {"lat": (-5.0, 5.0), "lon": (160.0, 210.0)},
 }
 
 #: Warm Water Volume integration box (5°S–5°N, 120°E–80°W)
@@ -207,7 +243,9 @@ OCEAN_VARIABLE_PRESETS: dict[str, dict[str, Any]] = {
     # cmocean.deep: sequential deep-ocean blue — deeper = darker
     "d20": {
         "cmap": cmocean.cm.deep,
-        "levels": np.array([20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 250, 300]),
+        "levels": np.array(
+            [20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 250, 300]
+        ),
         "cbar_label": "D20 Thermocline Depth (m)",
         "plot_title": "Depth of 20 °C Isotherm (D20)",
     },
@@ -241,14 +279,19 @@ OCEAN_SURFACE_VARS: list[str] = [
 
 # ── Helper ────────────────────────────────────────────────────────────────────
 
+
 def list_ocean_variable_presets() -> None:
     """Print all ocean variable presets: colormap, level range, and label."""
-    print(f"\n  {'Variable':<12}  {'Source':<8}  {'Colormap':<22}  {'Range (N steps)':<30}  Label")
+    print(
+        f"\n  {'Variable':<12}  {'Source':<8}  {'Colormap':<22}  {'Range (N steps)':<30}  Label"
+    )
     print("  " + "─" * 110)
     for key, p in OCEAN_VARIABLE_PRESETS.items():
         lvl = np.asarray(p["levels"])
         lvl_str = f"{lvl[0]:.3g} … {lvl[-1]:.3g}  ({len(lvl)} steps)"
         cmap_name = getattr(p["cmap"], "name", str(p["cmap"]))
         src = OCEAN_VARIABLES_INFO.get(key, {}).get("source", "derived")
-        print(f"  {key:<12}  {src:<8}  {cmap_name:<22}  {lvl_str:<30}  {p['cbar_label']}")
+        print(
+            f"  {key:<12}  {src:<8}  {cmap_name:<22}  {lvl_str:<30}  {p['cbar_label']}"
+        )
     print()

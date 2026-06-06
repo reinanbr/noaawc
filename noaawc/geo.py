@@ -9,18 +9,72 @@ import cartopy.feature as cfeature
 
 
 _REF_LATITUDES = {
-    "equator":           {"lat":  0.0,  "color": "#1e4a75", "lw_factor": 1.4, "ls": "-",  "alpha": 0.70},
-    "tropic_cancer":     {"lat":  23.5, "color": "#7a5510", "lw_factor": 0.9, "ls": "--", "alpha": 0.60},
-    "tropic_capricorn":  {"lat": -23.5, "color": "#7a5510", "lw_factor": 0.9, "ls": "--", "alpha": 0.60},
-    "arctic":            {"lat":  66.5, "color": "#2a5a6b", "lw_factor": 0.8, "ls": ":",  "alpha": 0.55},
-    "antarctic":         {"lat": -66.5, "color": "#2a5a6b", "lw_factor": 0.8, "ls": ":",  "alpha": 0.55},
+    "equator": {
+        "lat": 0.0,
+        "color": "#1e4a75",
+        "lw_factor": 1.4,
+        "ls": "-",
+        "alpha": 0.70,
+    },
+    "tropic_cancer": {
+        "lat": 23.5,
+        "color": "#7a5510",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.60,
+    },
+    "tropic_capricorn": {
+        "lat": -23.5,
+        "color": "#7a5510",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.60,
+    },
+    "arctic": {
+        "lat": 66.5,
+        "color": "#2a5a6b",
+        "lw_factor": 0.8,
+        "ls": ":",
+        "alpha": 0.55,
+    },
+    "antarctic": {
+        "lat": -66.5,
+        "color": "#2a5a6b",
+        "lw_factor": 0.8,
+        "ls": ":",
+        "alpha": 0.55,
+    },
 }
 
 _REF_LONGITUDES = {
-    "prime":     {"lon":   0.0, "color": "#3a3f45", "lw_factor": 1.1, "ls": "-",  "alpha": 0.55},
-    "date_line": {"lon": 180.0, "color": "#2e3338", "lw_factor": 0.9, "ls": "--", "alpha": 0.45},
-    "w90":       {"lon": -90.0, "color": "#1f2328", "lw_factor": 0.7, "ls": "--", "alpha": 0.35},
-    "e90":       {"lon":  90.0, "color": "#1f2328", "lw_factor": 0.7, "ls": "--", "alpha": 0.35},
+    "prime": {
+        "lon": 0.0,
+        "color": "#3a3f45",
+        "lw_factor": 1.1,
+        "ls": "-",
+        "alpha": 0.55,
+    },
+    "date_line": {
+        "lon": 180.0,
+        "color": "#2e3338",
+        "lw_factor": 0.9,
+        "ls": "--",
+        "alpha": 0.45,
+    },
+    "w90": {
+        "lon": -90.0,
+        "color": "#1f2328",
+        "lw_factor": 0.7,
+        "ls": "--",
+        "alpha": 0.35,
+    },
+    "e90": {
+        "lon": 90.0,
+        "color": "#1f2328",
+        "lw_factor": 0.7,
+        "ls": "--",
+        "alpha": 0.35,
+    },
 }
 
 

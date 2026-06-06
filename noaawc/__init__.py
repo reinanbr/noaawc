@@ -5,7 +5,11 @@ from noaawc.animators import (
     PlateCarreeAnimator,
     RobinsonAnimator,
 )
-from noaawc.presets import QUALITY_PRESETS_SQUARE, QUALITY_PRESETS_WIDE, list_quality_presets
+from noaawc.presets import (
+    QUALITY_PRESETS_SQUARE,
+    QUALITY_PRESETS_WIDE,
+    list_quality_presets,
+)
 from noaawc.variables import list_variable_presets
 from noaawc.ocean_variables import (
     OCEAN_VARIABLES_INFO,

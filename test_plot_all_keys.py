@@ -88,7 +88,7 @@ PROFILES: list[Profile] = [
         subdir="plate",
         suffix="_plate.png",
         configure=_configure_plate,
-    )
+    ),
 ]
 
 

@@ -10,22 +10,22 @@ animator.set_cmap("jet")
 animator.set_rotation(
     lon_start=-60.0,
     lon_end=-90.0,
-    lat_start=-55.0,   # Cabo Horn / ponta da Patagônia
-    lat_end=23.0,      # México central
+    lat_start=-55.0,  # Cabo Horn / ponta da Patagônia
+    lat_end=23.0,  # México central
 )
 animator.set_rotation_stop(fraction=0.80)
 
 # Pacífico Equatorial Central — epicentro do El Niño (região Niño 3.4)
 animator.set_annotate(
     text_base="El Niño\n%.1f°C",
-    pos=(0.0, -140.0),          # lat 0°, lon 140°W — Pacífico equatorial central
+    pos=(0.0, -140.0),  # lat 0°, lon 140°W — Pacífico equatorial central
     size=10.0,
     color="#ff4444",
     weight="bold",
     bbox=True,
     bbox_color="#0d1117",
     bbox_alpha=0.70,
-    interpolate=True,           # busca o valor real do campo t2m nessa coordenada
+    interpolate=True,  # busca o valor real do campo t2m nessa coordenada
     marker="o",
     marker_size=7.0,
     marker_color="#ff4444",

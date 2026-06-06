@@ -23,7 +23,9 @@ def _colorbar(
     orientation: str = "horizontal",
     scale: float = 1.0,
 ) -> None:
-    cb = fig.colorbar(cf, ax=ax, orientation=orientation, pad=0.03, fraction=0.03, shrink=0.85)
+    cb = fig.colorbar(
+        cf, ax=ax, orientation=orientation, pad=0.03, fraction=0.03, shrink=0.85
+    )
     cb.set_label(label, fontsize=round(8 * scale, 1), color="#8b949e")
     cb.ax.tick_params(labelsize=round(7 * scale, 1), colors="#8b949e")
     cast(Any, cb.outline).set_edgecolor("#30363d")
@@ -145,11 +147,18 @@ def _draw_author(
         )
 
     fig.text(
-        x_pos, y_pos, author,
-        ha=ha, va=va,
+        x_pos,
+        y_pos,
+        author,
+        ha=ha,
+        va=va,
         fontsize=round(fontsize * scale, 1),
-        color=color, fontweight=fontweight, fontfamily=fontfamily,
-        alpha=alpha, bbox=bbox_props, zorder=10,
+        color=color,
+        fontweight=fontweight,
+        fontfamily=fontfamily,
+        alpha=alpha,
+        bbox=bbox_props,
+        zorder=10,
     )
 
 
@@ -178,7 +187,9 @@ def _author_above_cbar(
     if cbar_top is None:
         cbar_top = 0.06
 
-    font_h_frac = (kw.get("fontsize", 8.5) * scale * 1.6) / (fig.get_figheight() * fig.dpi)
+    font_h_frac = (kw.get("fontsize", 8.5) * scale * 1.6) / (
+        fig.get_figheight() * fig.dpi
+    )
     y_pos = cbar_top + font_h_frac * 0.8
 
     bbox_props = None
@@ -232,7 +243,8 @@ def _draw_annotations_on(
         if mk is not None:
             mk_color = ann.get("marker_color") or ann["color"]
             ax.plot(
-                lon_a, lat_a,
+                lon_a,
+                lat_a,
                 marker=mk,
                 markersize=ann.get("marker_size", 6.0) * scale,
                 color=mk_color,

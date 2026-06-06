@@ -33,13 +33,55 @@ class PlateCarreeAnimator(_FlatAnimatorMixin, _AnimatorBase):
     _LAT_MAX = 80.0
 
     _NAMED_REGIONS: dict[str, dict] = {
-        "south_america": {"toplat": 15.0, "bottomlat": -60.0, "leftlon": -85.0, "rightlon": -30.0, "central_longitude": 0.0},
-        "brazil":        {"toplat":  6.0, "bottomlat": -34.0, "leftlon": -75.0, "rightlon": -28.0, "central_longitude": 0.0},
-        "northeast_br":  {"toplat": -1.0, "bottomlat": -18.0, "leftlon": -47.0, "rightlon": -34.0, "central_longitude": 0.0},
-        "north_br":      {"toplat":  5.5, "bottomlat":  -5.0, "leftlon": -74.0, "rightlon": -44.0, "central_longitude": 0.0},
-        "southeast_br":  {"toplat": -14.0, "bottomlat": -25.5, "leftlon": -53.0, "rightlon": -39.0, "central_longitude": 0.0},
-        "south_br":      {"toplat": -22.0, "bottomlat": -34.0, "leftlon": -58.0, "rightlon": -47.0, "central_longitude": 0.0},
-        "global":        {"toplat": 85.0, "bottomlat": -85.0, "leftlon": -179.9, "rightlon": 179.9, "central_longitude": 0.0},
+        "south_america": {
+            "toplat": 15.0,
+            "bottomlat": -60.0,
+            "leftlon": -85.0,
+            "rightlon": -30.0,
+            "central_longitude": 0.0,
+        },
+        "brazil": {
+            "toplat": 6.0,
+            "bottomlat": -34.0,
+            "leftlon": -75.0,
+            "rightlon": -28.0,
+            "central_longitude": 0.0,
+        },
+        "northeast_br": {
+            "toplat": -1.0,
+            "bottomlat": -18.0,
+            "leftlon": -47.0,
+            "rightlon": -34.0,
+            "central_longitude": 0.0,
+        },
+        "north_br": {
+            "toplat": 5.5,
+            "bottomlat": -5.0,
+            "leftlon": -74.0,
+            "rightlon": -44.0,
+            "central_longitude": 0.0,
+        },
+        "southeast_br": {
+            "toplat": -14.0,
+            "bottomlat": -25.5,
+            "leftlon": -53.0,
+            "rightlon": -39.0,
+            "central_longitude": 0.0,
+        },
+        "south_br": {
+            "toplat": -22.0,
+            "bottomlat": -34.0,
+            "leftlon": -58.0,
+            "rightlon": -47.0,
+            "central_longitude": 0.0,
+        },
+        "global": {
+            "toplat": 85.0,
+            "bottomlat": -85.0,
+            "leftlon": -179.9,
+            "rightlon": 179.9,
+            "central_longitude": 0.0,
+        },
     }
 
     def __init__(self, ds, var: str):
@@ -63,14 +105,25 @@ class PlateCarreeAnimator(_FlatAnimatorMixin, _AnimatorBase):
             facecolor="#0d1117",
             dpi=self._dpi,
         )
-        ax.set_extent([r["leftlon"], r["rightlon"], safe_bot, safe_top], crs=ccrs.PlateCarree())
-        _add_features(ax, lw=0.5 * scale, show_states=self._show_states, show_ocean=self._show_ocean)
+        ax.set_extent(
+            [r["leftlon"], r["rightlon"], safe_bot, safe_top], crs=ccrs.PlateCarree()
+        )
+        _add_features(
+            ax,
+            lw=0.5 * scale,
+            show_states=self._show_states,
+            show_ocean=self._show_ocean,
+        )
 
         if self._show_grid:
             gl = ax.gridlines(
-                crs=ccrs.PlateCarree(), draw_labels=True,
-                linewidth=0.3 * scale, color="#14181c", alpha=0.8,
-                linestyle="--", zorder=2,
+                crs=ccrs.PlateCarree(),
+                draw_labels=True,
+                linewidth=0.3 * scale,
+                color="#14181c",
+                alpha=0.8,
+                linestyle="--",
+                zorder=2,
             )
             gl.top_labels = False
             gl.right_labels = False

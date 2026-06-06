@@ -61,7 +61,9 @@ class _AnimatorBase:
         if var in VARIABLE_PRESETS:
             p = VARIABLE_PRESETS[var]
             if not silent:
-                print(f"[{self.__class__.__name__}] Variable preset '{var}': {p['plot_title']}")
+                print(
+                    f"[{self.__class__.__name__}] Variable preset '{var}': {p['plot_title']}"
+                )
         else:
             p = VARIABLE_PRESETS["t2m"]
             print(
@@ -175,10 +177,20 @@ class _AnimatorBase:
         if not x or not y:
             x, y = 0.4967, 0.1
         self._author_kwargs = dict(
-            x=x, y=y, ha=ha, va=va, color=color, fontsize=fontsize,
-            fontweight=fontweight, fontfamily=fontfamily, alpha=alpha,
-            bbox=bbox, bbox_facecolor=bbox_facecolor,
-            bbox_edgecolor=bbox_edgecolor, bbox_alpha=bbox_alpha, bbox_pad=bbox_pad,
+            x=x,
+            y=y,
+            ha=ha,
+            va=va,
+            color=color,
+            fontsize=fontsize,
+            fontweight=fontweight,
+            fontfamily=fontfamily,
+            alpha=alpha,
+            bbox=bbox,
+            bbox_facecolor=bbox_facecolor,
+            bbox_edgecolor=bbox_edgecolor,
+            bbox_alpha=bbox_alpha,
+            bbox_pad=bbox_pad,
         )
         return self
 
@@ -207,12 +219,24 @@ class _AnimatorBase:
     ):
         self._annotations.append(
             dict(
-                text_base=text_base, pos=pos, size=size, color=color,
-                weight=weight, alpha=alpha, bbox=bbox, bbox_color=bbox_color,
-                bbox_alpha=bbox_alpha, interpolate=interpolate, zorder=zorder,
-                marker=marker, marker_size=marker_size, marker_color=marker_color,
-                marker_edge_color=marker_edge_color, marker_edge_width=marker_edge_width,
-                marker_alpha=marker_alpha, text_offset=text_offset,
+                text_base=text_base,
+                pos=pos,
+                size=size,
+                color=color,
+                weight=weight,
+                alpha=alpha,
+                bbox=bbox,
+                bbox_color=bbox_color,
+                bbox_alpha=bbox_alpha,
+                interpolate=interpolate,
+                zorder=zorder,
+                marker=marker,
+                marker_size=marker_size,
+                marker_color=marker_color,
+                marker_edge_color=marker_edge_color,
+                marker_edge_width=marker_edge_width,
+                marker_alpha=marker_alpha,
+                text_offset=text_offset,
             )
         )
         return self
@@ -301,16 +325,37 @@ class _AnimatorBase:
 
     # ── shared render pipeline ────────────────────────────────────────────────
 
-    def _draw_field(self, fig, ax, lat, lon, field, time_val, _suppress_contours: bool = False, **build_kw) -> None:
+    def _draw_field(
+        self,
+        fig,
+        ax,
+        lat,
+        lon,
+        field,
+        time_val,
+        _suppress_contours: bool = False,
+        **build_kw,
+    ) -> None:
         norm, cmap = self._make_norm_and_cmap()
         cf = ax.pcolormesh(
-            lon, lat, field, cmap=cmap, norm=norm,
-            transform=ccrs.PlateCarree(), zorder=1,
+            lon,
+            lat,
+            field,
+            cmap=cmap,
+            norm=norm,
+            transform=ccrs.PlateCarree(),
+            zorder=1,
         )
         if not _suppress_contours:
             self._draw_contour(ax, lat, lon, field)
         self._draw_overlays(
-            fig, ax, lat, lon, field, time_val, cf,
+            fig,
+            ax,
+            lat,
+            lon,
+            field,
+            time_val,
+            cf,
             ax_anchored=self._overlays_ax_anchored(),
         )
 
@@ -327,7 +372,9 @@ class _AnimatorBase:
         scale = _font_scale(self._dpi)
         try:
             ax.contour(
-                lon[::3], lat[::3], field[::3, ::3],
+                lon[::3],
+                lat[::3],
+                field[::3, ::3],
                 levels=self._levels[::5],
                 colors="white",
                 linewidths=0.25 * scale,
@@ -337,6 +384,7 @@ class _AnimatorBase:
             )
         except TypeError:
             from noaawc.utils import _remove_contours
+
             _remove_contours(ax)
 
     def _overlays_ax_anchored(self) -> bool:
@@ -348,7 +396,16 @@ class _AnimatorBase:
         def _do_render(suppress_contours: bool) -> None:
             fig, ax = self._build_axes(**build_kw)
             try:
-                self._draw_field(fig, ax, lat, lon, field, time_val, _suppress_contours=suppress_contours, **build_kw)
+                self._draw_field(
+                    fig,
+                    ax,
+                    lat,
+                    lon,
+                    field,
+                    time_val,
+                    _suppress_contours=suppress_contours,
+                    **build_kw,
+                )
                 fig.tight_layout()
                 fig.savefig(fpath, format="png", dpi=self._dpi)
             finally:

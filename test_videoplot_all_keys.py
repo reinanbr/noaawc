@@ -115,7 +115,7 @@ PROFILES: list[Profile] = [
         subdir="plate",
         suffix="_plate.mp4",
         configure=_configure_plate,
-    )
+    ),
 ]
 
 

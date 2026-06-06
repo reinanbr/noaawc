@@ -37,11 +37,17 @@ class _RotatingAnimatorMixin:
         lon0, lat0 = self._default_camera()
         self._lon_start = float(lon_start)
         self._lon_end = float(lon_end)
-        self._lat_start = _clamp(float(lat_start) if lat_start is not None else lat0, "lat_start")
-        self._lat_end = _clamp(float(lat_end) if lat_end is not None else lat0, "lat_end")
+        self._lat_start = _clamp(
+            float(lat_start) if lat_start is not None else lat0, "lat_start"
+        )
+        self._lat_end = _clamp(
+            float(lat_end) if lat_end is not None else lat0, "lat_end"
+        )
         return self
 
-    def set_rotation_stop(self, frame: int | None = None, fraction: float | None = None):
+    def set_rotation_stop(
+        self, frame: int | None = None, fraction: float | None = None
+    ):
         if frame is not None and fraction is not None:
             raise ValueError("Provide 'frame' or 'fraction', not both.")
         if fraction is not None:
@@ -97,8 +103,15 @@ class _FlatAnimatorMixin:
             if "central_longitude" not in self._region:
                 self._region["central_longitude"] = 0.0
         else:
-            if toplat is None or bottomlat is None or leftlon is None or rightlon is None:
-                raise ValueError("Provide all four: toplat, bottomlat, leftlon, rightlon.")
+            if (
+                toplat is None
+                or bottomlat is None
+                or leftlon is None
+                or rightlon is None
+            ):
+                raise ValueError(
+                    "Provide all four: toplat, bottomlat, leftlon, rightlon."
+                )
             self._region = {
                 "toplat": float(toplat),
                 "bottomlat": float(bottomlat),
@@ -151,7 +164,9 @@ class _FlatAnimatorMixin:
         if save:
             fig.savefig(save, dpi=self._dpi, bbox_inches="tight")
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()

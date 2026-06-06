@@ -10,7 +10,13 @@ from matplotlib.colors import BoundaryNorm
 from noaawc.presets import QUALITY_PRESETS_SQUARE
 from noaawc.base import _AnimatorBase
 from noaawc.mixins import _RotatingAnimatorMixin
-from noaawc.utils import _get_field_full, _gfs_meta, _frames_dir, _font_scale, _remove_contours
+from noaawc.utils import (
+    _get_field_full,
+    _gfs_meta,
+    _frames_dir,
+    _font_scale,
+    _remove_contours,
+)
 from noaawc.geo import _add_features
 from noaawc.variables import NO_CONTOUR_VARS
 
@@ -56,7 +62,9 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
     def _default_camera(self) -> tuple[float, float]:
         return (self._lon, self._lat)
 
-    def set_view(self, lon: float, lat: float, satellite_height: float | None = None) -> "NearsidePerspectiveAnimator":
+    def set_view(
+        self, lon: float, lat: float, satellite_height: float | None = None
+    ) -> "NearsidePerspectiveAnimator":
         self._lon = float(lon)
         self._lat = float(lat)
         if satellite_height is not None:
@@ -108,7 +116,9 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         scale = _font_scale(self._dpi)
         try:
             ax.contour(
-                lon[::3], lat[::3], field[::3, ::3],
+                lon[::3],
+                lat[::3],
+                field[::3, ::3],
                 levels=self._levels[::5],
                 colors="white",
                 linewidths=0.25 * scale,
@@ -134,7 +144,9 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
         if save:
             fig.savefig(save, dpi=self._dpi)
             w, h = self._figsize
-            print(f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)")
+            print(
+                f"Saved: {save}  ({int(w * self._dpi)}×{int(h * self._dpi)} px @ {self._dpi} dpi)"
+            )
             plt.close(fig)
         if show:
             plt.show()
@@ -151,7 +163,8 @@ class NearsidePerspectiveAnimator(_RotatingAnimatorMixin, _AnimatorBase):
             extra=f"height={self._height / 1000:.0f} km | visible≈{r_deg:.1f}°",
         )
         self._animate_loop(
-            fdir, n_frames,
+            fdir,
+            n_frames,
             build_kw_for=lambda tidx: {"central": self._camera_at(tidx, stop)},
         )
         return self
