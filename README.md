@@ -1,5 +1,5 @@
 # noaawc
-![Tests](https://github.com/reinanbr/noaawc/actions/workflows/tests.yml/badge.svg)
+![CI](https://github.com/reinanbr/noaawc/actions/workflows/ci-publish.yml/badge.svg)
 ![PyPI Downloads](https://img.shields.io/pypi/dm/noaawc)
 ![PyPI Version](https://img.shields.io/pypi/v/noaawc)
 ![Python Versions](https://img.shields.io/pypi/pyversions/noaawc)
