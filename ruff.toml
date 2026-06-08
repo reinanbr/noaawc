@@ -1,0 +1,7 @@
+exclude = [
+    "manual_noaawc/",
+    "venv/",
+    ".venv/",
+    "dist/",
+    "build/",
+]
